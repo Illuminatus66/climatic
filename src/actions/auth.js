@@ -1,24 +1,23 @@
 import * as api from "../api";
-import { setCurrentUser } from "./currentUser";
-import { fetchAllUsers } from "./users";
+import { fetchCurrentUser } from "../reducers/userSlice";
+import { login } from "../reducers/authSlice"
 
-export const signup = (authData, navigate) => async (dispatch) => {
+export const signUp = (authData, navigate) => async (dispatch) => {
   try {
     const { data } = await api.signUp(authData);
-    dispatch({ type: "AUTH", data });
-    dispatch(setCurrentUser(JSON.parse(localStorage.getItem("Profile"))));
-    dispatch(fetchAllUsers());
+    dispatch(login(data));
+    dispatch(fetchCurrentUser(JSON.parse(localStorage.getItem("Profile"))));
     navigate("/");
   } catch (error) {
     console.log(error);
   }
 };
 
-export const login = (authData, navigate) => async (dispatch) => {
+export const logIn = (authData, navigate) => async (dispatch) => {
   try {
     const { data } = await api.logIn(authData);
-    dispatch({ type: "AUTH", data });
-    dispatch(setCurrentUser(JSON.parse(localStorage.getItem("Profile"))));
+    dispatch(login(data));
+    dispatch(fetchCurrentUser(JSON.parse(localStorage.getItem("Profile"))));
     navigate("/");
   } catch (error) {
     console.log(error);

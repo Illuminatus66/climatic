@@ -18,7 +18,6 @@ const connectDB = async () => {
   }
 };
 
-// Invoke the database connection
 connectDB();
 
 const auth = (handler) => async (event, context) => {

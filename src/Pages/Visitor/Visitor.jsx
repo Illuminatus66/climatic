@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "./Visitor.css";
 import { parameterMap, weatherConditions } from "./weathercodes.js";
-import dotenv from 'dotenv';
+import { useDispatch, useSelector } from 'react-redux';
+import { visitorData } from "../../actions/weather"
 
-dotenv.config();
 const Visitor = () => {
+  const dispatch= useDispatch();
   const [showTable, setShowTable] = useState(false);
+  const data = useSelector((state) => state.weather.weather);
   useEffect(() => {
-    const apiKey = process.env.TOMORROW_IO_API_KEY;
-    const apiUrl = `https://api.tomorrow.io/v4/timelines?apikey=${apiKey}`;
     mapboxgl.accessToken = 'pk.eyJ1IjoiaWxsdW1pbmF0dXM2NiIsImEiOiJjbGxnYnRpeXcxNDhjM21tZ25jcndxeDVzIn0.-vZDD9v0rvv-8GPCTpRvgg';
     const map = new mapboxgl.Map({
       container: 'map',
@@ -35,38 +35,13 @@ const Visitor = () => {
       console.log(lat);
       console.log(lng);
 
-      const options = {
-        method: 'POST',
-        headers: {
-          accept: 'application/json',
-          'Accept-Encoding': 'gzip',
-          'content-type': 'application/json'
-        },
-        body: JSON.stringify({
-          location: [lat, lng],
-          fields: ['temperature', 'temperatureApparent', 'humidity', 'sunriseTime', 'sunsetTime', 'cloudCover', 'visibility', 'precipitationIntensity', 'precipitationProbability', 'weatherCodeDay', 'weatherCodeNight'],
-          units: 'metric',
-          timesteps: ["1d"],
-          startTime: 'now',
-          endTime: 'nowPlus1d',
-          timezone: 'Asia/Kolkata'
-        })
-      };
-
       const todTable = document.querySelector("#dayone tbody");
       const tomTable = document.querySelector("#daytwo tbody");
       todTable.innerHTML = "";
       tomTable.innerHTML = "";
 
       try {
-        const response = await fetch(apiUrl, options);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log(data);
-
+        dispatch(visitorData({ lat, lng }));
         for (const parameter of Object.keys(data.data.timelines[0].intervals[0].values)) {
           const row = document.createElement("tr");
           const paramcell = document.createElement("td");
@@ -111,6 +86,9 @@ const Visitor = () => {
   }, []);
 
   return (
+    <html>
+      <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet"/>
+      <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"/>
     <div>
       <div id="map"></div>
       <pre id="info"></pre>
@@ -137,6 +115,7 @@ const Visitor = () => {
         </tbody>
       </table>
     </div>
+    </html>
   );
 };
 

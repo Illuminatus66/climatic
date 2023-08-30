@@ -5,7 +5,8 @@ import decode from "jwt-decode";
 import "./Navbar.css";
 import { fetchCurrentUser } from "../../reducers/userSlice"; 
 import { logout } from "../../reducers/authSlice";
-import { resetInteractions } from "../../reducers/interactionsSlice"
+import { resetInteractions } from "../../reducers/interactionsSlice";
+
 const Navbar = () => {
   const dispatch = useDispatch();
   const User = useSelector((state) => state.user.data);

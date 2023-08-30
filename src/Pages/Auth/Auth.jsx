@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import "./Auth.css";
 import AboutAuth from "./AboutAuth";
-import { signup, login } from "../../actions/auth";
+import { signUp, logIn } from "../../actions/auth";
 import eyeActive from "../../assets/eye.png";
 import eyeInactive from "../../assets/hide.png";
 import climatic from "../../assets/climatic.png"
@@ -39,9 +39,9 @@ const Auth = () => {
       if (!name) {
         alert("Enter a name to continue");
       }
-      dispatch(signup({ name, email, password }, navigate));
+      dispatch(signUp({ name, email, password }, navigate));
     } else {
-      dispatch(login({ email, password }, navigate));
+      dispatch(logIn({ email, password }, navigate));
     }
   };
 

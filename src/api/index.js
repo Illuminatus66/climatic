@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: 'https://stack-illuminatus66.netlify.app'
+  baseURL: 'https://climatic-illuminatus66.netlify.app'
 });
 
 API.interceptors.request.use((req) => {
@@ -14,24 +14,8 @@ API.interceptors.request.use((req) => {
   return req;
 });
 
-export const logIn = (authData) => API.post("/.netlify/functions/login", authData);
-export const signUp = (authData) => API.post("/.netlify/functions/signup", authData);
+export const logIn = (authData) => API.post("/.netlify/functions/logIn", authData);
+export const signUp = (authData) => API.post("/.netlify/functions/signUp", authData);
 export const postWeather = (weatherData) => API.patch("./netlify/functions/postWeather", weatherData, {withCredentials: true});
-export const postQuestion = (questionData) =>
-  API.post("/.netlify/functions/askQuestion", questionData, { withCredentials: true });
-export const getAllQuestions = () => API.get("/.netlify/functions/getAllQuestions");
-export const deleteQuestion = (_id) => API.delete(`/.netlify/functions/deleteQuestion/${_id}`, { withCredentials: true });
-export const voteQuestion = (_id, value) =>
-  API.patch(`/.netlify/functions/voteQuestion/${_id}`, { value }, { withCredentials: true });
-export const searchQuestions = (query) =>
-  API.get(`/.netlify/functions/searchQuestions?query=${query}`);
-  
-export const postAnswer = (_id, noOfAnswers, answerBody, userAnswered) =>
-  API.patch(`/.netlify/functions/postAnswer/${_id}`, { noOfAnswers, answerBody, userAnswered }, { withCredentials: true });
-export const deleteAnswer = (_id, answerId, noOfAnswers) =>
-  API.patch(`/.netlify/functions/deleteAnswer/${_id}`, { answerId, noOfAnswers }, { withCredentials: true });
-
-export const getAllUsers = () => API.get("/.netlify/functions/getAllUsers");
-export const updateProfile = (_id, updateData) =>
-  API.patch(`/.netlify/functions/updateProfile/${_id}`, updateData, { withCredentials: true });
-
+export const visitorData= (lat, lng) => API.post('/.netlify/functions/visitorData', lat, lng);
+export const mapData= (lat, lng) => API.post('./netlify/functions/mapData', lat, lng)
