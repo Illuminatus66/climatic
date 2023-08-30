@@ -1,0 +1,37 @@
+body { margin: 0; padding: 0; }
+#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+#dayone {
+  position: absolute;
+  bottom: 300px;
+  left: 0;
+  z-index: 999999999;
+  background-color: black;
+  border: 1px solid white;
+}
+#daytwo {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 999999999;
+  background-color: black;
+  border: 1px solid white;
+}
+table {
+  border: 1px inset #121212;
+  border-collapse: separate;
+}
+th {
+  border: 1px inset #121212;
+  padding: 5px;
+  background: #e45858;
+  color: #313030;
+  font-family: 'Roboto Mono', monospace;
+}
+
+td {
+  border: 1px inset #121212;
+  text-align: left;
+  background: #6abcfb;
+  color: #313030;
+  font-family: 'Raleway', sans-serif;
+}
