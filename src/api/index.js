@@ -16,6 +16,7 @@ API.interceptors.request.use((req) => {
 
 export const logIn = (authData) => API.post("/.netlify/functions/logIn", authData);
 export const signUp = (authData) => API.post("/.netlify/functions/signUp", authData);
-export const postWeather = (weatherData) => API.patch("./netlify/functions/postWeather", weatherData, {withCredentials: true});
 export const visitorData= (lat, lng) => API.post('/.netlify/functions/visitorData', lat, lng);
-export const mapData= (lat, lng) => API.post('./netlify/functions/mapData', lat, lng)
+export const mapData= (lat, lng) => API.post('./netlify/functions/mapData', lat, lng);
+export const toMongo = (weatherData) => API.post("./netlify/functions/toMongo", weatherData, {withCredentials: true});
+export const retrieveWeather = (userId, timestamp) => API.get(`./netlify/functions/retrieveWeather/${userId}`, timestamp);

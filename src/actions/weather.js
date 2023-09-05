@@ -1,7 +1,7 @@
 import * as api from '../api';
 import { setWeather, resetWeather} from '../reducers/weatherSlice'
 
-export const visitorData = (location, dispatch) => async (dispatch) => {
+export const visitorData = (location) => async (dispatch) => {
   try {
     dispatch (resetWeather());
     const {lat, lng} = location;
@@ -21,3 +21,14 @@ export const mapData = (location) => async () => {
   }
 };
 
+export const toMongo = (weatherData) => async () => {
+  try {
+    const { _id, tomorrowData } = weatherData;
+    await api.toMongo(
+      _id,
+      tomorrowData,
+    );
+  } catch (error) {
+    console.log(error);
+  }
+};
