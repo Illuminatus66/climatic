@@ -85,7 +85,7 @@ const Map = () => {
       geocoder.on('result', handleGeocoderResult);
       map.addControl(geocoder);
     }
-  }, [interactions, dispatch, currentUser, weather]);
+  }, [interactions, dispatch, currentUser, weather, _id]);
 
   return (
     <div>
