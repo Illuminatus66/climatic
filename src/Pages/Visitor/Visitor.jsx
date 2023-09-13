@@ -83,7 +83,7 @@ const Visitor = () => {
         console.error(error);
       }
     });
-  }, []);
+  }, [data.data.timelines, dispatch]);
 
   return (
     <html>
