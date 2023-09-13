@@ -56,8 +56,8 @@ export const fromMongo = (weatherData) => async (dispatch) => {
 
 export const interactionsLeft = () => async (dispatch) => {
   try {
-    await api.interactionsLeft ();
-    dispatch (setInteractions());
+    const { interactions } = await api.interactionsLeft ();
+    dispatch (setInteractions(interactions));
   } catch (error) {
     console.log(error);
   }
