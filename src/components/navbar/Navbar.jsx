@@ -5,22 +5,21 @@ import decode from "jwt-decode";
 import "./Navbar.css";
 import { fetchCurrentUser } from "../../reducers/userSlice"; 
 import { logout } from "../../reducers/authSlice";
-import { resetInteractions } from "../../reducers/interactionsSlice";
-
+import { resetWeather } from "../../reducers/weatherSlice"
 const Navbar = () => {
   const dispatch = useDispatch();
-  const User = useSelector((state) => state.user.data);
+  const user = useSelector((state) => state.user.data);
   const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(logout());
+    dispatch (resetWeather());
     navigate("/");
     dispatch(fetchCurrentUser(null));
-    dispatch (resetInteractions())
   };
 
   useEffect((handleLogout) => {
-    const token = User?.token;
+    const token = user?.token;
     if (token) {
       const decodedToken = decode(token);
       if (decodedToken.exp * 1000 < new Date().getTime()) {
@@ -28,7 +27,7 @@ const Navbar = () => {
       }
     }
     dispatch(fetchCurrentUser(JSON.parse(localStorage.getItem("Profile"))));
-  }, [User?.token, dispatch]);
+  }, [dispatch, user?.token]);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light" style={{backgroundColor : '#95d3ff'}}>
@@ -50,7 +49,7 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="navbar-2">
-          {User === null ? (
+          {user === null ? (
             <Link to="/Auth" className="nav-item nav-links">
               Log in
             </Link>

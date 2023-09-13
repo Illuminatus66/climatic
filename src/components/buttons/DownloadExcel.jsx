@@ -6,7 +6,6 @@ function DownloadExcel({ jsonData }) {
 
   const downloadExcel = () => {
     if (isExporting) {
-      // Prevent multiple clicks while export is in progress
       return;
     }
 
@@ -24,7 +23,7 @@ function DownloadExcel({ jsonData }) {
       a.download = 'data.xlsx';
 
       a.addEventListener('click', () => {
-        setIsExporting(false); // Re-enable the button when the download is complete
+        setIsExporting(false);
         URL.revokeObjectURL(url);
       });
 

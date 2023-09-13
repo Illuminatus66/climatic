@@ -45,11 +45,11 @@ exports.handler = async function (event, context) {
       throw new Error('Failed to fetch weather data');
     }
 
-    const data = await response.json();
+    const weatherData = await response.json();
 
     return {
       statusCode: 200,
-      body: JSON.stringify(data),
+      body: JSON.stringify(weatherData),
     };
   } catch (error) {
     console.error('Error:', error);

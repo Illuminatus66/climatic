@@ -1,2 +1,12 @@
 body { margin: 0; padding: 0; }
 #map { position: absolute; top: 110; bottom: 0; width: 80%; }
+#info { margin:0; }
+#info-container {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 200px;
+    background-color: rgba(200, 200, 200, 0.8);
+    padding: 10px;
+    z-index: 99999999;
+}

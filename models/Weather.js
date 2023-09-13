@@ -1,20 +1,14 @@
 import mongoose from "mongoose";
 
 const WeatherSchema = mongoose.Schema({
-  noOfAnswers: { type: Number, default: 0 },
-  upVote: { type: [String], default: [] },
-  downVote: { type: [String], default: [] },
-  userPosted: { type: String, required: "Question must have an author" },
   userId: { type: String },
   timestamp: { type: Date, default: Date.now },
-  answer: [
-    {
-      answerBody: String,
-      userAnswered: String,
-      userId: String,
-      answeredOn: { type: Date, default: Date.now },
-    },
-  ],
+  location: {
+    place: String,
+    lat: Number,
+    lng: Number,
+  },
+  weather: { type: mongoose.Schema.Types.Mixed },
 });
 
-export default mongoose.model("Weather", WeatherSchema, 'test');
+export default mongoose.model("Weather", WeatherSchema);

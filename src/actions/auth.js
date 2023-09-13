@@ -1,9 +1,11 @@
 import * as api from "../api";
 import { fetchCurrentUser } from "../reducers/userSlice";
+import { resetWeather } from '../reducers/weatherSlice';
 import { login } from "../reducers/authSlice"
 
 export const signUp = (authData, navigate) => async (dispatch) => {
   try {
+    dispatch (resetWeather());
     const { data } = await api.signUp(authData);
     dispatch(login(data));
     dispatch(fetchCurrentUser(JSON.parse(localStorage.getItem("Profile"))));
@@ -15,6 +17,7 @@ export const signUp = (authData, navigate) => async (dispatch) => {
 
 export const logIn = (authData, navigate) => async (dispatch) => {
   try {
+    dispatch (resetWeather());
     const { data } = await api.logIn(authData);
     dispatch(login(data));
     dispatch(fetchCurrentUser(JSON.parse(localStorage.getItem("Profile"))));

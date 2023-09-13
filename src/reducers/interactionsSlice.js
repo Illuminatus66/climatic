@@ -8,18 +8,12 @@ const interactionsSlice = createSlice({
   name: 'interactions',
   initialState,
   reducers: {
-    decrementInteractions: (state) => {
-      state.interactionsLeft--;
-    },
-    resetInteractions: (state) => {
-        state.interactionsLeft = 0
-    },
-    setInteractions: (state, payload) => {
-      state.interactionsLeft = payload.interactionsLeft
+    setInteractions: (state, action) => {
+      state.interactionsLeft = action.payload
     }
   },
 });
 
-export const { decrementInteractions, resetInteractions, setInteractions } = interactionsSlice.actions;
+export const { setInteractions } = interactionsSlice.actions;
 
 export default interactionsSlice.reducer;

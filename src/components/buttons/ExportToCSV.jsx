@@ -6,7 +6,6 @@ function ExportToCSV({ jsonData }) {
 
   const handleExport = () => {
     if (isExporting) {
-      // Prevent multiple clicks while export is in progress
       return;
     }
 
@@ -23,7 +22,7 @@ function ExportToCSV({ jsonData }) {
         <CSVLink
           data={jsonData}
           filename="data.csv"
-          onClick={() => setIsExporting(false)} // Re-enable the button when the download is complete
+          onClick={() => setIsExporting(false)}
         >
           Hidden CSVLink
         </CSVLink>

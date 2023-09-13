@@ -44,17 +44,6 @@ exports.handler = async function (event, context) {
       };
     }
     
-    // Check if 24 hrs have passed since the last interaction
-    const lastInteractionTime = new Date(existingUser.lastInteraction).getTime();
-    const currentTime = new Date().getTime();
-    const twentyFourHoursInMs = 24 * 60 * 60 * 1000;
-    
-    if (currentTime - lastInteractionTime >= twentyFourHoursInMs) {
-      existingUser.interactions = 5;
-      existingUser.lastInteraction = new Date();
-      await existingUser.save();
-    }
-    
     const token = jwt.sign(
       { email: existingUser.email, id: existingUser._id },
       process.env.JWT_SECRET,

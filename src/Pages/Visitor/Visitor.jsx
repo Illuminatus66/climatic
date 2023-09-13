@@ -91,7 +91,9 @@ const Visitor = () => {
       <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"/>
     <div>
       <div id="map"></div>
+      <div id="info-container">
       <pre id="info"></pre>
+      </div>
 
       <table id="dayone" style={{ visibility: showTable ? "visible" : "hidden" }}>
         <thead>

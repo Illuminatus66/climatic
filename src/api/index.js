@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: 'https://climatic-illuminatus66.netlify.app'
+  baseURL: 'https://climatic-illuminatus66.netlify.app/.netlify/functions'
 });
 
 API.interceptors.request.use((req) => {
@@ -14,9 +14,11 @@ API.interceptors.request.use((req) => {
   return req;
 });
 
-export const logIn = (authData) => API.post("/.netlify/functions/logIn", authData);
-export const signUp = (authData) => API.post("/.netlify/functions/signUp", authData);
-export const visitorData= (lat, lng) => API.post('/.netlify/functions/visitorData', lat, lng);
-export const mapData= (lat, lng) => API.post('./netlify/functions/mapData', lat, lng);
-export const toMongo = (weatherData) => API.post("./netlify/functions/toMongo", weatherData, {withCredentials: true});
-export const retrieveWeather = (userId, timestamp) => API.get(`./netlify/functions/retrieveWeather/${userId}`, timestamp);
+export const logIn = (authData) => API.post("/logIn", authData);
+export const signUp = (authData) => API.post("/signUp", authData);
+export const visitorData= (lat, lng) => API.post('/visitorData', lat, lng);
+export const mapData= (lat, lng) => API.post('/mapData', lat, lng);
+export const toMongo = (weatherData) => API.post("/toMongo", weatherData, {withCredentials: true});
+export const fromMongo = (timestamp) => API.get(`/fromMongo/`, timestamp, {withCredentials: true});
+export const decrementInteractions = () => API.post ("/decrementInteractions", {withCredentials: true});
+export const interactionsLeft = () => API.get ("/interactionsLeft", {withCredentials: true});

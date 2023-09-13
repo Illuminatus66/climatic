@@ -5,7 +5,6 @@ function DownloadJsonButton({ jsonData }) {
 
   const downloadJson = () => {
     if (isDownloading) {
-      // Prevent multiple clicks while download is in progress
       return;
     }
 
@@ -18,7 +17,7 @@ function DownloadJsonButton({ jsonData }) {
     a.download = 'data.json';
 
     a.addEventListener('click', () => {
-      setIsDownloading(false); // Re-enable the button when the download is complete
+      setIsDownloading(false);
       URL.revokeObjectURL(url);
     });
 

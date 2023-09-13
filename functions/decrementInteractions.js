@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
-import Weather from "../models/Weather.js";
+import Climatic from "../models/auth.js";
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -45,30 +45,35 @@ const auth = (handler) => async (event, context) => {
 
 exports.handler = auth(async (event, context) => {
   try {
-    const {lat, lng, place, weather} = JSON.parse(event.body);
     const userId = event.userId;
+    const user = await Climatic.findOne({ userId });
 
-    const postWeather = new Weather({
-      userId,
-      location: {
-        lat: lat,
-        lng: lng,
-        place: place,
-      },
-      weather: weather
-    });
+    if (!user) {
+      return {
+        statusCode: 404,
+        body: JSON.stringify("User not found"),
+      };
+    }
 
-    await postWeather.save();
+    if (user.interactions <= 0) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify("No interactions left"),
+      };
+    }
+
+    user.interactions--;
+    await user.save();
 
     return {
       statusCode: 200,
-      body: JSON.stringify("Posted weather data successfully"),
+      body: JSON.stringify('The number of interactions has been reduced by 1'),
     };
   } catch (error) {
     console.log(error);
     return {
-      statusCode: 409,
-      body: JSON.stringify("Couldn't post a new data entry"),
+      statusCode: 500,
+      body: JSON.stringify("Internal Server Error"),
     };
   }
 });

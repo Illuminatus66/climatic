@@ -45,24 +45,16 @@ const auth = (handler) => async (event, context) => {
 
 exports.handler = auth(async (event, context) => {
   try {
-    const {lat, lng, place, weather} = JSON.parse(event.body);
+    const {timestamp} = JSON.parse(event.body);
     const userId = event.userId;
-
-    const postWeather = new Weather({
-      userId,
-      location: {
-        lat: lat,
-        lng: lng,
-        place: place,
-      },
-      weather: weather
-    });
-
-    await postWeather.save();
+    const weatherData = await Weather.find ({
+        userId,
+        timestamp : {$gte :timestamp},
+    }).select ("timestamp location weather")
 
     return {
       statusCode: 200,
-      body: JSON.stringify("Posted weather data successfully"),
+      body: JSON.stringify(weatherData),
     };
   } catch (error) {
     console.log(error);
