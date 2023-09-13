@@ -42,13 +42,13 @@ const Visitor = () => {
 
       try {
         dispatch(visitorData({ lat, lng }));
-        for (const parameter of Object.keys(data.data.timelines[0].intervals[0].values)) {
+        for (const parameter of Object.keys(data.timelines[0].intervals[0].values)) {
           const row = document.createElement("tr");
           const paramcell = document.createElement("td");
           const valuecell = document.createElement("td");
 
           paramcell.textContent = parameterMap[parameter] || parameter;
-          let value = data.data.timelines[0].intervals[0].values[parameter];
+          let value = data.timelines[0].intervals[0].values[parameter];
           if (parameter === "sunriseTime" || parameter === "sunsetTime") {
             value = new Date(value).toLocaleString();
           } else if (parameter === "weatherCodeDay" || parameter === "weatherCodeNight") {
@@ -61,13 +61,13 @@ const Visitor = () => {
           todTable.appendChild(row);
         }
 
-        for (const parameter of Object.keys(data.data.timelines[0].intervals[1].values)) {
+        for (const parameter of Object.keys(data.timelines[0].intervals[1].values)) {
           const row = document.createElement("tr");
           const paramcell = document.createElement("td");
           const valuecell = document.createElement("td");
 
           paramcell.textContent = parameterMap[parameter] || parameter;
-          let value = data.data.timelines[0].intervals[1].values[parameter];
+          let value = data.timelines[0].intervals[1].values[parameter];
           if (parameter === "sunriseTime" || parameter === "sunsetTime") {
             value = new Date(value).toLocaleString();
           } else if (parameter === "weatherCodeDay" || parameter === "weatherCodeNight") {
@@ -83,7 +83,7 @@ const Visitor = () => {
         console.error(error);
       }
     });
-  }, [data.data.timelines, dispatch]);
+  }, [data.timelines, dispatch]);
 
   return (
     <html>

@@ -7,8 +7,8 @@ export const visitorData = (location) => async (dispatch) => {
   try {
     dispatch (resetWeather());
     const {lat, lng} = location;
-    const {weatherData} = await api.visitorData(lat, lng);
-    dispatch (setWeather(weatherData));
+    const {data} = await api.visitorData(lat, lng);
+    dispatch (setWeather(data));
   } catch (error) {
     console.log(error);
   }
@@ -39,33 +39,28 @@ export const toMongo = (weatherData) => async () => {
   }
 };
 
-export const fromMongo = (weatherData) => async (dispatch) => {
+export const fromMongo = (timestamp) => async (dispatch) => {
   try {
     dispatch (resetMongoData())
-    const {timestamp, location, weather } = weatherData;
-    const {jsonData} = await api.fromMongo (
-      timestamp,
-      location,
-      weather,
-    );
-    dispatch (setMongoData(jsonData));
+    const {weatherData} = await api.fromMongo (timestamp);
+    dispatch (setMongoData(weatherData));
   } catch (error) {
     console.log(error);
   }
 };
 
-export const interactionsLeft = () => async (dispatch) => {
+export const interactionsLeft = (_id) => async (dispatch) => {
   try {
-    const { interactions } = await api.interactionsLeft ();
+    const { interactions } = await api.interactionsLeft(_id);
     dispatch (setInteractions(interactions));
   } catch (error) {
     console.log(error);
   }
 };
 
-export const decrementInteractions = () => async (dispatch) => {
+export const decrementInteractions = (_id) => async (dispatch) => {
   try {
-    const { interactions } = await api.decrementInteractions ();
+    const { interactions } = await api.decrementInteractions(_id);
     dispatch (setInteractions(interactions));
   } catch (error) {
     console.log(error);

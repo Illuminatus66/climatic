@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from "react-router-dom";
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
@@ -10,7 +11,8 @@ import DownloadExcel from '../../components/buttons/DownloadExcel';
 import ExportToCSV from '../../components/buttons/ExportToCSV';
 
 const Map = () => {
-  const user = useSelector((state) => state.user.data);
+  const { _id } = useParams();
+  const currentUser = useSelector((state) => state.user.data);
   const interactions = useSelector((state) => state.interactions.interactionsLeft);
   const weather = useSelector((state) => state.weather.weather);
   const mongodata = useSelector((state) => state.mongo.weather);
@@ -43,20 +45,18 @@ const Map = () => {
   };
 
   useEffect(() => {
-    dispatch(interactionsLeft());
-  }, [dispatch]);
-
-  useEffect(() => {
     const handleGeocoderResult = (result) => {
       const [lng, lat] = result.result.center;
       const place = result.result.place_name;
-      if (user) {
-        dispatch(interactionsLeft());
+      if (currentUser?.result.id === _id) {
+        dispatch(interactionsLeft(currentUser?.result._id));
         dispatch(mapData({ lat, lng }));
         dispatch(toMongo({ lat, lng, place, weather }));
-        dispatch(decrementInteractions());
-      }
+        dispatch(decrementInteractions(currentUser?.result._id));
+      };
     };
+
+    dispatch(interactionsLeft(currentUser?.result._id));
 
     if (interactions > 0) {
       mapboxgl.accessToken =
@@ -85,7 +85,7 @@ const Map = () => {
       geocoder.on('result', handleGeocoderResult);
       map.addControl(geocoder);
     }
-  }, [interactions, dispatch, user, weather]);
+  }, [interactions, dispatch, currentUser, weather]);
 
   return (
     <div>

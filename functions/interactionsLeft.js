@@ -44,36 +44,35 @@ const auth = (handler) => async (event, context) => {
 };
 
 exports.handler = auth(async (event, context) => {
-  try {
-    const userId = event.userId;
-    const user = await Climatic.findOne({ userId });
+    const pathSegments = event.path.split('/');
+    const _id = pathSegments[pathSegments.length - 1];
     
-    if (!user) {
+    if (!mongoose.Types.ObjectId.isValid(_id)) {
       return {
         statusCode: 404,
         body: JSON.stringify("User not found"),
       };
     }
 
-    const currentTime = new Date();
-    const lastInteractionTime = new Date(user.lastInteraction);
-    const timeDifference = currentTime - lastInteractionTime;
-    const oneDayMilliseconds = 24 * 60 * 60 * 1000;
+    try {
+      const user = await Climatic.findbyId(_id);
 
-    if (timeDifference >= oneDayMilliseconds) {
-      user.interactions = 5;
-      user.lastInteraction = currentTime;
-      await user.save();
-    }
+      const currentTime = new Date();
+      const lastInteractionTime = new Date(user.lastInteraction);
+      const timeDifference = currentTime - lastInteractionTime;
+      const oneDayMilliseconds = 24 * 60 * 60 * 1000;
 
-    const interactions = user.interactions;
-
-    return {
-      statusCode: 200,
-      body: JSON.stringify(interactions),
-    };
-  } catch (error) {
-    console.log(error);
+      if (timeDifference >= oneDayMilliseconds) {
+        user.interactions = 5;
+        user.lastInteraction = currentTime;
+        await user.save();
+        const interactions = user.interactions;
+        return {
+          statusCode: 200,
+          body: JSON.stringify(interactions),
+        };
+      }
+    } catch (error) {
     return {
       statusCode: 409,
       body: JSON.stringify("Couldn't get the number of interactions"),
