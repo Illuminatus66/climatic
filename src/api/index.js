@@ -21,4 +21,4 @@ export const mapData= (lat, lng) => API.post('/mapData', lat, lng);
 export const toMongo = (weatherData) => API.post("/toMongo", weatherData, {withCredentials: true});
 export const fromMongo = (timestamp) => API.get(`/fromMongo/`, timestamp, {withCredentials: true});
 export const decrementInteractions = () => API.post ("/decrementInteractions", {withCredentials: true});
-export const interactionsLeft = () => API.get ("/interactionsLeft", {withCredentials: true});
+export const interactionsLeft = () => API.post ("/interactionsLeft", {withCredentials: true});
