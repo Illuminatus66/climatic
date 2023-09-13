@@ -14,8 +14,8 @@ API.interceptors.request.use((req) => {
   return req;
 });
 
-export const logIn = (authData) => API.post("/logIn", authData);
-export const signUp = (authData) => API.post("/signUp", authData);
+export const logIn = (authData) => API.post("/login", authData);
+export const signUp = (authData) => API.post("/signup", authData);
 export const visitorData= (lat, lng) => API.post('/visitorData', lat, lng);
 export const mapData= (lat, lng) => API.post('/mapData', lat, lng);
 export const toMongo = (weatherData) => API.post("/toMongo", weatherData, {withCredentials: true});
