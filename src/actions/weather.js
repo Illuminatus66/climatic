@@ -63,13 +63,10 @@ export const interactionsLeft = () => async (dispatch) => {
   }
 };
 
-export const decrementInteractions = (userId) => async (dispatch) => {
+export const decrementInteractions = () => async (dispatch) => {
   try {
-    const { _id } = userId;
-    await api.decrementInteractions (
-      _id
-    );
-    dispatch (setInteractions());
+    const { interactions } = await api.decrementInteractions ();
+    dispatch (setInteractions(interactions));
   } catch (error) {
     console.log(error);
   }

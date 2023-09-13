@@ -65,9 +65,11 @@ exports.handler = auth(async (event, context) => {
     user.interactions--;
     await user.save();
 
+    const interactions= user.interactions
+
     return {
       statusCode: 200,
-      body: JSON.stringify('The number of interactions has been reduced by 1'),
+      body: JSON.stringify(interactions),
     };
   } catch (error) {
     console.log(error);
