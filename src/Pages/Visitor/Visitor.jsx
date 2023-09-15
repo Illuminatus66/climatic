@@ -46,7 +46,7 @@ const Visitor = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (data.timelines && data.timelines.length > 0) {
+    if (data && data.timelines && data.timelines.length > 0) {
       const todTable = document.querySelector("#dayone tbody");
       const tomTable = document.querySelector("#daytwo tbody");
       todTable.innerHTML = "";
@@ -90,7 +90,7 @@ const Visitor = () => {
         tomTable.appendChild(row);
       }
     }
-  }, [data.timelines]);
+  }, [data, data.timelines]);
 
   return (
     <div>
