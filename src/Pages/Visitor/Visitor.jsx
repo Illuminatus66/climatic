@@ -90,7 +90,7 @@ const Visitor = () => {
         tomTable.appendChild(row);
       }
     }
-  }, [data, data.timelines]);
+  }, [data]);
 
   return (
     <div>
