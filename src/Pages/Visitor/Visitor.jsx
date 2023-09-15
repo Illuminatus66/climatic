@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
+import 'mapbox-gl/dist/mapbox-gl.css';
 import "./Visitor.css";
 import { parameterMap, weatherConditions } from "./weathercodes.js";
 import { useDispatch, useSelector } from "react-redux";
@@ -94,11 +95,6 @@ const Visitor = () => {
 
   return (
     <div>
-      <link
-        href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css"
-        rel="stylesheet"
-      />
-      <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js" />
       <div>
         <div id="map"></div>
         <div id="info-container">
