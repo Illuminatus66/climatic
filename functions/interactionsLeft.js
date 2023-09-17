@@ -53,7 +53,7 @@ exports.handler = auth(async (event, context) => {
     }
 
     try {
-      const user = await Climatic.findbyId(_id);
+      const user = await Climatic.findById(_id);
 
       const currentTime = new Date();
       const lastInteractionTime = new Date(user.lastInteraction);

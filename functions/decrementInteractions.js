@@ -53,7 +53,7 @@ exports.handler = auth(async (event, context) => {
   }
 
   try {
-    const user = await Climatic.findbyId(_id);
+    const user = await Climatic.findById(_id);
 
     if (user.interactions <= 0) {
       return {
