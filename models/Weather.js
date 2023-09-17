@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const WeatherSchema = mongoose.Schema({
-  _id: { type: String },
+  userId: { type: String },
   timestamp: { type: Date, default: Date.now },
   location: {
     place: String,

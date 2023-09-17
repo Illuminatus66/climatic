@@ -27,8 +27,9 @@ export const mapData = (location) => async (dispatch) => {
 
 export const toMongo = (data) => async () => {
   try {
-    const { lat, lng, place, weather } = data;
+    const { userId, lat, lng, place, weather } = data;
     await api.toMongo(
+      userId,
       lat,
       lng,
       place,
@@ -39,28 +40,29 @@ export const toMongo = (data) => async () => {
   }
 };
 
-export const fromMongo = (timestamp) => async (dispatch) => {
+export const fromMongo = (userdata) => async (dispatch) => {
   try {
+    const { userId, timestamp } = userdata;
     dispatch (resetMongoData())
-    const {data} = await api.fromMongo(timestamp);
+    const {data} = await api.fromMongo(userId, timestamp);
     dispatch (setMongoData(data));
   } catch (error) {
     console.log(error);
   }
 };
 
-export const interactionsLeft = (_id) => async (dispatch) => {
+export const interactionsLeft = (userId) => async (dispatch) => {
   try {
-    const { interactions } = await api.interactionsLeft(_id);
+    const { interactions } = await api.interactionsLeft(userId);
     dispatch (setInteractions(interactions));
   } catch (error) {
     console.log(error);
   }
 };
 
-export const decrementInteractions = (_id) => async (dispatch) => {
+export const decrementInteractions = (userId) => async (dispatch) => {
   try {
-    const { interactions } = await api.decrementInteractions(_id);
+    const { interactions } = await api.decrementInteractions(userId);
     dispatch (setInteractions(interactions));
   } catch (error) {
     console.log(error);

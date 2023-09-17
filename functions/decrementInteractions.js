@@ -44,8 +44,8 @@ const auth = (handler) => async (event, context) => {
 };
 
 exports.handler = auth(async (event, context) => {
-  const { _id } = JSON.parse(event.body);
-  if (!mongoose.Types.ObjectId.isValid(_id)) {
+  const { userId } = JSON.parse(event.body);
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
     return {
       statusCode: 404,
       body: JSON.stringify("User not found"),
@@ -53,7 +53,7 @@ exports.handler = auth(async (event, context) => {
   }
 
   try {
-    const user = await Climatic.findbyId(_id);
+    const user = await Climatic.findbyId(userId);
 
     if (user.interactions <= 0) {
       return {

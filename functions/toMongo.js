@@ -45,10 +45,10 @@ const auth = (handler) => async (event, context) => {
 
 exports.handler = auth(async (event, context) => {
   try {
-    const {_id, lat, lng, place, weather} = JSON.parse(event.body);
+    const {userId, lat, lng, place, weather} = JSON.parse(event.body);
 
     const postWeather = new Weather({
-      _id,
+      userId,
       location: {
         lat: lat,
         lng: lng,
