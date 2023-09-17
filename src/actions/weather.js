@@ -42,7 +42,7 @@ export const toMongo = (weatherData) => async () => {
 export const fromMongo = (timestamp) => async (dispatch) => {
   try {
     dispatch (resetMongoData())
-    const {weatherData} = await api.fromMongo (timestamp);
+    const {weatherData} = await api.fromMongo(timestamp);
     dispatch (setMongoData(weatherData));
   } catch (error) {
     console.log(error);
