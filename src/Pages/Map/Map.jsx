@@ -13,9 +13,10 @@ import ExportToCSV from '../../components/buttons/ExportToCSV';
 
 const Map = () => {
   const currentUser = useSelector((state) => state.user.data);
+  const _id = currentUser?.result._id
   const interactions = useSelector((state) => state.interactions.interactionsLeft);
-  const weather = useSelector((state) => state.weather.weather);
-  const mongodata = useSelector((state) => state.mongo.weather);
+  const weather = useSelector((state) => state.weather.data);
+  const mongodata = useSelector((state) => state.mongo.data);
   const [duration, setDuration] = useState(1);
   const [unit, setUnit] = useState('days');
   const [showButtons, setShowButtons] = useState(false);
@@ -35,7 +36,7 @@ const Map = () => {
 
   const fetchFromMongoDb = () => {
     const timestamp = calculateTimestamp(duration, unit);
-    dispatch(fromMongo(timestamp));
+    dispatch(fromMongo({_id, timestamp}));
     setShowButtons(true);
   };
 
@@ -48,13 +49,13 @@ const Map = () => {
     const handleGeocoderResult = (result) => {
       const [lng, lat] = result.result.center;
       const place = result.result.place_name;
-        dispatch(interactionsLeft(currentUser?.result._id));
+        dispatch(interactionsLeft({_id}));
         dispatch(mapData({ lat, lng }));
-        dispatch(toMongo({ lat, lng, place, weather }));
-        dispatch(decrementInteractions(currentUser?.result._id));
+        dispatch(toMongo({ _id, lat, lng, place, weather}));
+        dispatch(decrementInteractions({_id}));
     };
 
-    dispatch(interactionsLeft(currentUser?.result._id));
+    dispatch(interactionsLeft({_id}));
 
     if (interactions > 0) {
       mapboxgl.accessToken =
@@ -83,7 +84,7 @@ const Map = () => {
       geocoder.on('result', handleGeocoderResult);
       map.addControl(geocoder);
     }
-  }, [interactions, dispatch, currentUser, weather]);
+  }, [interactions, dispatch, _id, weather]);
 
   return (
     <div>

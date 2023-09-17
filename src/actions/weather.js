@@ -18,16 +18,16 @@ export const mapData = (location) => async (dispatch) => {
   try {
     dispatch (resetWeather());
     const {lat, lng} = location;
-    const {weatherData} = await api.mapData(lat,lng);
-    dispatch (setWeather(weatherData));
+    const {data} = await api.mapData(lat,lng);
+    dispatch (setWeather(data));
   } catch (error) {
     console.log(error);
   }
 };
 
-export const toMongo = (weatherData) => async () => {
+export const toMongo = (data) => async () => {
   try {
-    const { lat, lng, place, weather } = weatherData;
+    const { lat, lng, place, weather } = data;
     await api.toMongo(
       lat,
       lng,
@@ -42,8 +42,8 @@ export const toMongo = (weatherData) => async () => {
 export const fromMongo = (timestamp) => async (dispatch) => {
   try {
     dispatch (resetMongoData())
-    const {weatherData} = await api.fromMongo(timestamp);
-    dispatch (setMongoData(weatherData));
+    const {data} = await api.fromMongo(timestamp);
+    dispatch (setMongoData(data));
   } catch (error) {
     console.log(error);
   }

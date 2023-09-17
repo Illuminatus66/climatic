@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  weather: null,
+  data: null,
 };
 
 const mongoSlice = createSlice({
@@ -9,10 +9,10 @@ const mongoSlice = createSlice({
   initialState,
   reducers: {
     setMongoData: (state, action) => {
-      state.weather = action.payload;
+      state.data = action.payload;
     },
     resetMongoData: (state) => {
-      state.weather = null
+      state.data = null
     }
   },
 });
