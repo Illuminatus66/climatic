@@ -51,18 +51,18 @@ export const fromMongo = (userdata) => async (dispatch) => {
   }
 };
 
-export const interactionsLeft = (userId) => async (dispatch) => {
+export const interactionsLeft = (_id) => async (dispatch) => {
   try {
-    const { interactions } = await api.interactionsLeft(userId);
+    const { interactions } = await api.interactionsLeft(_id);
     dispatch (setInteractions(interactions));
   } catch (error) {
     console.log(error);
   }
 };
 
-export const decrementInteractions = (userId) => async (dispatch) => {
+export const decrementInteractions = (_id) => async (dispatch) => {
   try {
-    const { interactions } = await api.decrementInteractions(userId);
+    const { interactions } = await api.decrementInteractions(_id);
     dispatch (setInteractions(interactions));
   } catch (error) {
     console.log(error);
