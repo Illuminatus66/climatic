@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from "react-router-dom";
-import mapboxgl from 'mapbox-gl';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import mapboxgl from '!mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import './Map.css';
@@ -62,7 +63,7 @@ const Map = () => {
       mapboxgl.accessToken =
         'pk.eyJ1IjoiaWxsdW1pbmF0dXM2NiIsImEiOiJjbGxnYnRpeXcxNDhjM21tZ25jcndxeDVzIn0.-vZDD9v0rvv-8GPCTpRvgg';
       const map = new mapboxgl.Map({
-        container: 'map',
+        container: 'map2',
         style: 'mapbox://styles/mapbox/streets-v12',
         center: [72.87454485949254, 19.206438327005614],
         zoom: 13,
@@ -90,8 +91,8 @@ const Map = () => {
   return (
     <div>
       {interactions > 0 ? (
-        <>
-          <div id='map'></div>
+        <div className="container">
+          <div id='map2'></div>
           <div id='info-container'>
             <pre id='info'></pre>
           </div>
@@ -127,7 +128,7 @@ const Map = () => {
               <button onClick={handleFetchDataClick}>Fetch Data</button>
             </div>
           </div>
-        </>
+        </div>
       ) : (
         <div>
           <p>Sorry, come back tomorrow. You have exhausted your daily quota of 5 interactions.</p>

@@ -1,12 +1,70 @@
-body { margin: 0; padding: 0; }
-#map { position: absolute; top: 110; bottom: 0; width: 100%; }
-#info { margin:0; }
+body {
+    margin: 0;
+    padding: 0;
+}
+  
+.container {
+    display: flex;
+    flex-direction: row;
+}
+  
+#map2 {
+    flex: 4;
+    height: 75vh;
+}
+  
+#info {
+    margin: 0;
+}
+  
 #info-container {
     position: absolute;
     top: 10px;
     left: 10px;
-    width: 200px;
+    width: 400px;
     background-color: rgba(200, 200, 200, 0.8);
     padding: 10px;
     z-index: 99999999;
 }
+  
+#download {
+    flex: 1;
+    background-color: #f2f2f2;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+  
+#menu {
+    margin-bottom: 20px;
+}
+  
+#menu input,
+#menu select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+  
+#buttons {
+    display: flex;
+    flex-direction: column;
+}
+  
+button {
+    padding: 10px;
+    margin-bottom: 10px;
+}
+  
+@media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+    }
+  
+    #map2 {
+      flex: 1;
+      height: 50vh;
+    }
+}
+  
