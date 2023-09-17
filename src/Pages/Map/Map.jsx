@@ -49,13 +49,13 @@ const Map = () => {
     const handleGeocoderResult = (result) => {
       const [lng, lat] = result.result.center;
       const place = result.result.place_name;
-        dispatch(interactionsLeft({userId}));
+        dispatch(interactionsLeft(userId));
         dispatch(mapData({ lat, lng }));
         dispatch(toMongo({ userId, lat, lng, place, weather}));
-        dispatch(decrementInteractions({userId}));
+        dispatch(decrementInteractions(userId));
     };
 
-    dispatch(interactionsLeft({userId}));
+    dispatch(interactionsLeft(userId));
 
     if (interactions > 0) {
       mapboxgl.accessToken =
