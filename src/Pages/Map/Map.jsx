@@ -13,7 +13,6 @@ import DownloadExcel from '../../components/buttons/DownloadExcel';
 import ExportToCSV from '../../components/buttons/ExportToCSV';
 
 const Map = () => {
-  const { _id } = useParams();
   const currentUser = useSelector((state) => state.user.data);
   const interactions = useSelector((state) => state.interactions.interactionsLeft);
   const weather = useSelector((state) => state.weather.weather);
@@ -50,12 +49,10 @@ const Map = () => {
     const handleGeocoderResult = (result) => {
       const [lng, lat] = result.result.center;
       const place = result.result.place_name;
-      if (currentUser?.result.id === _id) {
         dispatch(interactionsLeft(currentUser?.result._id));
         dispatch(mapData({ lat, lng }));
         dispatch(toMongo({ lat, lng, place, weather }));
         dispatch(decrementInteractions(currentUser?.result._id));
-      };
     };
 
     dispatch(interactionsLeft(currentUser?.result._id));
@@ -87,7 +84,7 @@ const Map = () => {
       geocoder.on('result', handleGeocoderResult);
       map.addControl(geocoder);
     }
-  }, [interactions, dispatch, currentUser, weather, _id]);
+  }, [interactions, dispatch, currentUser, weather]);
 
   return (
     <div>
