@@ -16,9 +16,9 @@ API.interceptors.request.use((req) => {
 
 export const logIn = (authData) => API.post("/login", authData);
 export const signUp = (authData) => API.post("/signup", authData);
-export const visitorData= (lat, lng) => API.post('/visitorData', { lat, lng });
-export const mapData= (lat, lng) => API.post('/mapData', { lat, lng });
+export const visitorData= (lat, lng) => API.post("/visitorData", { lat, lng });
+export const mapData= (lat, lng) => API.post("/mapData", { lat, lng });
 export const toMongo = (weatherData) => API.post("/toMongo", weatherData, {withCredentials: true});
-export const fromMongo = (timestamp) => API.get(`/fromMongo`, timestamp, {withCredentials: true});
-export const decrementInteractions = (_id) => API.post (`/decrementInteractions/${_id}`,{withCredentials: true});
-export const interactionsLeft = (_id) => API.post (`/interactionsLeft/${_id}`, {withCredentials: true});
+export const fromMongo = (timestamp) => API.get("/fromMongo", timestamp, {withCredentials: true});
+export const decrementInteractions = (_id) => API.post ("/decrementInteractions", _id, {withCredentials: true});
+export const interactionsLeft = (_id) => API.post ("/interactionsLeft", _id, {withCredentials: true});

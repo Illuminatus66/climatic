@@ -44,9 +44,7 @@ const auth = (handler) => async (event, context) => {
 };
 
 exports.handler = auth(async (event, context) => {
-  const pathSegments = event.path.split('/');
-  const _id = pathSegments[pathSegments.length - 1];
-
+  const { _id } = JSON.parse(event.body);
   if (!mongoose.Types.ObjectId.isValid(_id)) {
     return {
       statusCode: 404,
