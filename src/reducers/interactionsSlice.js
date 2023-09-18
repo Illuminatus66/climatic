@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  interactionsLeft: null,
+  data: null,
 };
 
 const interactionsSlice = createSlice({
@@ -9,10 +9,10 @@ const interactionsSlice = createSlice({
   initialState,
   reducers: {
     setInteractions: (state, action) => {
-      state.interactionsLeft = action.payload;
+      state.data = action.payload;
     },
     resetInteractions: (state) => {
-      state.interactionsLeft = null;
+      state.data = null;
     },
   },
 });
