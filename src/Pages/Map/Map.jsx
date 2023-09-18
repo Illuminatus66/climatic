@@ -20,6 +20,8 @@ const Map = () => {
   const [duration, setDuration] = useState(1);
   const [unit, setUnit] = useState('days');
   const [showButtons, setShowButtons] = useState(false);
+  const [interactionsFetched, setInteractionsFetched] = useState(false);
+  const [showMap, setShowMap] = useState(true);
   const dispatch = useDispatch();
 
   const calculateTimestamp = (duration, unit) => {
@@ -55,9 +57,24 @@ const Map = () => {
         dispatch(decrementInteractions(currentUser?.result._id));
     };
 
-    dispatch(interactionsLeft(currentUser?.result._id));
+    if (interactions === null) {
+      const fetchInteractions = async () => {
+        try {
+          dispatch(interactionsLeft(currentUser?.result._id));
+          setInteractionsFetched(true);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchInteractions();
+    }
 
-    if (interactions > 0) {
+    if (interactions <= 0) {
+      setShowMap(false);
+      return;
+    }
+
+    if (interactionsFetched && showMap && interactions > 0) {
       mapboxgl.accessToken =
         'pk.eyJ1IjoiaWxsdW1pbmF0dXM2NiIsImEiOiJjbGxnYnRpeXcxNDhjM21tZ25jcndxeDVzIn0.-vZDD9v0rvv-8GPCTpRvgg';
       const map = new mapboxgl.Map({
@@ -84,11 +101,12 @@ const Map = () => {
       geocoder.on('result', handleGeocoderResult);
       map.addControl(geocoder);
     }
-  }, [interactions, dispatch, weather, currentUser, userId]);
+  }, [interactions, dispatch, weather, currentUser, userId, interactionsFetched, showMap]);
 
   return (
     <div>
-      {interactions > 0 ? (
+      { interactionsFetched? (
+       interactions > 0 ? (
         <div className="container">
           <div id='map2'></div>
           <div id='info-container'>
@@ -131,6 +149,9 @@ const Map = () => {
         <div>
           <p>Sorry, come back tomorrow. You have exhausted your daily quota of 5 interactions.</p>
         </div>
+      )
+      ) : (
+        <div>Loading the number of interactions left for you...</div>
       )}
     </div>
   );
