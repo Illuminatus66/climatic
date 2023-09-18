@@ -53,7 +53,7 @@ export const fromMongo = (userdata) => async (dispatch) => {
 
 export const interactionsLeft = (_id) => async (dispatch) => {
   try {
-    const data = await api.interactionsLeft(_id);
+    const {data} = await api.interactionsLeft(_id);
     dispatch (setInteractions(data));
   } catch (error) {
     console.log(error);
@@ -62,7 +62,7 @@ export const interactionsLeft = (_id) => async (dispatch) => {
 
 export const decrementInteractions = (_id) => async (dispatch) => {
   try {
-    const data = await api.decrementInteractions(_id);
+    const {data} = await api.decrementInteractions(_id);
     dispatch (setInteractions(data));
   } catch (error) {
     console.log(error);
