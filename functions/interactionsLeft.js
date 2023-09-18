@@ -5,20 +5,10 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const connectDB = async () => {
-  try {
-    await mongoose.connect(process.env.CONNECTION_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log("MongoDB connected");
-  } catch (error) {
-    console.error(error);
-    process.exit(1);
-  }
-};
-
-connectDB();
+mongoose.connect(process.env.CONNECTION_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 const auth = (handler) => async (event, context) => {
   try {
@@ -45,35 +35,41 @@ const auth = (handler) => async (event, context) => {
 
 exports.handler = auth(async (event, context) => {
   const { _id } = JSON.parse(event.body);
-    if (!mongoose.Types.ObjectId.isValid(_id)) {
+
+  try {
+    const user = await Climatic.findById(_id);
+
+    if (!user) {
       return {
         statusCode: 404,
         body: JSON.stringify("User not found"),
       };
     }
 
-    try {
-      const user = await Climatic.findById(_id);
+    const currentTime = new Date();
+    const lastInteractionTime = new Date(user.lastInteraction);
+    const timeDifference = currentTime - lastInteractionTime;
+    const oneDayMilliseconds = 24 * 60 * 60 * 1000;
 
-      const currentTime = new Date();
-      const lastInteractionTime = new Date(user.lastInteraction);
-      const timeDifference = currentTime - lastInteractionTime;
-      const oneDayMilliseconds = 24 * 60 * 60 * 1000;
+    if (timeDifference >= oneDayMilliseconds) {
+      user.interactions = 5;
+      user.lastInteraction = currentTime;
+      await user.save();
 
-      if (timeDifference >= oneDayMilliseconds) {
-        user.interactions = 5;
-        user.lastInteraction = currentTime;
-        await user.save();
-        const interactions = user.interactions;
-        return {
-          statusCode: 200,
-          body: JSON.stringify(interactions),
-        };
-      }
-    } catch (error) {
+      return {
+        statusCode: 200,
+        body: JSON.stringify(user.interactions),
+      };
+    }
+
     return {
-      statusCode: 409,
-      body: JSON.stringify("Couldn't get the number of interactions"),
+      statusCode: 200,
+      body: JSON.stringify(user.interactions),
+    };
+  } catch (error) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify("Internal Server Error"),
     };
   }
 });

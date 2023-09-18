@@ -5,20 +5,10 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const connectDB = async () => {
-  try {
-    await mongoose.connect(process.env.CONNECTION_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log("MongoDB connected");
-  } catch (error) {
-    console.error(error);
-    process.exit(1);
-  }
-};
-
-connectDB();
+mongoose.connect(process.env.CONNECTION_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 const auth = (handler) => async (event, context) => {
   try {
@@ -45,34 +35,27 @@ const auth = (handler) => async (event, context) => {
 
 exports.handler = auth(async (event, context) => {
   const { _id } = JSON.parse(event.body);
-  if (!mongoose.Types.ObjectId.isValid(_id)) {
-    return {
-      statusCode: 404,
-      body: JSON.stringify("User not found"),
-    };
-  }
 
   try {
     const user = await Climatic.findById(_id);
 
-    if (user.interactions <= 0) {
+    if (!user) {
       return {
-        statusCode: 400,
-        body: JSON.stringify("No interactions left"),
+        statusCode: 404,
+        body: JSON.stringify("User not found"),
       };
     }
 
-    user.interactions--;
-    await user.save();
-
-    const interactions= user.interactions
+    if (user.interactions > 0) {
+      user.interactions--;
+      await user.save();
+    }
 
     return {
       statusCode: 200,
-      body: JSON.stringify(interactions),
+      body: JSON.stringify(user.interactions),
     };
   } catch (error) {
-    console.log(error);
     return {
       statusCode: 500,
       body: JSON.stringify("Internal Server Error"),
