@@ -10,7 +10,7 @@ import { visitorData } from "../../actions/weather";
 const Visitor = () => {
   const dispatch = useDispatch();
   const [showTable, setShowTable] = useState(false);
-  const data = useSelector((state) => state.weather.weather);
+  const data = useSelector((state) => state.weather.data);
 
   useEffect(() => {
     mapboxgl.accessToken =
