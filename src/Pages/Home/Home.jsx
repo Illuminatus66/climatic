@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import './Home.css';
@@ -17,9 +17,12 @@ function Home() {
       navigate ('/Visitor');
     } else {
       navigate ('/Map');
-      dispatch (interactionsLeft(currentUser?.result._id));
     }
   }
+  useEffect (() => {
+    dispatch (interactionsLeft(currentUser?.result._id));
+  }, [dispatch, currentUser]);
+  
   return (
     <html>
       <head>
