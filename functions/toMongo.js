@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 import Weather from "../models/Weather.js";
 import Climatic from "../models/auth.js";
 import dotenv from 'dotenv';
-import fetch from 'node-fetch';
 
 dotenv.config();
 
