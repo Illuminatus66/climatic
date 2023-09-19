@@ -23,7 +23,16 @@ const WeatherIntervalSchema = mongoose.Schema({
 
 const WeatherSchema = mongoose.Schema({
   userId: { type: String },
-  timestamp: { type: Date, default: Date.now },
+  timestamp: { 
+    type: Date, 
+    default: Date.now,
+  toJSON: {
+    transform: function (doc, ret) {
+      ret.timestamp = doc.timestamp.toISOString();
+      return ret;
+    },
+  },
+},
   location: {
     place: String,
     lat: Number,

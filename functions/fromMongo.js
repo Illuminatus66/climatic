@@ -49,7 +49,7 @@ exports.handler = auth(async (event, context) => {
     console.log(error);
     return {
       statusCode: 409,
-      body: JSON.stringify("Couldn't post a new data entry"),
+      body: JSON.stringify("Couldn't fetch the data"),
     };
   }
 });
