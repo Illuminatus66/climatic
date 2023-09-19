@@ -39,7 +39,7 @@ exports.handler = auth(async (event, context) => {
     const data = await Weather.find ({
         userId,
         timestamp : {$gte :startTime, $lte :endTime},
-    }).select ("timestamp location weather")
+    }).select ("location weather")
 
     return {
       statusCode: 200,

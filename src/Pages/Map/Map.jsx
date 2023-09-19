@@ -25,6 +25,7 @@ const Map = () => {
   const handleFetchDataClick = () => {
     setShowButtons(false);
     const [startDate, endDate] = dateRange;
+    console.log(dateRange)
     dispatch(fromMongo({ userId: currentUser?.result._id, startTime: startDate, endTime: endDate }));
     setShowButtons(true);
   };
@@ -89,11 +90,11 @@ const Map = () => {
               />
             </div>
             <div id='buttons'>
-              {showButtons && (
+              {showButtons && mongodata && (
                 <>
-                  <button className='button button-shadow-pop'><DownloadJson jsonData={mongodata} /></button>
-                  <button className='button button-shadow-pop'><ExportToCSV jsonData={mongodata} /></button>
-                  <button className='button button-shadow-pop'><DownloadExcel jsonData={mongodata} /></button>
+                  <button><DownloadJson jsonData={mongodata} /></button>
+                  <button><ExportToCSV jsonData={mongodata} /></button>
+                  <button><DownloadExcel jsonData={mongodata} /></button>
                 </>
               )}
               <button onClick={handleFetchDataClick} className='button button-shadow-pop'>Fetch Data</button>
