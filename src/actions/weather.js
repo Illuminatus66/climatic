@@ -1,6 +1,6 @@
 import * as api from '../api';
 import { setWeather, resetWeather } from '../reducers/weatherSlice';
-import { setMongoData, resetMongoData } from '../reducers/mongoSlice';
+import { setMongoData } from '../reducers/mongoSlice';
 import { setInteractions } from '../reducers/interactionsSlice';
 
 export const visitorData = ({lat, lng}) => async (dispatch) => {
