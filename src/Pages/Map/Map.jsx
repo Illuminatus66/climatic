@@ -6,14 +6,13 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import './Map.css';
-import { mapData, toMongo, fromMongo, interactionsLeft, decrementInteractions } from '../../actions/weather';
+import { toMongo, fromMongo, interactionsLeft, decrementInteractions } from '../../actions/weather';
 import DownloadJson from '../../components/buttons/DownloadJson';
 import DownloadExcel from '../../components/buttons/DownloadExcel';
 import ExportToCSV from '../../components/buttons/ExportToCSV';
 
 const Map = () => {
   const currentUser = useSelector((state) => state.user.data);
-  const userId = currentUser?.result._id;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -21,7 +20,6 @@ const Map = () => {
   }, [dispatch, currentUser]);
 
   const interactions = useSelector((state) => state.interactions.data);
-  const weather = useSelector((state) => state.weather.data);
   const mongodata = useSelector((state) => state.mongo.data);
   const [duration, setDuration] = useState(1);
   const [unit, setUnit] = useState('days');
@@ -40,15 +38,11 @@ const Map = () => {
     return currentDate.getTime();
   };
 
-  const fetchFromMongoDb = () => {
-    const timestamp = calculateTimestamp(duration, unit);
-    dispatch(fromMongo({userId, timestamp}));
-    setShowButtons(true);
-  };
-
   const handleFetchDataClick = () => {
     setShowButtons(false);
-    fetchFromMongoDb();
+    const timestamp = calculateTimestamp(duration, unit);
+    dispatch(fromMongo({ userId: currentUser?.result._id, timestamp}));
+    setShowButtons(true);
   };
 
   useEffect(() => {
@@ -56,8 +50,7 @@ const Map = () => {
       const [lng, lat] = result.result.center;
       const place = result.result.place_name;
         dispatch(interactionsLeft(currentUser?.result._id));
-        dispatch(mapData({ lat, lng }));
-        dispatch(toMongo({ userId, lat, lng, place, weather}));
+        dispatch(toMongo({ userId: currentUser?.result._id, lat, lng, place }));
         dispatch(decrementInteractions(currentUser?.result._id));
     };
 
@@ -94,7 +87,7 @@ const Map = () => {
       geocoder.on('result', handleGeocoderResult);
       map.addControl(geocoder);
     }
-  }, [interactions, dispatch, weather, currentUser, userId, showMap]);
+  }, [interactions, dispatch, currentUser, showMap]);
 
   return (
     <div>

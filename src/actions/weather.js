@@ -3,10 +3,9 @@ import { setWeather, resetWeather } from '../reducers/weatherSlice';
 import { setMongoData, resetMongoData } from '../reducers/mongoSlice';
 import { setInteractions } from '../reducers/interactionsSlice';
 
-export const visitorData = (location) => async (dispatch) => {
+export const visitorData = ({lat, lng}) => async (dispatch) => {
   try {
     dispatch (resetWeather());
-    const {lat, lng} = location;
     const {data} = await api.visitorData(lat, lng);
     dispatch (setWeather(data));
   } catch (error) {
@@ -14,35 +13,16 @@ export const visitorData = (location) => async (dispatch) => {
   }
 };
 
-export const mapData = (location) => async (dispatch) => {
+export const toMongo = ({ userId, lat, lng, place }) => async () => {
   try {
-    dispatch (resetWeather());
-    const {lat, lng} = location;
-    const {data} = await api.mapData(lat,lng);
-    dispatch (setWeather(data));
+    await api.toMongo(userId, lat, lng, place);
   } catch (error) {
     console.log(error);
   }
 };
 
-export const toMongo = (data) => async () => {
+export const fromMongo = ({ userId, timestamp }) => async (dispatch) => {
   try {
-    const { userId, lat, lng, place, weather } = data;
-    await api.toMongo(
-      userId,
-      lat,
-      lng,
-      place,
-      weather,
-    );
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const fromMongo = (userdata) => async (dispatch) => {
-  try {
-    const { userId, timestamp } = userdata;
     dispatch (resetMongoData())
     const {data} = await api.fromMongo(userId, timestamp);
     dispatch (setMongoData(data));

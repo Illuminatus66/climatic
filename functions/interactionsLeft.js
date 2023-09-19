@@ -47,8 +47,7 @@ exports.handler = auth(async (event, context) => {
     }
 
     const currentTime = new Date();
-    const lastInteractionTime = new Date(user.lastInteraction);
-    const timeDifference = currentTime - lastInteractionTime;
+    const timeDifference = currentTime - user.lastInteraction;
     const oneDayMilliseconds = 24 * 60 * 60 * 1000;
 
     if (timeDifference >= oneDayMilliseconds) {
