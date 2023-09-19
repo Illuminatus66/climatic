@@ -25,7 +25,7 @@ const Map = () => {
   const handleFetchDataClick = () => {
     setShowButtons(false);
     const [startDate, endDate] = dateRange;
-    dispatch(fromMongo({ userId: currentUser?.result._id, startTime: startDate.toISOString(), endTime: endDate.toISOString() }));
+    dispatch(fromMongo({ userId: currentUser?.result._id, startTime: new Date(startDate), endTime: new Date(endDate) }));
     setShowButtons(true);
   };
 
@@ -49,13 +49,6 @@ const Map = () => {
         style: 'mapbox://styles/mapbox/streets-v12',
         center: [72.87454485949254, 19.206438327005614],
         zoom: 13,
-      });
-
-      map.on('mousemove', (e) => {
-        document.getElementById('info').innerHTML =
-          JSON.stringify(e.point) +
-          '<br />' +
-          JSON.stringify(e.lngLat.wrap());
       });
 
       const geocoder = new MapboxGeocoder({
