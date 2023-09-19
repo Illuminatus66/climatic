@@ -22,10 +22,10 @@ export const toMongo = ({ userId, lat, lng, place }) => async (dispatch) => {
   }
 };
 
-export const fromMongo = ({ userId, timestamp }) => async (dispatch) => {
+export const fromMongo = ({ userId, startTime, endTime }) => async (dispatch) => {
   try {
     dispatch (resetMongoData())
-    const {data} = await api.fromMongo(userId, timestamp);
+    const {data} = await api.fromMongo(userId, startTime, endTime);
     dispatch (setMongoData(data));
   } catch (error) {
     console.log(error);

@@ -1,70 +1,53 @@
-body {
-    margin: 0;
-    padding: 0;
-}
-  
 .container {
     display: flex;
-    flex-direction: row;
-}
-  
-#map2 {
-    flex: 4;
-    height: 75vh;
-}
-  
-#info {
-    margin: 0;
-}
-  
-#info-container {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    width: 400px;
-    background-color: rgba(200, 200, 200, 0.8);
-    padding: 10px;
-    z-index: 99999999;
-}
-  
-#download {
-    flex: 1;
-    background-color: #f2f2f2;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
     justify-content: space-between;
-}
-  
-#menu {
-    margin-bottom: 20px;
-}
-  
-#menu input,
-#menu select {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-}
+    height: 75vh;
+  }
   
-#buttons {
+  #map-container {
+    width: 80%;
+  }
+  
+  #info-container {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    max-width: 300px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  #controls {
+    width: 20%;
+    padding: 10px;
     display: flex;
     flex-direction: column;
-}
+    align-items: center;
+  }
   
-button {
-    padding: 10px;
+  #datepick {
     margin-bottom: 10px;
-}
+  }
   
-@media (max-width: 768px) {
-    .container {
-      flex-direction: column;
-    }
+  .button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
   
-    #map2 {
-      flex: 1;
-      height: 50vh;
-    }
-}
+  .button:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+  }
+  
+  .button:active {
+    transform: translateY(0);
+  }
   
