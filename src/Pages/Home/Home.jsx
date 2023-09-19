@@ -1,20 +1,23 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import './Home.css';
 import screenshot1 from "../../assets/screenshot1.png";
 import screenshot2 from "../../assets/screenshot2.png";
 import screenshot3 from "../../assets/screenshot3.png";
 import weather from "../../assets/weather.svg";
+import { interactionsLeft } from '../../actions/weather';
 
 function Home() {
-  const User= useSelector((state)=> state.user.data);
+  const currentUser= useSelector((state)=> state.user.data);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleButtonClick = () => {
-    if (User === null ) {
+    if (currentUser === null ) {
       navigate ('/Visitor');
     } else {
       navigate ('/Map');
+      dispatch (interactionsLeft(currentUser?.result._id));
     }
   }
   return (

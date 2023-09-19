@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 import Weather from "../models/Weather.js";
+import Climatic from "../models/auth.js";
 import dotenv from 'dotenv';
 import fetch from 'node-fetch';
 
@@ -96,15 +97,21 @@ exports.handler = auth(async (event, context) => {
 
     await postWeather.save();
 
+    const user = await Climatic.findById(userId);
+    if (user && user.interactions > 0) {
+      user.interactions--;
+      await user.save();
+    }
+
     return {
       statusCode: 200,
-      body: JSON.stringify("Posted weather data successfully"),
+      body: JSON.stringify(user.interactions),
     };
   } catch (error) {
     console.error(error);
     return {
       statusCode: 409,
-      body: JSON.stringify("Couldn't post a new data entry"),
+      body: JSON.stringify("Couldn't post weather data or couldn't reduce the number of interactions"),
     };
   }
 });

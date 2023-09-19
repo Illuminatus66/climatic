@@ -6,7 +6,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import './Map.css';
-import { toMongo, fromMongo, interactionsLeft, decrementInteractions } from '../../actions/weather';
+import { toMongo, fromMongo } from '../../actions/weather';
 import DownloadJson from '../../components/buttons/DownloadJson';
 import DownloadExcel from '../../components/buttons/DownloadExcel';
 import ExportToCSV from '../../components/buttons/ExportToCSV';
@@ -14,11 +14,6 @@ import ExportToCSV from '../../components/buttons/ExportToCSV';
 const Map = () => {
   const currentUser = useSelector((state) => state.user.data);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(interactionsLeft(currentUser?.result._id));
-  }, [dispatch, currentUser]);
-
   const interactions = useSelector((state) => state.interactions.data);
   const mongodata = useSelector((state) => state.mongo.data);
   const [duration, setDuration] = useState(1);
@@ -49,18 +44,15 @@ const Map = () => {
     const handleGeocoderResult = (result) => {
       const [lng, lat] = result.result.center;
       const place = result.result.place_name;
-        dispatch(interactionsLeft(currentUser?.result._id));
         dispatch(toMongo({ userId: currentUser?.result._id, lat, lng, place }));
-        dispatch(decrementInteractions(currentUser?.result._id));
     };
-
 
     if (interactions <= 0) {
       setShowMap(false);
       return;
     }
 
-    if (showMap && interactions > 0) {
+    if (currentUser && showMap && interactions > 0) {
       mapboxgl.accessToken =
         'pk.eyJ1IjoiaWxsdW1pbmF0dXM2NiIsImEiOiJjbGxnYnRpeXcxNDhjM21tZ25jcndxeDVzIn0.-vZDD9v0rvv-8GPCTpRvgg';
       const map = new mapboxgl.Map({
@@ -91,7 +83,7 @@ const Map = () => {
 
   return (
     <div>
-      {interactions > 0 ? (
+      {currentUser && interactions > 0 ? (
         <div className="container">
           <div id='map2'></div>
           <div id='info-container'>
