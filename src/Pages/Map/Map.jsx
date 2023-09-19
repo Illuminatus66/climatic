@@ -75,9 +75,6 @@ const Map = () => {
       {currentUser && interactions > 0 ? (
         <div className="container">
           <div id='map-container'></div>
-          <div id='info-container'>
-            <pre id='info'></pre>
-          </div>
           <div id='controls'>
             <div id='datepick'>
               <DatePicker
