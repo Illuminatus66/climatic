@@ -38,8 +38,7 @@ exports.handler = auth(async (event, context) => {
     const {userId, startTime, endTime} = JSON.parse(event.body);
     const data = await Weather.find ({
         userId,
-        timestamp : {$gte :{ $toDate: startTime }, $lte : { $toDate: endTime } },
-    }).select ("timestamp location weather")
+    }).where('timestamp').gte(startTime).lte(endTime).select ("timestamp location weather")
 
     return {
       statusCode: 200,
