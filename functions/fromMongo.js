@@ -4,7 +4,9 @@ dotenv.config();
 
 exports.handler = async function (event, context) {
   console.log("event.body:", event.body);
-  const { userId, startTime, endTime } = JSON.parse(event.body);
+  const { userId, startDate, endDate } = JSON.parse(event.body);
+  const start = startDate.toISOString()
+  const end = endDate.toISOString()
   const uri = process.env.CONNECTION_URL;
   const databaseName = "test";
   const collectionName = "weathers";
@@ -18,7 +20,7 @@ exports.handler = async function (event, context) {
 
     const query = {
       userId: userId,
-      createdAt: { $gte: startTime, $lte: endTime }
+      createdAt: { $gte: start, $lte: end }
     };
 
     const projection = {
@@ -39,7 +41,5 @@ exports.handler = async function (event, context) {
       statusCode: 500,
       body: JSON.stringify({ message: "Search failed" }),
     };
-  } finally {
-    client.close();
   }
 };
