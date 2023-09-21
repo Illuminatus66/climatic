@@ -9,7 +9,7 @@ mongoose.connect(process.env.CONNECTION_URL, {
 });
 
 export const handler = async (event, context) => {
-  const { userId, startDate, endDate } = JSON.parse(event.body);
+  const { userId, startDate, endDate } = event.queryStringParameters;
 
   try {
     const data = await Weather.find({
