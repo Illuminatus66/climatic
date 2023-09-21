@@ -3,6 +3,7 @@ import { MongoClient } from 'mongodb';
 dotenv.config();
 
 exports.handler = async function (event, context) {
+  console.log("event.body:", event.body);
   const { userId, startTime, endTime } = JSON.parse(event.body);
   const uri = process.env.CONNECTION_URL;
   const databaseName = "test";
