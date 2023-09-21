@@ -1,33 +1,28 @@
 import dotenv from "dotenv";
-import { MongoClient } from 'mongodb';
+import mongoose from "mongoose";
+import Weather from "../models/Weather";
 dotenv.config();
 
-exports.handler = async function (event, context) {
+mongoose.connect(process.env.CONNECTION_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true,
+});
+
+export const handler = async (event, context) => {
   const { userId, startDate, endDate } = JSON.parse(event.body);
-  const uri = process.env.CONNECTION_URL;
-  const databaseName = "test";
-  const collectionName = "weathers";
-  let client;
 
   try {
-    client = new MongoClient(uri, { useUnifiedTopology: true, useNewUrlParser: true });
-    await client.connect();
-    const db = client.db(databaseName);
-    const collection = db.collection(collectionName);
-
-    const query = {
+    const data = await Weather.find({
       userId: userId,
-      createdAt: { $gte: startDate, $lte: endDate }
-    };
-
-    const projection = {
+      createdAt: { $gte: startDate, $lte: endDate },
+    }).select({
       _id: 0,
       createdAt: 1,
       location: 1,
-      weather: 1
-    };
-
-    const data = await collection.find(query).project(projection).toArray();
+      weather: 1,
+    });
 
     return {
       statusCode: 200,
