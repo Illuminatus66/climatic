@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 import Weather from "../models/Weather.js";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -36,7 +36,7 @@ const auth = (handler) => async (event, context) => {
 exports.handler = auth(async (event, context) => {
   try {
     const {userId, startTime, endTime} = JSON.parse(event.body);
-    const data = await Weather.find ({userId: userId}).where('timestamp').gte(startTime).lte(endTime).sort('-timestamp').select('timestamp location weather')
+    const data = await Weather.find ({userId: userId}).where('createdAt').gte(startTime).lte(endTime).sort('createdAt').select('createdAt location weather')
 
     return {
       statusCode: 200,

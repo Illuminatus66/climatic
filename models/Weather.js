@@ -21,15 +21,18 @@ const WeatherIntervalSchema = mongoose.Schema({
   },
 });
 
-const WeatherSchema = mongoose.Schema({
-  userId: { type: String },
-  timestamp: { type: Date, default: Date.now },
-  location: {
-    place: String,
-    lat: Number,
-    lng: Number,
+const WeatherSchema = mongoose.Schema(
+  {
+    userId: { type: String },
+    location: {
+      place: String,
+      lat: Number,
+      lng: Number,
+    },
+    weather: [WeatherIntervalSchema],
   },
-  weather: [WeatherIntervalSchema],
-});
+  { timestamps: true }
+);
+
 
 export default mongoose.model("Weather", WeatherSchema);
