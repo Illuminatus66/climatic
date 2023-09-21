@@ -35,29 +35,33 @@ function DownloadExcel({ mongodata }) {
 
     worksheet.addRow(columns);
 
-    mongodata.forEach((data) => {
-      data.weather.forEach((interval) => {
-        const values = [
-          interval.startTime,
-          interval.values.cloudCover,
-          interval.values.dewPoint,
-          interval.values.humidity,
-          interval.values.precipitationIntensity,
-          interval.values.precipitationProbability,
-          interval.values.pressureSeaLevel,
-          interval.values.sunriseTime,
-          interval.values.sunsetTime,
-          interval.values.temperature,
-          interval.values.temperatureApparent,
-          interval.values.uvIndex,
-          interval.values.visibility,
-          interval.values.weatherCodeDay,
-          interval.values.weatherCodeNight,
-          interval.values.windSpeed,
-        ];
-        worksheet.addRow(values);
+    if (Array.isArray(mongodata)) {
+      mongodata.forEach((data) => {
+        if (data.weather && Array.isArray(data.weather)) {
+          data.weather.forEach((interval) => {
+            const values = [
+              interval.startTime,
+              interval.values.cloudCover,
+              interval.values.dewPoint,
+              interval.values.humidity,
+              interval.values.precipitationIntensity,
+              interval.values.precipitationProbability,
+              interval.values.pressureSeaLevel,
+              interval.values.sunriseTime,
+              interval.values.sunsetTime,
+              interval.values.temperature,
+              interval.values.temperatureApparent,
+              interval.values.uvIndex,
+              interval.values.visibility,
+              interval.values.weatherCodeDay,
+              interval.values.weatherCodeNight,
+              interval.values.windSpeed,
+            ];
+            worksheet.addRow(values);
+          });
+        }
       });
-    });
+    }
 
     workbook.xlsx.writeBuffer().then((buffer) => {
       const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });

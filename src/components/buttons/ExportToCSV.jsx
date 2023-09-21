@@ -4,27 +4,49 @@ import Papa from 'papaparse';
 function ExportToCSV({ mongodata }) {
   const [isExporting, setIsExporting] = useState(false);
 
-  const handleExport = () => {
+  const downloadCSV = () => {
     if (isExporting) {
       return;
     }
 
     setIsExporting(true);
 
-    const csv = Papa.unparse(mongodata, {
-      header: true,
-    });
+    const rows = mongodata.reduce((acc, location) => {
+      location.weather.forEach((interval) => {
+        const row = {
+          'Date': interval.startTime,
+          'Cloud Cover': interval.values.cloudCover,
+          'Dew Point': interval.values.dewPoint,
+          'Humidity': interval.values.humidity,
+          'Precipitation Intensity': interval.values.precipitationIntensity,
+          'Precipitation Probability': interval.values.precipitationProbability,
+          'Pressure Sea Level': interval.values.pressureSeaLevel,
+          'Sunrise Time': interval.values.sunriseTime,
+          'Sunset Time': interval.values.sunsetTime,
+          'Temperature': interval.values.temperature,
+          'Temperature Apparent': interval.values.temperatureApparent,
+          'UV Index': interval.values.uvIndex,
+          'Visibility': interval.values.visibility,
+          'Weather Code Day': interval.values.weatherCodeDay,
+          'Weather Code Night': interval.values.weatherCodeNight,
+          'Wind Speed': interval.values.windSpeed,
+        };
+        acc.push(row);
+      });
+      return acc;
+    }, []);
 
-    const csvBlob = new Blob([csv], { type: 'text/csv' });
-    const csvUrl = URL.createObjectURL(csvBlob);
+    const csv = Papa.unparse(rows);
 
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = csvUrl;
-    a.download = 'data.csv';
+    a.href = url;
+    a.download = 'weather_data.csv';
 
     a.addEventListener('click', () => {
       setIsExporting(false);
-      URL.revokeObjectURL(csvUrl);
+      URL.revokeObjectURL(url);
     });
 
     a.click();
@@ -33,7 +55,7 @@ function ExportToCSV({ mongodata }) {
   return (
     <div>
       <h2>Export to CSV</h2>
-      <button onClick={handleExport} disabled={isExporting}>
+      <button onClick={downloadCSV} disabled={isExporting}>
         {isExporting ? 'Downloading...' : 'Download CSV'}
       </button>
     </div>
