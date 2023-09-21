@@ -1,52 +1,44 @@
-import jwt from "jsonwebtoken";
-import mongoose from "mongoose";
-import Weather from "../models/Weather.js";
 import dotenv from "dotenv";
-
+import { MongoClient } from 'mongodb';
 dotenv.config();
 
-mongoose.connect(process.env.CONNECTION_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+exports.handler = async function (event, context) {
+  const { userId, startTime, endTime } = JSON.parse(event.body);
+  const uri = process.env.CONNECTION_URL;
+  const databaseName = "test";
+  const collectionName = "weathers";
+  let client;
 
-const auth = (handler) => async (event, context) => {
   try {
-    const authorizationHeader = event.headers && event.headers.authorization;
-    if (!authorizationHeader) {
-      return {
-        statusCode: 401,
-        body: JSON.stringify("Unauthorized: Missing authorization header"),
-      };
-    }
+    client = new MongoClient(uri, { useUnifiedTopology: true, useNewUrlParser: true });
+    await client.connect();
+    const db = client.db(databaseName);
+    const collection = db.collection(collectionName);
 
-    const token = authorizationHeader.split(" ")[1];
-    let decodeData = jwt.verify(token, process.env.JWT_SECRET);
-    event.userId = decodeData?.id;
-    return await handler(event, context);
-  } catch (error) {
-    console.log(error);
-    return {
-      statusCode: 401,
-      body: JSON.stringify("Unauthorized"),
+    const query = {
+      userId: userId,
+      createdAt: { $gte: startTime, $lte: endTime }
     };
-  }
-};
 
-exports.handler = auth(async (event, context) => {
-  try {
-    const {userId, startTime, endTime} = JSON.parse(event.body);
-    const data = await Weather.find ({userId: userId}).where('createdAt').gte(startTime).lte(endTime).sort('createdAt').select('createdAt location weather')
+    const projection = {
+      _id: 0,
+      createdAt: 1,
+      location: 1,
+      weather: 1
+    };
+
+    const data = await collection.find(query).project(projection).toArray();
 
     return {
       statusCode: 200,
       body: JSON.stringify(data),
     };
   } catch (error) {
-    console.log(error);
     return {
-      statusCode: 409,
-      body: JSON.stringify("Couldn't fetch the data"),
+      statusCode: 500,
+      body: JSON.stringify({ message: "Search failed" }),
     };
+  } finally {
+    client.close();
   }
-});
+};
