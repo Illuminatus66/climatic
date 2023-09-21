@@ -25,7 +25,7 @@ const Map = () => {
   const handleFetchDataClick = () => {
     setShowButtons(false);
     const [startDate, endDate] = dateRange;
-    dispatch(fromMongo({ userId: currentUser?.result._id, startDate, endDate }));
+    dispatch(fromMongo({ userId: currentUser?.result._id, startDate : startDate.toISOString(), endDate : endDate.toISOString() }));
     setShowButtons(true);
   };
 
