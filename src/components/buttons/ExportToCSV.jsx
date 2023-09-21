@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { CSVLink } from 'react-csv';
+import Papa from 'papaparse';
 
-function ExportToCSV({ jsonData }) {
+function ExportToCSV({ mongodata }) {
   const [isExporting, setIsExporting] = useState(false);
 
   const handleExport = () => {
@@ -10,6 +10,24 @@ function ExportToCSV({ jsonData }) {
     }
 
     setIsExporting(true);
+
+    const csv = Papa.unparse(mongodata, {
+      header: true,
+    });
+
+    const csvBlob = new Blob([csv], { type: 'text/csv' });
+    const csvUrl = URL.createObjectURL(csvBlob);
+
+    const a = document.createElement('a');
+    a.href = csvUrl;
+    a.download = 'data.csv';
+
+    a.addEventListener('click', () => {
+      setIsExporting(false);
+      URL.revokeObjectURL(csvUrl);
+    });
+
+    a.click();
   };
 
   return (
@@ -18,15 +36,6 @@ function ExportToCSV({ jsonData }) {
       <button onClick={handleExport} disabled={isExporting}>
         {isExporting ? 'Downloading...' : 'Download CSV'}
       </button>
-      {isExporting && (
-        <CSVLink
-          data={jsonData}
-          filename="data.csv"
-          onClick={() => setIsExporting(false)}
-        >
-          Hidden CSVLink
-        </CSVLink>
-      )}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ExcelJS from 'exceljs';
 
-function DownloadExcel({ jsonData }) {
+function DownloadExcel({ mongodata }) {
   const [isExporting, setIsExporting] = useState(false);
 
   const downloadExcel = () => {
@@ -35,26 +35,28 @@ function DownloadExcel({ jsonData }) {
 
     worksheet.addRow(columns);
 
-    jsonData.weather.forEach((interval) => {
-      const values = [
-        interval.startTime.$date,
-        interval.values.cloudCover,
-        interval.values.dewPoint,
-        interval.values.humidity,
-        interval.values.precipitationIntensity,
-        interval.values.precipitationProbability,
-        interval.values.pressureSeaLevel,
-        interval.values.sunriseTime.$date,
-        interval.values.sunsetTime.$date,
-        interval.values.temperature,
-        interval.values.temperatureApparent,
-        interval.values.uvIndex,
-        interval.values.visibility,
-        interval.values.weatherCodeDay,
-        interval.values.weatherCodeNight,
-        interval.values.windSpeed,
-      ];
-      worksheet.addRow(values);
+    mongodata.forEach((data) => {
+      data.weather.forEach((interval) => {
+        const values = [
+          interval.startTime,
+          interval.values.cloudCover,
+          interval.values.dewPoint,
+          interval.values.humidity,
+          interval.values.precipitationIntensity,
+          interval.values.precipitationProbability,
+          interval.values.pressureSeaLevel,
+          interval.values.sunriseTime,
+          interval.values.sunsetTime,
+          interval.values.temperature,
+          interval.values.temperatureApparent,
+          interval.values.uvIndex,
+          interval.values.visibility,
+          interval.values.weatherCodeDay,
+          interval.values.weatherCodeNight,
+          interval.values.windSpeed,
+        ];
+        worksheet.addRow(values);
+      });
     });
 
     workbook.xlsx.writeBuffer().then((buffer) => {

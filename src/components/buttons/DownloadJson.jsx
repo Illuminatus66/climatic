@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function DownloadJsonButton({ jsonData }) {
+function DownloadJsonButton({ mongodata }) {
   const [isDownloading, setIsDownloading] = useState(false);
 
   const downloadJson = () => {
@@ -10,18 +10,16 @@ function DownloadJsonButton({ jsonData }) {
 
     setIsDownloading(true);
 
-    const jsonBlob = new Blob([JSON.stringify(jsonData)], { type: 'application/json' });
-    const url = URL.createObjectURL(jsonBlob);
+    const jsonData = JSON.stringify(mongodata);
+    const dataUrl = `data:application/json;charset=utf-8,${encodeURIComponent(jsonData)}`;
+
     const a = document.createElement('a');
-    a.href = url;
+    a.href = dataUrl;
     a.download = 'data.json';
 
-    a.addEventListener('click', () => {
-      setIsDownloading(false);
-      URL.revokeObjectURL(url);
-    });
-
     a.click();
+
+    setIsDownloading(false);
   };
 
   return (
