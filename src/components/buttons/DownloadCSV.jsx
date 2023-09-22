@@ -2,22 +2,25 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Papa from 'papaparse';
 
-function ExportToCSV() {
-  const [isExporting, setIsExporting] = useState(false);
+function DownloadCSV() {
+  const [isDownloading, setIsDownloading] = useState(false);
   const mongodata = useSelector((state) => state.mongo.data);
 
   const downloadCSV = async () => {
-    if (isExporting || !mongodata) {
+    if (isDownloading || !mongodata) {
       return;
     }
 
-    setIsExporting(true);
+    setIsDownloading(true);
 
     try {
       const rows = mongodata.reduce((acc, location) => {
         location.weather.forEach((interval) => {
           const row = {
-            'Date': interval.startTime,
+            'Place': location.location.place,
+            'Latitude': location.location.lat,
+            'Longitude': location.location.lng,
+            'Weather Start Time': interval.startTime,
             'Cloud Cover': interval.values.cloudCover,
             'Dew Point': interval.values.dewPoint,
             'Humidity': interval.values.humidity,
@@ -39,9 +42,9 @@ function ExportToCSV() {
         return acc;
       }, []);
 
-      const csv = Papa.unparse(rows);
+      const csvData = Papa.unparse(rows);
 
-      const base64Data = btoa(csv);
+      const base64Data = btoa(csvData);
 
       const dataUri = `data:text/csv;base64,${base64Data}`;
       const a = document.createElement('a');
@@ -49,24 +52,24 @@ function ExportToCSV() {
       a.download = 'weather_data.csv';
 
       a.addEventListener('click', () => {
-        setIsExporting(false);
+        setIsDownloading(false);
       });
 
       a.click();
     } catch (error) {
       console.error('Error generating CSV:', error);
-      setIsExporting(false);
+      setIsDownloading(false);
     }
   };
 
   return (
     <div>
-      <h2>Export to CSV</h2>
-      <button onClick={downloadCSV} disabled={isExporting}>
-        {isExporting ? 'Downloading...' : 'Download CSV'}
-      </button>
+      <h2 onClick={isDownloading ? null : downloadCSV} style={{ cursor: isDownloading ? 'not-allowed' : 'pointer' }}>
+        Download CSV file
+      </h2>
+      {isDownloading ? 'Downloading...' : null}
     </div>
   );
 }
 
-export default ExportToCSV;
+export default DownloadCSV;

@@ -29,10 +29,10 @@ function DownloadJsonButton() {
 
   return (
     <div>
-      <h2>Download JSON</h2>
-      <button onClick={downloadJson} disabled={isDownloading}>
-        {isDownloading ? 'Downloading...' : 'Download JSON'}
-      </button>
+      <h2 onClick={isDownloading ? null : downloadJson} style={{ cursor: isDownloading ? 'not-allowed' : 'pointer' }}>
+        Download JSON File
+      </h2>
+      {isDownloading ? 'Downloading...' : null}
     </div>
   );
 }

@@ -9,7 +9,7 @@ import './Map.css';
 import { toMongo, fromMongo } from '../../actions/weather';
 import DownloadJson from '../../components/buttons/DownloadJson';
 import DownloadExcel from '../../components/buttons/DownloadExcel';
-import ExportToCSV from '../../components/buttons/ExportToCSV';
+import DownloadCSV from '../../components/buttons/DownloadCSV';
 import DownloadTxt from '../../components/buttons/DownloadTxt';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -87,7 +87,7 @@ const Map = () => {
                 <>
                   <button><DownloadJson/></button>
                   <button><DownloadTxt/></button>
-                  <button><ExportToCSV/></button>
+                  <button><DownloadCSV/></button>
                   <button><DownloadExcel/></button>
                 </>
               )}

@@ -3,15 +3,15 @@ import { useSelector } from 'react-redux';
 import ExcelJS from 'exceljs';
 
 function DownloadExcel() {
-  const [isExporting, setIsExporting] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
   const mongodata = useSelector((state) => state.mongo.data);
 
   const downloadExcel = async () => {
-    if (isExporting || !mongodata) {
+    if (isDownloading || !mongodata) {
       return;
     }
 
-    setIsExporting(true);
+    setIsDownloading(true);
 
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet('Weather Data');
@@ -82,15 +82,15 @@ function DownloadExcel() {
     a.click();
     document.body.removeChild(a);
 
-    setIsExporting(false);
+    setIsDownloading(false);
   };
 
   return (
     <div>
-      <h2>Download Excel</h2>
-      <button onClick={downloadExcel} disabled={isExporting}>
-        {isExporting ? 'Exporting...' : 'Download Excel'}
-      </button>
+      <h2 onClick={isDownloading ? null : downloadExcel} style={{ cursor: isDownloading ? 'not-allowed' : 'pointer' }}>
+        Download Excel File
+      </h2>
+      {isDownloading ? 'Downloading...' : null}
     </div>
   );
 }
