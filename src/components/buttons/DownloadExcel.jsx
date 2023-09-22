@@ -72,19 +72,17 @@ function DownloadExcel() {
     }
 
     const buffer = await workbook.xlsx.writeBuffer();
-    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-    const url = URL.createObjectURL(blob);
 
+    const dataUri = 'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,' + buffer.toString('base64');
     const a = document.createElement('a');
-    a.href = url;
+    a.href = dataUri;
     a.download = 'weather_data.xlsx';
-
-    a.addEventListener('click', () => {
-      setIsExporting(false);
-      URL.revokeObjectURL(url);
-    });
-
+    a.style.display = 'none';
+    document.body.appendChild(a);
     a.click();
+    document.body.removeChild(a);
+
+    setIsExporting(false);
   };
 
   return (

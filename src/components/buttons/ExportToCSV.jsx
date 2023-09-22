@@ -13,6 +13,7 @@ function ExportToCSV() {
 
     setIsExporting(true);
 
+    try{
     const rows = mongodata.reduce((acc, location) => {
       location.weather.forEach((interval) => {
         const row = {
@@ -40,18 +41,21 @@ function ExportToCSV() {
 
     const csv = Papa.unparse(rows);
 
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
+    const base64Data = Buffer.from(csv).toString('base64');
+    const dataUrl = `data:text/csv;base64,${base64Data}`;
     const a = document.createElement('a');
-    a.href = url;
+    a.href = dataUrl;
     a.download = 'weather_data.csv';
 
     a.addEventListener('click', () => {
       setIsExporting(false);
-      URL.revokeObjectURL(url);
     });
 
     a.click();
+  } catch (error) {
+    console.error('Error generating CSV:', error);
+    setIsExporting(false);
+  }
   };
 
   return (

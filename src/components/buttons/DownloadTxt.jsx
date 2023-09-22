@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
-function DownloadText() {
+function DownloadTxt() {
   const [isExporting, setIsExporting] = useState(false);
   const mongodata = useSelector((state) => state.mongo.data);
 
@@ -21,19 +21,17 @@ function DownloadText() {
       return `${locationInfo}\n${weatherInfo.join('\n')}\n`;
     }).join('\n\n');
 
-    const blob = new Blob([textData], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-
+    const dataUri = 'data:text/plain;charset=utf-8,' + encodeURIComponent(textData);
     const a = document.createElement('a');
-    a.href = url;
+    a.href = dataUri;
     a.download = 'weather_data.txt';
+    a.style.display = 'none';
 
-    a.addEventListener('click', () => {
-      setIsExporting(false);
-      URL.revokeObjectURL(url);
-    });
-
+    document.body.appendChild(a);
     a.click();
+    document.body.removeChild(a);
+    
+    setIsExporting(false);
   };
 
   return (
@@ -46,4 +44,4 @@ function DownloadText() {
   );
 }
 
-export default DownloadText;
+export default DownloadTxt;

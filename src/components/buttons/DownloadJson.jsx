@@ -12,7 +12,7 @@ function DownloadJsonButton() {
 
     setIsDownloading(true);
 
-    const jsonData = JSON.stringify(mongodata);
+    const jsonData = JSON.stringify(mongodata, null, 2);
     const dataUrl = `data:application/json;charset=utf-8,${encodeURIComponent(jsonData)}`;
 
     const a = document.createElement('a');
