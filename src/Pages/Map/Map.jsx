@@ -10,6 +10,7 @@ import { toMongo, fromMongo } from '../../actions/weather';
 import DownloadJson from '../../components/buttons/DownloadJson';
 import DownloadExcel from '../../components/buttons/DownloadExcel';
 import ExportToCSV from '../../components/buttons/ExportToCSV';
+import DownloadTxt from '../../components/buttons/DownloadTxt';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -25,7 +26,7 @@ const Map = () => {
   const handleFetchDataClick = () => {
     setShowButtons(false);
     const [startDate, endDate] = dateRange;
-    dispatch(fromMongo({ userId: currentUser?.result._id, startDate : new Date(startDate).toISOString(), endDate : new Date(endDate).toISOString() }));
+    dispatch(fromMongo({ userId: currentUser?.result._id, startDate: new Date(startDate).toISOString(), endDate: new Date(endDate).toISOString() }));
     setShowButtons(true);
   };
 
@@ -84,9 +85,10 @@ const Map = () => {
             <div id='buttons'>
               {showButtons && mongodata && (
                 <>
-                  <button><DownloadJson jsonData={mongodata} /></button>
-                  <button><ExportToCSV jsonData={mongodata} /></button>
-                  <button><DownloadExcel jsonData={mongodata} /></button>
+                  <button><DownloadJson/></button>
+                  <button><DownloadTxt/></button>
+                  <button><ExportToCSV/></button>
+                  <button><DownloadExcel/></button>
                 </>
               )}
               <button onClick={handleFetchDataClick} className='button button-shadow-pop'>Fetch Data</button>

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import Papa from 'papaparse';
 
-function ExportToCSV({ mongodata }) {
+function ExportToCSV() {
   const [isExporting, setIsExporting] = useState(false);
+  const mongodata = useSelector((state) => state.mongo.data);
 
   const downloadCSV = () => {
-    if (isExporting) {
+    if (isExporting || !mongodata) {
       return;
     }
 

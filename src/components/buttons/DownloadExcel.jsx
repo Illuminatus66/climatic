@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import ExcelJS from 'exceljs';
 
-function DownloadExcel({ mongodata }) {
+function DownloadExcel() {
   const [isExporting, setIsExporting] = useState(false);
+  const mongodata = useSelector((state) => state.mongo.data);
 
-  const downloadExcel = () => {
-    if (isExporting) {
+  const downloadExcel = async () => {
+    if (isExporting || !mongodata) {
       return;
     }
 
@@ -16,6 +18,9 @@ function DownloadExcel({ mongodata }) {
 
     const columns = [
       'Date',
+      'Location',
+      'Latitude',
+      'Longitude',
       'Cloud Cover',
       'Dew Point',
       'Humidity',
@@ -41,6 +46,9 @@ function DownloadExcel({ mongodata }) {
           data.weather.forEach((interval) => {
             const values = [
               interval.startTime,
+              data.location.place,
+              data.location.lat,
+              data.location.lng,
               interval.values.cloudCover,
               interval.values.dewPoint,
               interval.values.humidity,
@@ -63,20 +71,20 @@ function DownloadExcel({ mongodata }) {
       });
     }
 
-    workbook.xlsx.writeBuffer().then((buffer) => {
-      const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'weather_data.xlsx';
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const url = URL.createObjectURL(blob);
 
-      a.addEventListener('click', () => {
-        setIsExporting(false);
-        URL.revokeObjectURL(url);
-      });
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'weather_data.xlsx';
 
-      a.click();
+    a.addEventListener('click', () => {
+      setIsExporting(false);
+      URL.revokeObjectURL(url);
     });
+
+    a.click();
   };
 
   return (
