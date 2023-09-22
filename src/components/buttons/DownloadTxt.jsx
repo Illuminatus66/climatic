@@ -55,7 +55,7 @@ function DownloadTxt() {
   return (
     <div>
       <h2 onClick={isDownloading ? null : downloadText} style={{ cursor: isDownloading ? 'not-allowed' : 'pointer' }}>
-        Download Txt File
+        Download Txt File&nbsp;&nbsp;
       </h2>
       {isDownloading ? 'Downloading...' : null}
     </div>

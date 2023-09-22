@@ -65,7 +65,7 @@ function DownloadCSV() {
   return (
     <div>
       <h2 onClick={isDownloading ? null : downloadCSV} style={{ cursor: isDownloading ? 'not-allowed' : 'pointer' }}>
-        Download CSV file
+        Download CSV file&nbsp;
       </h2>
       {isDownloading ? 'Downloading...' : null}
     </div>
