@@ -4,7 +4,7 @@ const AboutAuth = () => {
   return (
     <div className="auth-container-1">
       <h1 style={{ fontSize: "30px", color: "#7b36fc" }}>Join the Climatic™ community now!</h1>
-      <p>Map element sourced from Mapbox's WebGL API and Geocoder.</p>
+      <p>Map element from Mapbox's WebGL API and Geocoder.</p>
       <p>Get the data for today and the next two days via Tomorrow.io</p>
       <p>Sign in to search for weather anywhere around the world!</p>
       <p>Save historical data in .json, .csv, .txt and .xlsx format</p>

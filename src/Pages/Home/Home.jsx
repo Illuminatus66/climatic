@@ -134,6 +134,7 @@ function Home() {
             </p>
             <hr />
             <h2>Screenshots:</h2>
+            <div className="screenshots-container">
             <AnimatePresence initial={false} custom={direction}>
               <motion.img
                 key={page}
@@ -161,11 +162,14 @@ function Home() {
                 }}
               />
             </AnimatePresence>
+            <div className="buttons-container">
             <div className="next" onClick={() => paginate(1)}>
               {'‣'}
             </div>
             <div className="prev" onClick={() => paginate(-1)}>
               {'‣'}
+            </div>
+            </div>
             </div>
             <hr />
           </div>
