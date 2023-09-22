@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
-function DownloadJsonButton() {
+function DownloadJson() {
   const [isDownloading, setIsDownloading] = useState(false);
   const mongodata = useSelector((state) => state.mongo.data);
 
@@ -37,4 +37,4 @@ function DownloadJsonButton() {
   );
 }
 
-export default DownloadJsonButton;
+export default DownloadJson;

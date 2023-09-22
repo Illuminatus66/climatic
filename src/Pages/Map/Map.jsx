@@ -85,10 +85,10 @@ const Map = () => {
             <div id='buttons'>
               {showButtons && mongodata && (
                 <>
-                  <button><DownloadJson/></button>
-                  <button><DownloadTxt/></button>
-                  <button><DownloadCSV/></button>
-                  <button><DownloadExcel/></button>
+                  <DownloadJson/>
+                  <DownloadTxt/>
+                  <DownloadCSV/>
+                  <DownloadExcel/>
                 </>
               )}
               <button onClick={handleFetchDataClick} className='button button-shadow-pop'>Fetch Data</button>
