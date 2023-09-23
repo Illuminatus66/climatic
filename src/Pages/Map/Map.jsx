@@ -43,8 +43,7 @@ const Map = () => {
     }
 
     if (currentUser && showMap && interactions > 0) {
-      mapboxgl.accessToken =
-        'pk.eyJ1IjoiaWxsdW1pbmF0dXM2NiIsImEiOiJjbGxnYnRpeXcxNDhjM21tZ25jcndxeDVzIn0.-vZDD9v0rvv-8GPCTpRvgg';
+      mapboxgl.accessToken = process.env.REACT_APP__MAPBOX_ACCESS_TOKEN;
       const map = new mapboxgl.Map({
         container: 'map-container',
         style: 'mapbox://styles/mapbox/streets-v12',

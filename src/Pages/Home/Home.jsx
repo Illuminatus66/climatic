@@ -160,10 +160,10 @@ function Home() {
             </div>
             <hr />
           <div className="footer">
-            <span style={{ fontFamily: 'Phudu', fontWeight: 'bolder', fontSize: '20px' }}>
-              A product of &copy; Illuminatus66
+            <span style={{ fontFamily: 'Phudu', fontWeight: 'bolder', fontSize: '20px', paddingLeft: '5px' }}>
+              A product by &copy; Illuminatus66
             </span>
-            <span style={{ fontFamily: 'Phudu', fontWeight: 'bolder', fontSize: '20px', paddingLeft: '600px' }}>
+            <span style={{ fontFamily: 'Phudu', fontWeight: 'bolder', fontSize: '20px', paddingLeft: '715px' }}>
               Full-Stack Web Development and AI/ML enthusiast
             </span>
           </div>
