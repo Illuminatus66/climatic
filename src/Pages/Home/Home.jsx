@@ -1,46 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { wrap } from 'popmotion';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from 'react-responsive-carousel';
 import screenshot1 from '../../assets/screenshot1.png';
 import screenshot2 from '../../assets/screenshot2.png';
 import screenshot3 from '../../assets/screenshot3.png';
+import screenshot4 from '../../assets/screenshot4.png';
+import screenshot5 from '../../assets/screenshot5.png';
 import weather from '../../assets/weather.svg';
 import { interactionsLeft } from '../../actions/weather';
 import './Home.css';
 
-const variants = {
-  enter: (direction) => {
-    return {
-      x: direction > 0 ? 1000 : -1000,
-      opacity: 0,
-    };
-  },
-  center: {
-    zIndex: 1,
-    x: 0,
-    opacity: 1,
-  },
-  exit: (direction) => {
-    return {
-      zIndex: 0,
-      x: direction < 0 ? 1000 : -1000,
-      opacity: 0,
-    };
-  },
-};
-
-const swipeConfidenceThreshold = 10000;
-const swipePower = (offset, velocity) => {
-  return Math.abs(offset) * velocity;
-};
-
 function Home() {
-  const images = [screenshot1, screenshot2, screenshot3];
   const currentUser = useSelector((state) => state.user.data);
-  const [[page, direction], setPage] = useState([0, 0]);
-  const imageIndex = wrap(0, images.length, page);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleButtonClick = () => {
@@ -51,18 +24,13 @@ function Home() {
     }
   };
 
-  const paginate = (newDirection) => {
-    setPage([page + newDirection, newDirection]);
-  };
-
   useEffect(() => {
     dispatch(interactionsLeft(currentUser?.result._id));
   }, [dispatch, currentUser]);
 
   return (
-    <html>
+    <div>
       <head>
-        <title>Weather Forecaster</title>
         <link
           rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
@@ -84,11 +52,38 @@ function Home() {
               <div className="caption">
                 <h2>Information:</h2>
                 <p>
-                  This is the all new Weather Forecast app. You can choose to either get the weather at your current
-                  location or you can input any desired location by yourself using a clickable map interface. This
-                  comes in very handy as it is a lightweight application designed for a web browser solely using HTML,
-                  CSS and Javascript. We have also made frequent use of GET and POST APIs for both, the map interface
-                  as well as the Weather forecast that is generated.
+                  This is the all new Climatic™ app. With us, you can choose to either get the weather as an unregistered 
+                  user, which will enable you to double click anywhere on the map provided by Mapbox. Then consequently, you'll
+                  be able to view the weather data for the next two days inside an HTML table.<br/><br/>
+                  <p>
+                  If you do decide to sign-in, 
+                  you gain the perks to search for your desired location in the Geocoder support also provided by Mapbox.<br/>
+                  Apart from being able search and locate, you'll be able to store the weather data for 3 days, ie. the current
+                  day, the next day and the day after that. The data will be stored indefinitely and can be downloaded using our
+                  simple but intuitive UI.
+                  </p>
+                  The weather data provided by Tomorrow.io contains various parameters such as:
+                  <ol>
+                    ‣Cloud Cover<br/>
+                    ‣Humidity<br/>
+                    ‣UV Index<br/>
+                    ‣Temperature and Apparent Temperature<br/>
+                    ‣Rainfall Probablity and Intensity<br/>
+                    ‣Pressure at Sea Level<br/>
+                    ‣Sunrise and Sunset Time<br/>
+                    ‣Wind Speed<br/>
+                    ‣Visibility<br/>
+                    ‣Dew Point<br/>
+                  </ol>
+                  <p>
+                  To fetch the stored data, you can specify the date range and Axios will fetch the data
+                  from MongoDB Atlas. You can then easily download the data in four different formats based upon your needs.
+                  The most useful one, is obviously the .json file format which is the most beautiful way to display nested data.
+                  A simple text or .txt file might be what you want but that gets more and more verbose as you keep on using the 
+                  app. In that case, you might want to choose a .xlsx file because no amount of data can faze the trusty old Excel
+                  file format. If your needs fall in the data analytics or machine learning disciplines, a .csv file might be what
+                  you need, and we have that too!
+                  </p>
                 </p>
                 <hr></hr>
                 <p>Thank You</p>
@@ -97,95 +92,84 @@ function Home() {
           </div>
 
           <div className="col-lg-9">
-            <h1>Documentation</h1>
+            <h1><u>Documentation</u></h1>
             <hr />
             <h2>About:</h2>
             <p>
-              This Weather Forecasting app was built on 29/04/2023 for the purpose<br />
-              of demonstrating the use of API calls<br />
-              You can get accurate weather of any place! Click on the button below and get your first weather<br />
-              forecast or read ahead to know how the web application works-----&gt;
+              This Weather Forecasting app was built on 30/08/2023 for the purpose of demonstrating the integration of various services<br/>
+              like Mapbox's WebGL-based map rendering, their forward-geocoding capabilities, Tomorrow.io's extensive array of weather<br/>
+              parameters and MongoDB's unopinionated document and schema structuring, complemented by blazingly-fast read-write speeds.<br/>
+              You can get accurate weather of any place on Earth! Click on the button below and get your first weather forecast<br/>
+              or you could read ahead to know how the web application was built and how it works-----&gt;
               <button className="buttonClass" onClick={handleButtonClick}>
                 Get Forecast
               </button>
             </p>
-            <hr />
             <h2>Guides: </h2>
             <p>
-              <li>First Click on the Button(given above).</li>
+              <li>You can either choose to Sign-in as an authenticated user or simply click the Get Forecast button in the About section.</li>
               <li>
-                Then choose whether you would like to see the weather forecast for the location you are currently in<br />
-                (this will require geolocation permission) or if you want to see the weather at some other location.<br />
+                After signing-in you can either search for the location you want to fetch the weather for, or you can download any<br/>
+                weather data that you have previously searched for, using the date-picker on the top-left side. You'll soon see four<br/>
+                options to download weather data in the format of your choosing. Currently, we have JSON, CSV, XLSX and TXT file formats.
               </li>
-              <li>The first button on the next page will simply display weather conditions at your current location.<br /></li>
-              <li>The second button will lead you to an interactive, scrollable and scalable map where a double click will<br />
-                register your chosen tilespace as a Latitude, Longitude pair that will help in requesting weather data.</li>
+              <li>
+                If you choose to remain unauthenticated your search and download capabilities will be disabled and you'll only be able<br/>
+                to fetch data for two days, via double clicking on your desired location. The data will be displayed in an HTML table.
+              </li>
+              <li>
+                You can only interact with the Geocoder 5 times per day as an authenticated user because the free-tier of Mapbox allows<br/>
+                for very few forward-geocoding requests per month. Since Climatic™ doesn't offer a paid-tier, hence we cannot afford to<br/>
+                breach the limits of the free-tier provided by either Mapbox or Tomorrow.io.
+              </li>
             </p>
-            <hr />
             <h2>Features: </h2>
             <p>
-              <li>API calls to both map and weather interfaces are limited free-tier services but still enough to be used at your discretion.</li>
-              <li>You can get the weather predictions for any location you want, of the current day as well as the next day.</li>
-              <li>Weather data can be retrieved</li>
-              <li>Weather predictions carry a wide variety of parameters that could go up to 34 but we have included the 11 most important ones for simplicity's sake</li>
-              <li>Interactive and labelled global map that can be panned and scrolled through to get weather data. A double click will register your chosen lat-lng pair</li>
-              <li>Repeated double-clicks on different areas of the map will repopulate the tables where Weather Predicitions are stored. This means that you can view data for tons of different places without having to refresh the webpage</li>
-              <li>The website is one of a kind and fun to operate because of the simplistic UI.</li>
+              <li>API calls to both Map and Weather interfaces are limited free-tier services but still enough to be viably used.</li>
+              <li>Weather predictions for any location you want, of the current day as well as the next two days for unauthenticated users.</li>
+              <li>Repeatedly double-clicking on different areas of the map will repopulate the HTML tables for unauthenticated users.</li>
+              <li>Weather data can be retrieved for upto three days for users that sign-in. Search and download capabilities also enabled.</li>
+              <li>Weather predictions include a wide variety of parameters that could enhance your understanding of the locality you want.</li>
+              <li>Map and location services provided by Mapbox. Weather services by Tomorrow. Storage managed by MongoDB's Atlas.</li>
+              <li>The website is one of a kind and fun to operate because of the simplistic UI built using React.</li>
             </p>
             <hr />
-            <h2>Screenshots:</h2>
-            <div className="screenshots-container">
-            <AnimatePresence initial={false} custom={direction}>
-              <motion.img
-                key={page}
-                src={images[imageIndex]}
-                custom={direction}
-                variants={variants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{
-                  x: { type: 'spring', stiffness: 300, damping: 30 },
-                  opacity: { duration: 0.2 },
-                }}
-                drag="x"
-                dragConstraints={{ left: 0, right: 0 }}
-                dragElastic={1}
-                onDragEnd={(e, { offset, velocity }) => {
-                  const swipe = swipePower(offset.x, velocity.x);
-
-                  if (swipe < -swipeConfidenceThreshold) {
-                    paginate(1);
-                  } else if (swipe > swipeConfidenceThreshold) {
-                    paginate(-1);
-                  }
-                }}
-              />
-            </AnimatePresence>
-            <div className="buttons-container">
-            <div className="next" onClick={() => paginate(1)}>
-              {'‣'}
-            </div>
-            <div className="prev" onClick={() => paginate(-1)}>
-              {'‣'}
-            </div>
-            </div>
+            <h3>Screenshots:</h3>
+            <Carousel showArrows={true}>
+              <div>
+                <img src={screenshot1} alt="The map view for unauthenticated users" />
+                <p className="legend">What the visitor sees after double-clicking on the map element as an unauthenticated user.</p>
+              </div>
+              <div>
+                <img src={screenshot2} alt="The map view for authenticated users" />
+                <p className="legend">The layout of the map element for authenticated users with the date-picker on the left side.</p>
+              </div>
+              <div>
+                <img src={screenshot3} alt="The map view after fetching the data from MongoDB" />
+                <p className="legend">Set the date range and click on fetch to see all of these file format options. Download one or all!</p>
+              </div>
+              <div>
+                <img src= {screenshot4} alt= "The map view after 5 interactions per day are exhausted" />
+                <p className="legend">When you interact 5 times with the geocoder on the map, you'll be locked out for exactly 24 hours.</p>
+              </div>
+              <div>
+                <img src= {screenshot5} alt= "The downloaded data in .json format"/>
+                <p className="legend">Data downloaded from one of the users' account in .json format.</p>
+              </div>
+            </Carousel>
             </div>
             <hr />
-          </div>
           <div className="footer">
             <span style={{ fontFamily: 'Phudu', fontWeight: 'bolder', fontSize: '20px' }}>
-              A product of &copy; Illuminatus66 and company
+              A product of &copy; Illuminatus66
             </span>
-            <span
-              style={{ fontFamily: 'Phudu', fontWeight: 'bolder', fontSize: '20px', paddingLeft: '600px' }}
-            >
+            <span style={{ fontFamily: 'Phudu', fontWeight: 'bolder', fontSize: '20px', paddingLeft: '600px' }}>
               Full-Stack Web Development and AI/ML enthusiast
             </span>
           </div>
         </section>
       </body>
-    </html>
+    </div>
   );
 }
 
