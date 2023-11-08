@@ -3,16 +3,16 @@ import { useSelector } from 'react-redux';
 
 function DownloadTxt() {
   const [isDownloading, setIsDownloading] = useState(false);
-  const mongodata = useSelector((state) => state.mongo.data);
+  const weatherdata = useSelector((state) => state.weather.data);
 
   const downloadText = () => {
-    if (isDownloading || !mongodata) {
+    if (isDownloading || !weatherdata) {
       return;
     }
 
     setIsDownloading(true);
 
-    const textData = mongodata.map((data) => {
+    const textData = weatherdata.map((data) => {
       const locationInfo = 
       `Location: ${data.location.place}, 
       Latitude: ${data.location.lat}, 

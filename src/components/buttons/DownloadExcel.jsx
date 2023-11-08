@@ -4,10 +4,10 @@ import ExcelJS from 'exceljs';
 
 function DownloadExcel() {
   const [isDownloading, setIsDownloading] = useState(false);
-  const mongodata = useSelector((state) => state.mongo.data);
+  const weatherdata = useSelector((state) => state.weather.data);
 
   const downloadExcel = async () => {
-    if (isDownloading || !mongodata) {
+    if (isDownloading || !weatherdata) {
       return;
     }
 
@@ -40,8 +40,8 @@ function DownloadExcel() {
 
     worksheet.addRow(columns);
 
-    if (Array.isArray(mongodata)) {
-      mongodata.forEach((data) => {
+    if (Array.isArray(weatherdata)) {
+      weatherdata.forEach((data) => {
         if (data.weather && Array.isArray(data.weather)) {
           data.weather.forEach((interval) => {
             const values = [

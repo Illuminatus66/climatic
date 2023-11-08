@@ -3,16 +3,16 @@ import { useSelector } from 'react-redux';
 
 function DownloadJson() {
   const [isDownloading, setIsDownloading] = useState(false);
-  const mongodata = useSelector((state) => state.mongo.data);
+  const weatherdata = useSelector((state) => state.weather.data);
 
   const downloadJson = () => {
-    if (isDownloading || !mongodata) {
+    if (isDownloading || !weatherdata) {
       return;
     }
 
     setIsDownloading(true);
 
-    const jsonData = JSON.stringify(mongodata, null, 2);
+    const jsonData = JSON.stringify(weatherdata, null, 2);
     const dataUrl = `data:application/json;charset=utf-8,${encodeURIComponent(jsonData)}`;
 
     const a = document.createElement('a');

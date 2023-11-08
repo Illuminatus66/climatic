@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import mapboxgl from '!mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import './Map.css';
-import { toMongo, fromMongo } from '../../actions/weather';
+import { toMongo, fromMongo, forVisualization } from '../../actions/weather';
 import DownloadJson from '../../components/buttons/DownloadJson';
 import DownloadExcel from '../../components/buttons/DownloadExcel';
 import DownloadCSV from '../../components/buttons/DownloadCSV';
@@ -17,8 +18,9 @@ import 'react-datepicker/dist/react-datepicker.css';
 const Map = () => {
   const currentUser = useSelector((state) => state.user.data);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const interactions = useSelector((state) => state.interactions.data);
-  const mongodata = useSelector((state) => state.mongo.data);
+  const weatherdata = useSelector((state) => state.weather.data);
   const [dateRange, setDateRange] = useState([null, null]);
   const [showButtons, setShowButtons] = useState(false);
   const [showMap, setShowMap] = useState(interactions > 0);
@@ -28,6 +30,11 @@ const Map = () => {
     const [startDate, endDate] = dateRange;
     dispatch(fromMongo({ userId: currentUser?.result._id, startDate: new Date(startDate).toISOString(), endDate: new Date(endDate).toISOString() }));
     setShowButtons(true);
+  };
+
+  const handleVisualizeClick = () => {
+    dispatch(forVisualization({ userId: currentUser?.result._id }))
+    navigate("/Visualize");
   };
 
   useEffect(() => {
@@ -82,12 +89,13 @@ const Map = () => {
               />
             </div>
             <div id='buttons'>
-              {showButtons && mongodata && (
+              {showButtons && weatherdata && (
                 <>
                   <button className='button button-shadow-pop'><DownloadJson/></button>
                   <button className='button button-shadow-pop'><DownloadTxt/></button>
                   <button className='button button-shadow-pop'><DownloadCSV/></button>
                   <button className='button button-shadow-pop'><DownloadExcel/></button>
+                  <button onClick= {handleVisualizeClick} className='button button-shadow-pop'>Visualize Data</button>
                 </>
               )}
               <button onClick={handleFetchDataClick} className='button button-shadow-pop'>Fetch Data</button>

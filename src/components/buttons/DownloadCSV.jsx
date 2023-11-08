@@ -4,17 +4,17 @@ import Papa from 'papaparse';
 
 function DownloadCSV() {
   const [isDownloading, setIsDownloading] = useState(false);
-  const mongodata = useSelector((state) => state.mongo.data);
+  const weatherdata = useSelector((state) => state.weather.data);
 
   const downloadCSV = async () => {
-    if (isDownloading || !mongodata) {
+    if (isDownloading || !weatherdata) {
       return;
     }
 
     setIsDownloading(true);
 
     try {
-      const rows = mongodata.reduce((acc, location) => {
+      const rows = weatherdata.reduce((acc, location) => {
         location.weather.forEach((interval) => {
           const row = {
             'Place': location.location.place,

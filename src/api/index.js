@@ -18,8 +18,6 @@ export const logIn = (authData) => API.post("/login", authData);
 export const signUp = (authData) => API.post("/signup", authData);
 export const visitorData= (lat, lng) => API.post("/visitorData", { lat, lng });
 export const toMongo = (userId, lat, lng, place) => API.post("/toMongo", { userId, lat, lng, place }, {withCredentials: true});
-export const fromMongo = (userId, startDate, endDate) => {
-  return API.get(`/fromMongo?userId=${userId}&startDate=${startDate}&endDate=${endDate}`);
-};
-
+export const fromMongo = (userId, startDate, endDate) => API.get(`/fromMongo?userId=${userId}&startDate=${startDate}&endDate=${endDate}`);
+export const forVisualization = (userId) => API.get("/forVisualization", {userId});
 export const interactionsLeft = (_id) => API.post ("/interactionsLeft", { _id });
