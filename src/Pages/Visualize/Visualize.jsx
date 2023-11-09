@@ -9,22 +9,46 @@ import TemperatureLineChart from './TemperatureLineChart';
 import "./Visualize.css";
 
 const clubWeatherByLocation = (data) => {
-  const groupedByLocation = {};
+  const groupedByLocationAndTime = {};
 
   data.forEach((item) => {
     const location = item.location.place;
-    if (!groupedByLocation[location]) {
-      groupedByLocation[location] = [];
-    }
-    groupedByLocation[location] = groupedByLocation[location].concat(item.weather);
+    item.weather.forEach((weather) => {
+      const timeKey = new Date(weather.startTime).toISOString();
+      const locationTimeKey = `${location}|${timeKey}`;
+
+      if (!groupedByLocationAndTime[locationTimeKey]) {
+        groupedByLocationAndTime[locationTimeKey] = {
+          count: 0,
+          totalTemperature: 0,
+          ...weather,
+        };
+      }
+
+      groupedByLocationAndTime[locationTimeKey].count += 1;
+      groupedByLocationAndTime[locationTimeKey].totalTemperature += weather.values.temperature;
+    });
   });
 
-  return Object.entries(groupedByLocation).map(([location, weather]) => ({
+  const averagedData = Object.entries(groupedByLocationAndTime).reduce((acc, [key, value]) => {
+    const [location, time] = key.split('|');
+    const avgTemperature = value.totalTemperature / value.count;
+
+    if (!acc[location]) {
+      acc[location] = [];
+    }
+
+    acc[location].push({
+      x: time,
+      y: avgTemperature,
+    });
+
+    return acc;
+  }, {});
+
+  return Object.entries(averagedData).map(([location, weatherData]) => ({
     id: location,
-    data: weather.map((weatherData) => ({
-      x: new Date(weatherData.startTime).toLocaleDateString('en-US'),
-      y: weatherData.values.temperature,
-    })),
+    data: weatherData.sort((a, b) => new Date(a.x) - new Date(b.x)),
   }));
 };
 
