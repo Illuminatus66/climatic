@@ -1,6 +1,7 @@
-import { ResponsiveLine } from "@nivo/line";
+import React from 'react';
+import { ResponsiveLine } from '@nivo/line';
 
-const TemperatureLineChart = ({ data }) => {
+const ResponsiveLineChart = ({ data, parameter }) => {
 
   return (
     <div style={{ height: 400 }}>
@@ -24,7 +25,7 @@ const TemperatureLineChart = ({ data }) => {
               orient: "bottom",
               tickSize: 5,
               tickPadding: 5,
-              tickRotation: 0,
+              tickRotation: -18,
               legend: "Date",
               legendOffset: 36,
               legendPosition: "middle",
@@ -34,7 +35,7 @@ const TemperatureLineChart = ({ data }) => {
               tickSize: 5,
               tickPadding: 5,
               tickRotation: 0,
-              legend: "Temperature",
+              legend: parameter,
               legendOffset: -40,
               legendPosition: "middle",
             }}
@@ -45,6 +46,8 @@ const TemperatureLineChart = ({ data }) => {
             pointBorderColor={{ from: "serieColor" }}
             pointLabelYOffset={-12}
             useMesh={true}
+            crosshairType= 'cross'
+            motionConfig= 'gentle'
             tooltip={({ point }) => {
               return (
                 <div
@@ -57,10 +60,10 @@ const TemperatureLineChart = ({ data }) => {
                   }}
                 >
                   <div>
-                    <strong>Date:</strong> {point.data.xFormatted}
+                    <strong>Date</strong>:{point.data.xFormatted}
                   </div>
                   <div>
-                    <strong>Temp:</strong> {point.data.yFormatted}°C
+                    <strong>{parameter}</strong>:{point.data.yFormatted}
                   </div>
                 </div>
               );
@@ -98,4 +101,4 @@ const TemperatureLineChart = ({ data }) => {
   );
 };
 
-export default TemperatureLineChart;
+export default ResponsiveLineChart;
