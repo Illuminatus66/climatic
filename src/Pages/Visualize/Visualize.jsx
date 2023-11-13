@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import WeatherDataList from "../../components/visualize/weatherDataList";
 import WeatherLineChart from '../../components/visualize/LineChart/WeatherLineChart';
 import WeatherBarChart from "../../components/visualize/BarChart/WeatherBarChart";
+import WeatherParallelCoordinatesChart from "../../components/visualize/ParallelCoodinatesChart/WeatherParallelCoodinatesChart";
 import "./Visualize.css";
 
 const transformDataforLineChart = (data, lineParameter) => {
@@ -73,11 +74,53 @@ const transformDataforBarChart = (data, barParameter) => {
   });
 
   return Object.entries(groupedByLocationAndTime).map(([locationTime, value]) => ({
-    locationTime: locationTime,
+    id: locationTime,
     value: value.totalofParameter / value.count
   }));
 };
 
+const transformDataforParallelChart = (data, parallelParameters) => {
+  const groupedByLocationAndTime = {};
+
+  data.forEach((item) => {
+    const location = item.location.place;
+    item.weather.forEach((weather) => {
+      const timeKey = new Date(weather.startTime).toISOString();
+      const locationTimeKey = `${location}-${timeKey}`;
+
+      if (!groupedByLocationAndTime[locationTimeKey]) {
+        groupedByLocationAndTime[locationTimeKey] = {
+          count: 0,
+          parameters: parallelParameters.reduce((obj, param) => {
+            obj[param] = 0;
+            return obj;
+          }, {}),
+        };
+      }
+
+      parallelParameters.forEach((param) => {
+        if (weather.values[param] !== undefined) {
+          groupedByLocationAndTime[locationTimeKey].parameters[param] += weather.values[param];
+        }
+      });
+
+      groupedByLocationAndTime[locationTimeKey].count += 1;
+    });
+  });
+
+  return Object.entries(groupedByLocationAndTime).map(([locationTime, value]) => {
+    const averagedParameters = {};
+
+    parallelParameters.forEach((param) => {
+      averagedParameters[param] = value.parameters[param] / value.count;
+    });
+
+    return {
+      id: locationTime,
+      ...averagedParameters,
+    };
+  });
+};
 
 const Visualize = () => {
   const history = useHistory();
@@ -88,8 +131,10 @@ const Visualize = () => {
   const [selectedEntries, setSelectedEntries] = useState([]);
   const [lineData, setLineData] = useState([]);
   const [barData, setBarData] = useState([]);
+  const [parallelData, setParallelData] = useState([]);
   const [selectedLineParameter, setSelectedLineParameter] = useState('temperature');
   const [selectedBarParameter, setSelectedBarParameter] = useState('temperature');
+  const [selectedParallelParameters, setSelectedParallelParameters] = useState('temperature');
 
   const handleDateChange = useCallback((dates) => {
     const [start, end] = dates;
@@ -134,6 +179,15 @@ const Visualize = () => {
     setSelectedBarParameter(event.target.value);
   };
 
+  useEffect(() => {
+    const parallelChartData = transformDataforParallelChart(selectedEntries, selectedParallelParameters);
+    setParallelData(parallelChartData);
+  }, [selectedEntries, selectedParallelParameters]);
+
+  const handleParallelParameterChange = (event) => {
+    setSelectedParallelParameters(event.target.value);
+  };
+
   return (
     <div style={{ display: "flex", width: "100%" }}>
       <div style={{ width: "30%" }}>
@@ -165,6 +219,11 @@ const Visualize = () => {
         selectedParameter={selectedBarParameter}
         handleParameterChange={handleBarParameterChange}
         graphData={barData}
+        />
+        <WeatherParallelCoordinatesChart
+        selectedParameter={selectedParallelParameters}
+        handleParameterChange={handleParallelParameterChange}
+        graphData={parallelData}
         />
       </div>
     </div>
