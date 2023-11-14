@@ -35,7 +35,6 @@ const WeatherParallelCoordinatesChart = ({
           <MenuItem value="dewPoint">Dew Point</MenuItem>
           <MenuItem value="uvIndex">UV Index</MenuItem>
           <MenuItem value="cloudCover">Cloud Cover</MenuItem>
-          <MenuItem value="visibility">Visibility</MenuItem>
         </Select>
       </FormControl>
       <ResponsiveParallelCoordinatesChart data={graphData} parameters={selectedParameters} />

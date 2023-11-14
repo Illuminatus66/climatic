@@ -7,6 +7,7 @@ import WeatherDataList from "../../components/visualize/weatherDataList";
 import WeatherLineChart from '../../components/visualize/LineChart/WeatherLineChart';
 import WeatherBarChart from "../../components/visualize/BarChart/WeatherBarChart";
 import WeatherParallelCoordinatesChart from "../../components/visualize/ParallelCoodinatesChart/WeatherParallelCoodinatesChart";
+import WeatherScatterPlot from "../../components/visualize/ScatterPlot/WeatherScatterPlot";
 import "./Visualize.css";
 
 const transformDataforLineChart = (data, lineParameter) => {
@@ -122,6 +123,38 @@ const transformDataforParallelChart = (data, parallelParameters) => {
   });
 };
 
+const transformDataforScatterPlot = (data, [param1, param2]) => {
+  const groupedByLocationAndTime = {};
+
+  data.forEach((item) => {
+    const location = item.location.place;
+    item.weather.forEach((weather) => {
+      const timeKey = new Date(weather.startTime).toISOString();
+      const locationTimeKey = `${location}-${timeKey}`;
+
+      if (!groupedByLocationAndTime[locationTimeKey]) {
+        groupedByLocationAndTime[locationTimeKey] = {
+          count: 0,
+          totalParam1: 0,
+          totalParam2: 0,
+        };
+      }
+
+      groupedByLocationAndTime[locationTimeKey].count += 1;
+      groupedByLocationAndTime[locationTimeKey].totalParam1 += weather.values[param1];
+      groupedByLocationAndTime[locationTimeKey].totalParam2 += weather.values[param2];
+    });
+  });
+
+  return Object.entries(groupedByLocationAndTime).map(([locationTime, value]) => ({
+    id: locationTime,
+    data: [{
+      x: value.totalParam1 / value.count,
+      y: value.totalParam2 / value.count
+    }]
+  }));
+};
+
 const Visualize = () => {
   const history = useHistory();
   const currentUser = useSelector((state) => state.user.data);
@@ -132,9 +165,12 @@ const Visualize = () => {
   const [lineData, setLineData] = useState([]);
   const [barData, setBarData] = useState([]);
   const [parallelData, setParallelData] = useState([]);
+  const [scatterData, setScatterData] = useState([]);
   const [selectedLineParameter, setSelectedLineParameter] = useState('temperature');
   const [selectedBarParameter, setSelectedBarParameter] = useState('temperature');
-  const [selectedParallelParameters, setSelectedParallelParameters] = useState('temperature');
+  const [selectedParallelParameters, setSelectedParallelParameters] = useState(['temperature', 'humidity', 'visibility']);
+  const [selectedScatterParameter1, setSelectedScatterParameter1] = useState('temperature');
+  const [selectedScatterParameter2, setSelectedScatterParameter2] = useState('humidity');
 
   const handleDateChange = useCallback((dates) => {
     const [start, end] = dates;
@@ -188,9 +224,21 @@ const Visualize = () => {
     setSelectedParallelParameters(event.target.value);
   };
 
+  useEffect(() => {
+    const scatterData = transformDataforScatterPlot(selectedEntries, [selectedScatterParameter1, selectedScatterParameter2 ]);
+    setScatterData(scatterData);
+  }, [selectedEntries, selectedScatterParameter1, selectedScatterParameter2]);
+
+  const handleScatterParameter1Change = (event) => {
+    setSelectedScatterParameter1(event.target.value);
+  };
+  const handleScatterParameter2Change = (event) => {
+    setSelectedScatterParameter2(event.target.value);
+  };
+
   return (
     <div style={{ display: "flex", width: "100%" }}>
-      <div style={{ width: "30%" }}>
+      <div style={{ width: "20%" }}>
         <div id="datepick">
           <DatePicker
             selectsRange={true}
@@ -209,7 +257,7 @@ const Visualize = () => {
         selectedEntries={selectedEntries} 
         />
       </div>
-      <div style={{ width: "70%" }}>
+      <div style={{ width: "80%" }}>
         <WeatherLineChart 
         selectedParameter={selectedLineParameter} 
         handleParameterChange={handleLineParameterChange} 
@@ -224,6 +272,12 @@ const Visualize = () => {
         selectedParameter={selectedParallelParameters}
         handleParameterChange={handleParallelParameterChange}
         graphData={parallelData}
+        />
+        <WeatherScatterPlot
+        selectedParameters={[selectedScatterParameter1, selectedScatterParameter2]}
+        handleParam1Change={handleScatterParameter1Change}
+        handleParam2Change={handleScatterParameter2Change}
+        graphData={scatterData}
         />
       </div>
     </div>
