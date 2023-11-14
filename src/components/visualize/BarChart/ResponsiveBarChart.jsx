@@ -7,7 +7,7 @@ const ResponsiveBarChart = ({ data, parameter }) => {
       <ResponsiveBar
         data={data}
         keys={['value']}
-        indexBy="locationTime"
+        indexBy="id"
         margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
         padding={0.3}
         valueScale={{ type: 'linear' }}
