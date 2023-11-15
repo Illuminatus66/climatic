@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import WeatherDataList from "../../components/visualize/WeatherDataList";
+import ResponsiveCalendar from '../../components/visualize/Calendar/ResponsiveCalendar';
 import WeatherLineChart from '../../components/visualize/LineChart/WeatherLineChart';
 import WeatherBarChart from "../../components/visualize/BarChart/WeatherBarChart";
 import WeatherParallelCoordinatesChart from "../../components/visualize/ParallelCoodinatesChart/WeatherParallelCoodinatesChart";
@@ -211,6 +212,26 @@ const transformDataforRadarChart = (weatherdata, selectedEntries, parameters) =>
   });
 };
 
+const transformDataForCalendar = (weatherdata, selectedEntries) => {
+  const dateCounts = {};
+
+  selectedEntries.forEach((entryId) => {
+    weatherdata.forEach((item) => {
+      item.weather.forEach((weather) => {
+        if (weather._id === entryId) {
+          const day = new Date(weather.startTime).toISOString().split('T')[0];
+          if (!dateCounts[day]) {
+            dateCounts[day] = 0;
+          }
+          dateCounts[day]++;
+        }
+      });
+    });
+  });
+
+  return Object.entries(dateCounts).map(([day, value]) => ({ day, value }));
+};
+
 const Visualize = () => {
   const history = useHistory();
   const currentUser = useSelector((state) => state.user.data);
@@ -218,6 +239,7 @@ const Visualize = () => {
   const [dateRange, setDateRange] = useState([null, null]);
   const [filteredData, setFilteredData] = useState([]);
   const [selectedEntries, setSelectedEntries] = useState([]);
+  const [calendarData, setCalendarData] = useState([]);
   const [lineData, setLineData] = useState([]);
   const [barData, setBarData] = useState([]);
   const [parallelData, setParallelData] = useState([]);
@@ -254,6 +276,11 @@ const Visualize = () => {
   const handleSelect = useCallback((newSelectedEntries) => {
     setSelectedEntries(newSelectedEntries);
   }, []);
+
+  useEffect(() => {
+    const calendarData = transformDataForCalendar(weatherdata, selectedEntries);
+    setCalendarData(calendarData);
+  }, [weatherdata, selectedEntries]);
 
   useEffect(() => {
     const lineChartData = transformDataforLineChart(weatherdata, selectedEntries, selectedLineParameter);
@@ -325,6 +352,9 @@ const Visualize = () => {
         />
       </div>
       <div style={{ width: "80%" }}>
+        <ResponsiveCalendar 
+        graphData={calendarData} 
+        />
         <WeatherLineChart 
         selectedParameter={selectedLineParameter} 
         handleParameterChange={handleLineParameterChange} 
