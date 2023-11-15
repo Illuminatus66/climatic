@@ -58,24 +58,28 @@ const transformDataforLineChart = (weatherdata, selectedEntries, lineParameter) 
   }));
 };
 
-const transformDataforBarChart = (data, barParameter) => {
+const transformDataforBarChart = (weatherdata, selectedEntries, barParameter) => {
   const groupedByLocationAndTime = {};
+  
+  selectedEntries.forEach((entryId) => {
+    weatherdata.forEach((item) => {
+      item.weather.forEach((weather)=> {
+        if (weather._id === entryId) {
+          const location = item.location.place;
+          const timeKey = new Date(weather.startTime).toISOString();
+          const locationTimeKey = `${location}-${timeKey}`;
 
-  data.forEach((item) => {
-    const location = item.location.place;
-    item.weather.forEach((weather) => {
-      const timeKey = new Date(weather.startTime).toISOString();
-      const locationTimeKey = `${location}-${timeKey}`;
+          if (!groupedByLocationAndTime[locationTimeKey]) {
+            groupedByLocationAndTime[locationTimeKey] = {
+              count: 0,
+              totalofParameter: 0,
+            };
+          }
 
-      if (!groupedByLocationAndTime[locationTimeKey]) {
-        groupedByLocationAndTime[locationTimeKey] = {
-          count: 0,
-          totalofParameter: 0,
-        };
-      }
-
-      groupedByLocationAndTime[locationTimeKey].count += 1;
-      groupedByLocationAndTime[locationTimeKey].totalofParameter += weather.values[barParameter];
+          groupedByLocationAndTime[locationTimeKey].count += 1;
+          groupedByLocationAndTime[locationTimeKey].totalofParameter += weather.values[barParameter];
+        }
+      });
     });
   });
 
