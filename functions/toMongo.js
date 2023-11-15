@@ -70,7 +70,7 @@ exports.handler = auth(async (event, context) => {
         units: 'metric',
         timesteps: ['1d'],
         startTime: 'now',
-        endTime: 'nowPlus2d',
+        endTime: 'nowPlus4d',
         timezone: 'Asia/Kolkata',
       }),
     };

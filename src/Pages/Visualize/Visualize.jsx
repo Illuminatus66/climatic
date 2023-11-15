@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import WeatherDataList from "../../components/visualize/weatherDataList";
+import WeatherDataList from "../../components/visualize/WeatherDataList";
 import WeatherLineChart from '../../components/visualize/LineChart/WeatherLineChart';
 import WeatherBarChart from "../../components/visualize/BarChart/WeatherBarChart";
 import WeatherParallelCoordinatesChart from "../../components/visualize/ParallelCoodinatesChart/WeatherParallelCoodinatesChart";
@@ -11,24 +11,28 @@ import WeatherScatterPlot from "../../components/visualize/ScatterPlot/WeatherSc
 import WeatherRadarChart from "../../components/visualize/RadarChart/WeatherRadarChart";
 import "./Visualize.css";
 
-const transformDataforLineChart = (data, lineParameter) => {
+const transformDataforLineChart = (weatherdata, selectedEntries, lineParameter) => {
   const groupedByLocationAndTime = {};
 
-  data.forEach((item) => {
-    const location = item.location.place;
-    item.weather.forEach((weather) => {
-      const timeKey = new Date(weather.startTime).toISOString();
-      const locationTimeKey = `${location}|${timeKey}`;
+  selectedEntries.forEach((entryId) => {
+    weatherdata.forEach((item) =>{
+      item.weather.forEach((weather)=> {
+        if (weather._id === entryId) {
+          const location = item.location.place;
+          const timeKey = new Date(weather.startTime).toISOString();
+          const locationTimeKey = `${location}|${timeKey}`;
 
-      if (!groupedByLocationAndTime[locationTimeKey]) {
-        groupedByLocationAndTime[locationTimeKey] = {
-          count: 0,
-          totalofParameter: 0, // Generalized for any parameter
-        };
-      }
+          if (!groupedByLocationAndTime[locationTimeKey]) {
+            groupedByLocationAndTime[locationTimeKey] = {
+              count: 0,
+              totalofParameter: 0, // Generalized for any parameter
+            };
+          }
 
-      groupedByLocationAndTime[locationTimeKey].count += 1;
-      groupedByLocationAndTime[locationTimeKey].totalofParameter += weather.values[lineParameter];
+          groupedByLocationAndTime[locationTimeKey].count += 1;
+          groupedByLocationAndTime[locationTimeKey].totalofParameter += weather.values[lineParameter];
+        }
+      });
     });
   });
 
@@ -236,36 +240,36 @@ const Visualize = () => {
   }, []);
 
   useEffect(() => {
-    const lineChartData = transformDataforLineChart(selectedEntries, selectedLineParameter);
+    const lineChartData = transformDataforLineChart(weatherdata, selectedEntries, selectedLineParameter);
     setLineData(lineChartData);
-  }, [selectedEntries, selectedLineParameter]);
+  }, [weatherdata, selectedEntries, selectedLineParameter]);
 
   const handleLineParameterChange = (event) => {
     setSelectedLineParameter(event.target.value);
   };
 
   useEffect(() => {
-    const barChartData = transformDataforBarChart(selectedEntries, selectedBarParameter);
+    const barChartData = transformDataforBarChart(weatherdata, selectedEntries, selectedBarParameter);
     setBarData(barChartData);
-  }, [selectedEntries, selectedBarParameter]);
+  }, [weatherdata, selectedEntries, selectedBarParameter]);
 
   const handleBarParameterChange = (event) => {
     setSelectedBarParameter(event.target.value);
   };
 
   useEffect(() => {
-    const parallelChartData = transformDataforParallelChart(selectedEntries, selectedParallelParameters);
+    const parallelChartData = transformDataforParallelChart(weatherdata, selectedEntries, selectedParallelParameters);
     setParallelData(parallelChartData);
-  }, [selectedEntries, selectedParallelParameters]);
+  }, [weatherdata, selectedEntries, selectedParallelParameters]);
 
   const handleParallelParameterChange = (event) => {
     setSelectedParallelParameters(event.target.value);
   };
 
   useEffect(() => {
-    const scatterPlotData = transformDataforScatterPlot(selectedEntries, [selectedScatterParameter1, selectedScatterParameter2 ]);
+    const scatterPlotData = transformDataforScatterPlot(weatherdata, selectedEntries, [selectedScatterParameter1, selectedScatterParameter2 ]);
     setScatterData(scatterPlotData);
-  }, [selectedEntries, selectedScatterParameter1, selectedScatterParameter2]);
+  }, [weatherdata, selectedEntries, selectedScatterParameter1, selectedScatterParameter2]);
 
   const handleScatterParameter1Change = (event) => {
     setSelectedScatterParameter1(event.target.value);
@@ -275,9 +279,9 @@ const Visualize = () => {
   };
 
   useEffect(() => {
-    const radarChartData = transformDataforRadarChart(selectedEntries, selectedRadarParameters);
+    const radarChartData = transformDataforRadarChart(weatherdata, selectedEntries, selectedRadarParameters);
     setRadarData(radarChartData);
-  }, [selectedEntries, selectedRadarParameters]);
+  }, [weatherdata, selectedEntries, selectedRadarParameters]);
 
   const handleRadarParameterChange = (event) => {
     setSelectedRadarParameters(event.target.value);
