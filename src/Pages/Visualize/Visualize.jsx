@@ -172,30 +172,33 @@ const transformDataforScatterPlot = (weatherdata, selectedEntries, [param1, para
   }));
 };
 
-
-const transformDataforRadarChart = (data, parameters) => {
+const transformDataforRadarChart = (weatherdata, selectedEntries, parameters) => {
   const groupedByLocationAndTime = {};
 
-  data.forEach((item) => {
-    const location = item.location.place;
-    item.weather.forEach((weather) => {
-      const timeKey = new Date(weather.startTime).toISOString();
-      const locationTimeKey = `${location}-${timeKey}`;
+  selectedEntries.forEach((entryId) => {
+    weatherdata.forEach((item) => {
+      item.weather.forEach((weather) => {
+        if (weather._id === entryId) {
+          const location = item.location.place;
+          const timeKey = new Date(weather.startTime).toISOString();
+          const locationTimeKey = `${location}-${timeKey}`;
 
-      if (!groupedByLocationAndTime[locationTimeKey]) {
-        groupedByLocationAndTime[locationTimeKey] = { count: 0 };
-        parameters.forEach(param => {
-          groupedByLocationAndTime[locationTimeKey][param] = 0;
-        });
-      }
+          if (!groupedByLocationAndTime[locationTimeKey]) {
+            groupedByLocationAndTime[locationTimeKey] = { count: 0 };
+            parameters.forEach(param => {
+              groupedByLocationAndTime[locationTimeKey][param] = 0;
+            });
+          }
 
-      parameters.forEach((param) => {
-        if (weather.values[param] !== undefined) {
-          groupedByLocationAndTime[locationTimeKey][param] += weather.values[param];
+          parameters.forEach((param) => {
+            if (weather.values[param] !== undefined) {
+              groupedByLocationAndTime[locationTimeKey][param] += weather.values[param];
+            }
+          });
+
+          groupedByLocationAndTime[locationTimeKey].count += 1;
         }
       });
-
-      groupedByLocationAndTime[locationTimeKey].count += 1;
     });
   });
 
