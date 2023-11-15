@@ -89,11 +89,11 @@ const transformDataforBarChart = (weatherdata, selectedEntries, barParameter) =>
   }));
 };
 
-const transformDataforParallelChart = (weatherData, selectedEntries, parallelParameters) => {
+const transformDataforParallelChart = (weatherdata, selectedEntries, parallelParameters) => {
   const groupedByLocationAndTime = {};
 
   selectedEntries.forEach((entryId) => {
-    weatherData.forEach((item) => {
+    weatherdata.forEach((item) => {
       item.weather.forEach((weather) => {
         if (weather._id === entryId) {
           const location = item.location.place;
@@ -136,26 +136,30 @@ const transformDataforParallelChart = (weatherData, selectedEntries, parallelPar
   });
 };
 
-const transformDataforScatterPlot = (data, [param1, param2]) => {
+const transformDataforScatterPlot = (weatherdata, selectedEntries, [param1, param2]) => {
   const groupedByLocationAndTime = {};
 
-  data.forEach((item) => {
-    const location = item.location.place;
-    item.weather.forEach((weather) => {
-      const timeKey = new Date(weather.startTime).toISOString();
-      const locationTimeKey = `${location}-${timeKey}`;
+  selectedEntries.forEach((entryId) => {
+    weatherdata.forEach((item) => {
+      item.weather.forEach((weather) => {
+        if (weather._id === entryId) {
+          const location = item.location.place;
+          const timeKey = new Date(weather.startTime).toISOString();
+          const locationTimeKey = `${location}-${timeKey}`;
 
-      if (!groupedByLocationAndTime[locationTimeKey]) {
-        groupedByLocationAndTime[locationTimeKey] = {
-          count: 0,
-          totalParam1: 0,
-          totalParam2: 0,
-        };
-      }
+          if (!groupedByLocationAndTime[locationTimeKey]) {
+            groupedByLocationAndTime[locationTimeKey] = {
+              count: 0,
+              totalParam1: 0,
+              totalParam2: 0,
+            };
+          }
 
-      groupedByLocationAndTime[locationTimeKey].count += 1;
-      groupedByLocationAndTime[locationTimeKey].totalParam1 += weather.values[param1];
-      groupedByLocationAndTime[locationTimeKey].totalParam2 += weather.values[param2];
+          groupedByLocationAndTime[locationTimeKey].count += 1;
+          groupedByLocationAndTime[locationTimeKey].totalParam1 += weather.values[param1];
+          groupedByLocationAndTime[locationTimeKey].totalParam2 += weather.values[param2];
+        }
+      });
     });
   });
 
@@ -167,6 +171,7 @@ const transformDataforScatterPlot = (data, [param1, param2]) => {
     }]
   }));
 };
+
 
 const transformDataforRadarChart = (data, parameters) => {
   const groupedByLocationAndTime = {};
