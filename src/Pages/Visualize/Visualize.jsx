@@ -89,32 +89,36 @@ const transformDataforBarChart = (weatherdata, selectedEntries, barParameter) =>
   }));
 };
 
-const transformDataforParallelChart = (data, parallelParameters) => {
+const transformDataforParallelChart = (weatherData, selectedEntries, parallelParameters) => {
   const groupedByLocationAndTime = {};
 
-  data.forEach((item) => {
-    const location = item.location.place;
-    item.weather.forEach((weather) => {
-      const timeKey = new Date(weather.startTime).toISOString();
-      const locationTimeKey = `${location}-${timeKey}`;
+  selectedEntries.forEach((entryId) => {
+    weatherData.forEach((item) => {
+      item.weather.forEach((weather) => {
+        if (weather._id === entryId) {
+          const location = item.location.place;
+          const timeKey = new Date(weather.startTime).toISOString();
+          const locationTimeKey = `${location}-${timeKey}`;
 
-      if (!groupedByLocationAndTime[locationTimeKey]) {
-        groupedByLocationAndTime[locationTimeKey] = {
-          count: 0,
-          parameters: parallelParameters.reduce((obj, param) => {
-            obj[param] = 0;
-            return obj;
-          }, {}),
-        };
-      }
+          if (!groupedByLocationAndTime[locationTimeKey]) {
+            groupedByLocationAndTime[locationTimeKey] = {
+              count: 0,
+              parameters: parallelParameters.reduce((obj, param) => {
+                obj[param] = 0;
+                return obj;
+              }, {}),
+            };
+          }
 
-      parallelParameters.forEach((param) => {
-        if (weather.values[param] !== undefined) {
-          groupedByLocationAndTime[locationTimeKey].parameters[param] += weather.values[param];
+          parallelParameters.forEach((param) => {
+            if (weather.values[param] !== undefined) {
+              groupedByLocationAndTime[locationTimeKey].parameters[param] += weather.values[param];
+            }
+          });
+
+          groupedByLocationAndTime[locationTimeKey].count += 1;
         }
       });
-
-      groupedByLocationAndTime[locationTimeKey].count += 1;
     });
   });
 
