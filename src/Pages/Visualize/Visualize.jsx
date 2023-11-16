@@ -10,6 +10,7 @@ import DropdownMenuBarChart from "../../components/visualize/BarChart/DropdownMe
 import DropdownMenuParallelCoordinatesChart from "../../components/visualize/ParallelCoordinatesChart/DropdownMenuParallelCoordinatesChart";
 import DropdownMenuScatterPlot from "../../components/visualize/ScatterPlot/DropdownMenuScatterPlot";
 import DropdownMenuRadarChart from "../../components/visualize/RadarChart/DropdownMenuRadarChart";
+import DropdownMenuBoxPlot from "../../components/visualize/BoxPlot/DropdownMenuBoxPlot";
 import "./Visualize.css";
 
 const transformDataForCalendar = (filteredData, selectedEntries) => {
@@ -193,7 +194,7 @@ const transformDataforScatterPlot = (filteredData, selectedEntries, [param1, par
   }));
 };
 
-const transformDataforRadarChart = (filteredData, selectedEntries, parameters) => {
+const transformDataforRadarChart = (filteredData, selectedEntries, radarParameters) => {
   const groupedByLocationAndTime = {};
 
   selectedEntries.forEach((entryId) => {
@@ -206,12 +207,12 @@ const transformDataforRadarChart = (filteredData, selectedEntries, parameters) =
 
           if (!groupedByLocationAndTime[locationTimeKey]) {
             groupedByLocationAndTime[locationTimeKey] = { count: 0 };
-            parameters.forEach(param => {
+            radarParameters.forEach(param => {
               groupedByLocationAndTime[locationTimeKey][param] = 0;
             });
           }
 
-          parameters.forEach((param) => {
+          radarParameters.forEach((param) => {
             if (weather.values[param] !== undefined) {
               groupedByLocationAndTime[locationTimeKey][param] += weather.values[param];
             }
@@ -225,11 +226,77 @@ const transformDataforRadarChart = (filteredData, selectedEntries, parameters) =
 
   return Object.entries(groupedByLocationAndTime).map(([locationTime, value]) => {
     const averagedParameters = { locationTimeKey: locationTime };
-    parameters.forEach((param) => {
+    radarParameters.forEach((param) => {
       averagedParameters[param] = value[param] / value.count;
     });
     return averagedParameters;
   });
+};
+
+const getWeekDateRange = (date) => {
+  const startOfWeek = new Date(date);
+  startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
+  
+  const endOfWeek = new Date(startOfWeek);
+  endOfWeek.setDate(endOfWeek.getDate() + 6);
+
+  const format = (d) => `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')}`;
+
+  return `${format(startOfWeek)} to ${format(endOfWeek)}`;
+};
+
+const getGroupKey = (date, groupBy) => {
+  switch (groupBy) {
+    case 'year':
+      return `${date.getFullYear()}`;
+    case 'month':
+      return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`;
+    case 'week':
+      return getWeekDateRange(date);
+    default:
+      throw new Error('Invalid time scale');
+  }
+};
+
+const transformDataforBoxPlot = (filteredData, selectedEntries, boxParameter, groupBy) => {
+  const groupedData = {};
+
+  selectedEntries.forEach((entryId) => {
+    filteredData.forEach((item) => {
+      item.weather.forEach((weather) => {
+        if (weather._id === entryId) {
+          let groupKey;
+          if (groupBy === 'location') {
+            groupKey = item.location.place;
+          } else if (groupBy === 'year' || groupBy === 'month' || groupBy === 'week') {
+            const date = new Date(weather.startTime);
+            groupKey = getGroupKey(date, groupBy);
+          }
+
+          if (!groupedData[groupKey]) {
+            groupedData[groupKey] = { count: 0, values: [] };
+          }
+
+          groupedData[groupKey].count += 1;
+          groupedData[groupKey].values.push(weather.values[boxParameter]);
+        }
+      });
+    });
+  });
+
+  const transformedData = [];
+
+  Object.entries(groupedData).forEach(([groupKey, groupData]) => {
+    groupData.values.forEach(value => {
+      transformedData.push({
+        group: groupKey,
+        value: value,
+        n: groupData.count,
+      });
+    });
+  });
+
+  return transformedData;
 };
 
 const Visualize = () => {
@@ -245,12 +312,15 @@ const Visualize = () => {
   const [parallelData, setParallelData] = useState([]);
   const [scatterData, setScatterData] = useState([]);
   const [radarData, setRadarData] = useState([]);
+  const [boxData, setBoxData] = useState([]);
   const [selectedLineParameter, setSelectedLineParameter] = useState('temperature');
   const [selectedBarParameter, setSelectedBarParameter] = useState('temperature');
   const [selectedParallelParameters, setSelectedParallelParameters] = useState(['temperature', 'humidity', 'visibility']);
   const [selectedScatterParameter1, setSelectedScatterParameter1] = useState('temperature');
   const [selectedScatterParameter2, setSelectedScatterParameter2] = useState('humidity');
   const [selectedRadarParameters, setSelectedRadarParameters] = useState(['temperature', 'humidity', 'visibility']);
+  const [selectedBoxParameter, setSelectedBoxParameter] = useState('temperature');
+  const [groupByBox, setGroupByBox] = useState('location');
 
   const handleDateChange = useCallback((dates) => {
     const [start, end] = dates;
@@ -330,6 +400,19 @@ const Visualize = () => {
     setSelectedRadarParameters(event.target.value);
   };
 
+  useEffect(() => {
+    const boxPlotData = transformDataforBoxPlot(filteredData, selectedEntries, selectedBoxParameter, groupByBox);
+    setBoxData(boxPlotData);
+  }, [filteredData, selectedEntries, selectedBoxParameter, groupByBox]);
+
+  const handleBoxParameterChange = (event) => {
+    setSelectedBoxParameter(event.target.value);
+  };
+
+  const handleGroupbyBoxChange = (event) => {
+    setGroupByBox(event.target.value);
+  };
+
   return (
     <div style={{ display: "flex", width: "100%" }}>
       <div style={{ width: "20%" }}>
@@ -380,6 +463,13 @@ const Visualize = () => {
         selectedParameters={selectedRadarParameters}
         handleParameterChange={handleRadarParameterChange}
         graphData={radarData}
+        />
+        <DropdownMenuBoxPlot
+        selectedParameter={selectedBoxParameter}
+        selectedGroup={groupByBox}
+        handleParameterChange={handleBoxParameterChange}
+        handleGroupChange={handleGroupbyBoxChange}
+        graphData={boxData}
         />
       </div>
     </div>
