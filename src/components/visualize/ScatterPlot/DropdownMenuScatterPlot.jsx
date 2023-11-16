@@ -2,7 +2,7 @@ import React from "react";
 import { MenuItem, Select, FormControl, InputLabel } from "@material-ui/core";
 import ResponsiveScatterPlot from "./ResponsiveScatterPlot";
 
-const WeatherScatterPlot = ({
+const DropdownMenuScatterPlot = ({
   selectedParameters: [param1, param2],
   handleParam1Change,
   handleParam2Change,
@@ -63,4 +63,4 @@ const WeatherScatterPlot = ({
   );
 };
 
-export default WeatherScatterPlot;
+export default DropdownMenuScatterPlot;

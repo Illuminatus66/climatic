@@ -5,12 +5,32 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import WeatherDataList from "../../components/visualize/WeatherDataList";
 import ResponsiveCalendar from '../../components/visualize/Calendar/ResponsiveCalendar';
-import WeatherLineChart from '../../components/visualize/LineChart/WeatherLineChart';
-import WeatherBarChart from "../../components/visualize/BarChart/WeatherBarChart";
-import WeatherParallelCoordinatesChart from "../../components/visualize/ParallelCoordinatesChart/WeatherParallelCoordinatesChart";
-import WeatherScatterPlot from "../../components/visualize/ScatterPlot/WeatherScatterPlot";
-import WeatherRadarChart from "../../components/visualize/RadarChart/WeatherRadarChart";
+import DropdownMenuLineChart from '../../components/visualize/LineChart/DropdownMenuLineChart';
+import DropdownMenuBarChart from "../../components/visualize/BarChart/DropdownMenuBarChart";
+import DropdownMenuParallelCoordinatesChart from "../../components/visualize/ParallelCoordinatesChart/DropdownMenuParallelCoordinatesChart";
+import DropdownMenuScatterPlot from "../../components/visualize/ScatterPlot/DropdownMenuScatterPlot";
+import DropdownMenuRadarChart from "../../components/visualize/RadarChart/DropdownMenuRadarChart";
 import "./Visualize.css";
+
+const transformDataForCalendar = (filteredData, selectedEntries) => {
+  const dateCounts = {};
+
+  selectedEntries.forEach((entryId) => {
+    filteredData.forEach((item) => {
+      item.weather.forEach((weather) => {
+        if (weather._id === entryId) {
+          const day = new Date(weather.startTime).toISOString().split('T')[0];
+          if (!dateCounts[day]) {
+            dateCounts[day] = 0;
+          }
+          dateCounts[day]++;
+        }
+      });
+    });
+  });
+
+  return Object.entries(dateCounts).map(([day, value]) => ({ day, value }));
+};
 
 const transformDataforLineChart = (filteredData, selectedEntries, lineParameter) => {
   const groupedByLocationAndTime = {};
@@ -212,26 +232,6 @@ const transformDataforRadarChart = (filteredData, selectedEntries, parameters) =
   });
 };
 
-const transformDataForCalendar = (filteredData, selectedEntries) => {
-  const dateCounts = {};
-
-  selectedEntries.forEach((entryId) => {
-    filteredData.forEach((item) => {
-      item.weather.forEach((weather) => {
-        if (weather._id === entryId) {
-          const day = new Date(weather.startTime).toISOString().split('T')[0];
-          if (!dateCounts[day]) {
-            dateCounts[day] = 0;
-          }
-          dateCounts[day]++;
-        }
-      });
-    });
-  });
-
-  return Object.entries(dateCounts).map(([day, value]) => ({ day, value }));
-};
-
 const Visualize = () => {
   const history = useHistory();
   const currentUser = useSelector((state) => state.user.data);
@@ -355,28 +355,28 @@ const Visualize = () => {
         <ResponsiveCalendar 
         data={calendarData} 
         />
-        <WeatherLineChart 
+        <DropdownMenuLineChart 
         selectedParameter={selectedLineParameter} 
         handleParameterChange={handleLineParameterChange} 
         graphData={lineData} 
         />
-        <WeatherBarChart
+        <DropdownMenuBarChart
         selectedParameter={selectedBarParameter}
         handleParameterChange={handleBarParameterChange}
         graphData={barData}
         />
-        <WeatherParallelCoordinatesChart
+        <DropdownMenuParallelCoordinatesChart
         selectedParameters={selectedParallelParameters}
         handleParameterChange={handleParallelParameterChange}
         graphData={parallelData}
         />
-        <WeatherScatterPlot
+        <DropdownMenuScatterPlot
         selectedParameters={[selectedScatterParameter1, selectedScatterParameter2]}
         handleParam1Change={handleScatterParameter1Change}
         handleParam2Change={handleScatterParameter2Change}
         graphData={scatterData}
         />
-        <WeatherRadarChart
+        <DropdownMenuRadarChart
         selectedParameters={selectedRadarParameters}
         handleParameterChange={handleRadarParameterChange}
         graphData={radarData}

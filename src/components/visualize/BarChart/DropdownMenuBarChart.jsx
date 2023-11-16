@@ -1,29 +1,21 @@
 import React from "react";
-import { MenuItem, Select, FormControl, InputLabel, Chip } from "@material-ui/core";
-import ResponsiveRadarChart from "./ResponsiveRadarChart";
+import { MenuItem, Select, FormControl, InputLabel } from "@material-ui/core";
+import ResponsiveBarChart from "./ResponsiveBarChart";
 
-const WeatherRadarChart = ({
-  selectedParameters,
+const DropdownMenuBarChart = ({
+  selectedParameter,
   handleParameterChange,
   graphData,
 }) => {
   return (
     <>
-      <FormControl style={{ minWidth: 120, marginBottom: 20, maxWidth: 300 }}>
-        <InputLabel id="parameter-select-label">Multiple Parameters</InputLabel>
+      <FormControl style={{ minWidth: 120, marginBottom: 20 }}>
+        <InputLabel id="parameter-select-label">Weather Parameter</InputLabel>
         <Select
           labelId="parameter-select-label"
           id="parameter-select"
-          multiple
-          value={selectedParameters}
+          value={selectedParameter}
           onChange={handleParameterChange}
-          renderValue={(selected) => (
-            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-              {selected.map((value) => (
-                <Chip key={value} label={value} style={{ margin: 2 }} />
-              ))}
-            </div>
-          )}
         >
           <MenuItem value="temperature">Temperature</MenuItem>
           <MenuItem value="humidity">Humidity</MenuItem>
@@ -35,11 +27,12 @@ const WeatherRadarChart = ({
           <MenuItem value="dewPoint">Dew Point</MenuItem>
           <MenuItem value="uvIndex">UV Index</MenuItem>
           <MenuItem value="cloudCover">Cloud Cover</MenuItem>
+          <MenuItem value="visibility">Visibility</MenuItem>
         </Select>
       </FormControl>
-      <ResponsiveRadarChart data={graphData} parameters={selectedParameters} />
+      <ResponsiveBarChart data={graphData} parameter={selectedParameter} />
     </>
   );
 };
 
-export default WeatherRadarChart;
+export default DropdownMenuBarChart;
