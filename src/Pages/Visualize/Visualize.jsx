@@ -7,16 +7,16 @@ import WeatherDataList from "../../components/visualize/WeatherDataList";
 import ResponsiveCalendar from '../../components/visualize/Calendar/ResponsiveCalendar';
 import WeatherLineChart from '../../components/visualize/LineChart/WeatherLineChart';
 import WeatherBarChart from "../../components/visualize/BarChart/WeatherBarChart";
-import WeatherParallelCoordinatesChart from "../../components/visualize/ParallelCoodinatesChart/WeatherParallelCoodinatesChart";
+import WeatherParallelCoordinatesChart from "../../components/visualize/ParallelCoordinatesChart/WeatherParallelCoordinatesChart";
 import WeatherScatterPlot from "../../components/visualize/ScatterPlot/WeatherScatterPlot";
 import WeatherRadarChart from "../../components/visualize/RadarChart/WeatherRadarChart";
 import "./Visualize.css";
 
-const transformDataforLineChart = (weatherdata, selectedEntries, lineParameter) => {
+const transformDataforLineChart = (filteredData, selectedEntries, lineParameter) => {
   const groupedByLocationAndTime = {};
 
   selectedEntries.forEach((entryId) => {
-    weatherdata.forEach((item) =>{
+    filteredData.forEach((item) =>{
       item.weather.forEach((weather)=> {
         if (weather._id === entryId) {
           const location = item.location.place;
@@ -59,11 +59,11 @@ const transformDataforLineChart = (weatherdata, selectedEntries, lineParameter) 
   }));
 };
 
-const transformDataforBarChart = (weatherdata, selectedEntries, barParameter) => {
+const transformDataforBarChart = (filteredData, selectedEntries, barParameter) => {
   const groupedByLocationAndTime = {};
   
   selectedEntries.forEach((entryId) => {
-    weatherdata.forEach((item) => {
+    filteredData.forEach((item) => {
       item.weather.forEach((weather)=> {
         if (weather._id === entryId) {
           const location = item.location.place;
@@ -90,11 +90,11 @@ const transformDataforBarChart = (weatherdata, selectedEntries, barParameter) =>
   }));
 };
 
-const transformDataforParallelChart = (weatherdata, selectedEntries, parallelParameters) => {
+const transformDataforParallelChart = (filteredData, selectedEntries, parallelParameters) => {
   const groupedByLocationAndTime = {};
 
   selectedEntries.forEach((entryId) => {
-    weatherdata.forEach((item) => {
+    filteredData.forEach((item) => {
       item.weather.forEach((weather) => {
         if (weather._id === entryId) {
           const location = item.location.place;
@@ -137,11 +137,11 @@ const transformDataforParallelChart = (weatherdata, selectedEntries, parallelPar
   });
 };
 
-const transformDataforScatterPlot = (weatherdata, selectedEntries, [param1, param2]) => {
+const transformDataforScatterPlot = (filteredData, selectedEntries, [param1, param2]) => {
   const groupedByLocationAndTime = {};
 
   selectedEntries.forEach((entryId) => {
-    weatherdata.forEach((item) => {
+    filteredData.forEach((item) => {
       item.weather.forEach((weather) => {
         if (weather._id === entryId) {
           const location = item.location.place;
@@ -173,11 +173,11 @@ const transformDataforScatterPlot = (weatherdata, selectedEntries, [param1, para
   }));
 };
 
-const transformDataforRadarChart = (weatherdata, selectedEntries, parameters) => {
+const transformDataforRadarChart = (filteredData, selectedEntries, parameters) => {
   const groupedByLocationAndTime = {};
 
   selectedEntries.forEach((entryId) => {
-    weatherdata.forEach((item) => {
+    filteredData.forEach((item) => {
       item.weather.forEach((weather) => {
         if (weather._id === entryId) {
           const location = item.location.place;
@@ -212,11 +212,11 @@ const transformDataforRadarChart = (weatherdata, selectedEntries, parameters) =>
   });
 };
 
-const transformDataForCalendar = (weatherdata, selectedEntries) => {
+const transformDataForCalendar = (filteredData, selectedEntries) => {
   const dateCounts = {};
 
   selectedEntries.forEach((entryId) => {
-    weatherdata.forEach((item) => {
+    filteredData.forEach((item) => {
       item.weather.forEach((weather) => {
         if (weather._id === entryId) {
           const day = new Date(weather.startTime).toISOString().split('T')[0];
@@ -278,41 +278,41 @@ const Visualize = () => {
   }, []);
 
   useEffect(() => {
-    const calendarData = transformDataForCalendar(weatherdata, selectedEntries);
+    const calendarData = transformDataForCalendar(filteredData, selectedEntries);
     setCalendarData(calendarData);
-  }, [weatherdata, selectedEntries]);
+  }, [filteredData, selectedEntries]);
 
   useEffect(() => {
-    const lineChartData = transformDataforLineChart(weatherdata, selectedEntries, selectedLineParameter);
+    const lineChartData = transformDataforLineChart(filteredData, selectedEntries, selectedLineParameter);
     setLineData(lineChartData);
-  }, [weatherdata, selectedEntries, selectedLineParameter]);
+  }, [filteredData, selectedEntries, selectedLineParameter]);
 
   const handleLineParameterChange = (event) => {
     setSelectedLineParameter(event.target.value);
   };
 
   useEffect(() => {
-    const barChartData = transformDataforBarChart(weatherdata, selectedEntries, selectedBarParameter);
+    const barChartData = transformDataforBarChart(filteredData, selectedEntries, selectedBarParameter);
     setBarData(barChartData);
-  }, [weatherdata, selectedEntries, selectedBarParameter]);
+  }, [filteredData, selectedEntries, selectedBarParameter]);
 
   const handleBarParameterChange = (event) => {
     setSelectedBarParameter(event.target.value);
   };
 
   useEffect(() => {
-    const parallelChartData = transformDataforParallelChart(weatherdata, selectedEntries, selectedParallelParameters);
+    const parallelChartData = transformDataforParallelChart(filteredData, selectedEntries, selectedParallelParameters);
     setParallelData(parallelChartData);
-  }, [weatherdata, selectedEntries, selectedParallelParameters]);
+  }, [filteredData, selectedEntries, selectedParallelParameters]);
 
   const handleParallelParameterChange = (event) => {
     setSelectedParallelParameters(event.target.value);
   };
 
   useEffect(() => {
-    const scatterPlotData = transformDataforScatterPlot(weatherdata, selectedEntries, [selectedScatterParameter1, selectedScatterParameter2 ]);
+    const scatterPlotData = transformDataforScatterPlot(filteredData, selectedEntries, [selectedScatterParameter1, selectedScatterParameter2 ]);
     setScatterData(scatterPlotData);
-  }, [weatherdata, selectedEntries, selectedScatterParameter1, selectedScatterParameter2]);
+  }, [filteredData, selectedEntries, selectedScatterParameter1, selectedScatterParameter2]);
 
   const handleScatterParameter1Change = (event) => {
     setSelectedScatterParameter1(event.target.value);
@@ -322,9 +322,9 @@ const Visualize = () => {
   };
 
   useEffect(() => {
-    const radarChartData = transformDataforRadarChart(weatherdata, selectedEntries, selectedRadarParameters);
+    const radarChartData = transformDataforRadarChart(filteredData, selectedEntries, selectedRadarParameters);
     setRadarData(radarChartData);
-  }, [weatherdata, selectedEntries, selectedRadarParameters]);
+  }, [filteredData, selectedEntries, selectedRadarParameters]);
 
   const handleRadarParameterChange = (event) => {
     setSelectedRadarParameters(event.target.value);
@@ -353,7 +353,7 @@ const Visualize = () => {
       </div>
       <div style={{ width: "80%" }}>
         <ResponsiveCalendar 
-        graphData={calendarData} 
+        data={calendarData} 
         />
         <WeatherLineChart 
         selectedParameter={selectedLineParameter} 
