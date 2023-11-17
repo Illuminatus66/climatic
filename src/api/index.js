@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: 'https://climatic-illuminatus66.netlify.app/.netlify/functions'
+  baseURL: 'https://climatic2-illuminatus66.netlify.app/.netlify/functions'
 });
 
 API.interceptors.request.use((req) => {
