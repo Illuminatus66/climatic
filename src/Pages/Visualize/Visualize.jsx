@@ -11,6 +11,7 @@ import DropdownMenuParallelCoordinatesChart from "../../components/visualize/Par
 import DropdownMenuScatterPlot from "../../components/visualize/ScatterPlot/DropdownMenuScatterPlot";
 import DropdownMenuRadarChart from "../../components/visualize/RadarChart/DropdownMenuRadarChart";
 import DropdownMenuBoxPlot from "../../components/visualize/BoxPlot/DropdownMenuBoxPlot";
+import DropdownMenuHeatMap from "../../components/visualize/RadarChart/DropdownMenuHeatMap";
 import "./Visualize.css";
 
 const transformDataForCalendar = (filteredData, selectedEntries) => {
@@ -299,6 +300,39 @@ const transformDataforBoxPlot = (filteredData, selectedEntries, boxParameter, gr
   return transformedData;
 };
 
+const transformDataforHeatMap = (filteredData, selectedEntries, heatmapParameter) => {
+  const groupedByLocation = {};
+
+  selectedEntries.forEach((entryId) => {
+    filteredData.forEach((item) => {
+      item.weather.forEach((weather) => {
+        if (weather._id === entryId && weather.values[heatmapParameter] !== undefined) {
+          const location = item.location.place;
+          const date = new Date(weather.startTime).toISOString().split('T')[0];
+
+          if (!groupedByLocation[location]) {
+            groupedByLocation[location] = {};
+          }
+          if (!groupedByLocation[location][date]) {
+            groupedByLocation[location][date] = { total: 0, count: 0 };
+          }
+
+          groupedByLocation[location][date].total += weather.values[heatmapParameter];
+          groupedByLocation[location][date].count += 1;
+        }
+      });
+    });
+  });
+
+  return Object.entries(groupedByLocation).map(([location, dates]) => ({
+    id: location,
+    data: Object.entries(dates).map(([date, value]) => ({
+      x: date,
+      y: value.total / value.count
+    }))
+  }));
+};
+
 const Visualize = () => {
   const history = useHistory();
   const currentUser = useSelector((state) => state.user.data);
@@ -313,6 +347,7 @@ const Visualize = () => {
   const [scatterData, setScatterData] = useState([]);
   const [radarData, setRadarData] = useState([]);
   const [boxData, setBoxData] = useState([]);
+  const [heatData, setHeatData] = useState([]);
   const [selectedLineParameter, setSelectedLineParameter] = useState('temperature');
   const [selectedBarParameter, setSelectedBarParameter] = useState('temperature');
   const [selectedParallelParameters, setSelectedParallelParameters] = useState(['temperature', 'humidity', 'visibility']);
@@ -321,6 +356,7 @@ const Visualize = () => {
   const [selectedRadarParameters, setSelectedRadarParameters] = useState(['temperature', 'humidity', 'visibility']);
   const [selectedBoxParameter, setSelectedBoxParameter] = useState('temperature');
   const [groupByBox, setGroupByBox] = useState('location');
+  const [selectedHeatParameter, setSelectedHeatParameter] = useState('temperature');
 
   const handleDateChange = useCallback((dates) => {
     const [start, end] = dates;
@@ -413,6 +449,15 @@ const Visualize = () => {
     setGroupByBox(event.target.value);
   };
 
+  useEffect(() => {
+    const heatMapData = transformDataforHeatMap(filteredData, selectedEntries, selectedHeatParameter);
+    setHeatData(heatMapData);
+  }, [filteredData, selectedEntries, selectedHeatParameter]);
+
+  const handleHeatParameterChange = (event) => {
+    setSelectedHeatParameter(event.target.value);
+  };
+
   return (
     <div style={{ display: "flex", width: "100%" }}>
       <div style={{ width: "20%" }}>
@@ -470,6 +515,11 @@ const Visualize = () => {
         handleParameterChange={handleBoxParameterChange}
         handleGroupChange={handleGroupbyBoxChange}
         graphData={boxData}
+        />
+        <DropdownMenuHeatMap
+        selectedParameter={selectedHeatParameter}
+        handleParameterChange={handleHeatParameterChange}
+        graphData={heatData}
         />
       </div>
     </div>

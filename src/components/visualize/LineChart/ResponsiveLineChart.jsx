@@ -1,8 +1,7 @@
-import React from 'react';
-import { ResponsiveLine } from '@nivo/line';
+import React from "react";
+import { ResponsiveLine } from "@nivo/line";
 
 const ResponsiveLineChart = ({ data, parameter }) => {
-
   return (
     <div style={{ height: 400 }}>
       {data.map((locationData) => (
@@ -46,8 +45,8 @@ const ResponsiveLineChart = ({ data, parameter }) => {
             pointBorderColor={{ from: "serieColor" }}
             pointLabelYOffset={-12}
             useMesh={true}
-            crosshairType= 'cross'
-            motionConfig= 'gentle'
+            crosshairType="cross"
+            motionConfig="gentle"
             tooltip={({ point }) => {
               return (
                 <div

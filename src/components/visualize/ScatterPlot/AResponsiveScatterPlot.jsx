@@ -1,7 +1,7 @@
 import React from "react";
 import { ResponsiveScatterPlot } from "@nivo/scatterplot";
 
-const MyResponsiveScatterPlot = ({ data, parameters }) => {
+const AResponsiveScatterPlot = ({ data, parameters }) => {
   const [param1, param2] = parameters;
 
   return (
@@ -65,4 +65,4 @@ const MyResponsiveScatterPlot = ({ data, parameters }) => {
   );
 };
 
-export default MyResponsiveScatterPlot;
+export default AResponsiveScatterPlot;

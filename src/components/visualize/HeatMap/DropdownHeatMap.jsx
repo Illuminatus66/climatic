@@ -1,8 +1,8 @@
 import React from "react";
 import { MenuItem, Select, FormControl, InputLabel } from "@material-ui/core";
-import ResponsiveLineChart from "./ResponsiveLineChart";
+import AResponsiveHeatMap from "./AResponsiveHeatMap";
 
-const DropdownMenuLineChart = ({
+const DropdownMenuHeatChart = ({
   selectedParameter,
   handleParameterChange,
   graphData,
@@ -27,11 +27,12 @@ const DropdownMenuLineChart = ({
           <MenuItem value="dewPoint">Dew Point</MenuItem>
           <MenuItem value="uvIndex">UV Index</MenuItem>
           <MenuItem value="cloudCover">Cloud Cover</MenuItem>
+          <MenuItem value="visibility">Visibility</MenuItem>
         </Select>
       </FormControl>
-      <ResponsiveLineChart data={graphData} parameter={selectedParameter} />
+      <AResponsiveHeatMap data={graphData} parameter={selectedParameter} />
     </>
   );
 };
 
-export default DropdownMenuLineChart;
+export default DropdownMenuHeatChart;

@@ -1,6 +1,6 @@
 import React from "react";
 import { MenuItem, Select, FormControl, InputLabel } from "@material-ui/core";
-import ResponsiveScatterPlot from "./ResponsiveScatterPlot";
+import AResponsiveScatterPlot from "./AResponsiveScatterPlot";
 
 const DropdownMenuScatterPlot = ({
   selectedParameters: [param1, param2],
@@ -58,7 +58,7 @@ const DropdownMenuScatterPlot = ({
         </FormControl>
       </div>
       
-      <ResponsiveScatterPlot data={graphData} parameters={[param1, param2]} />
+      <AResponsiveScatterPlot data={graphData} parameters={[param1, param2]} />
     </div>
   );
 };
