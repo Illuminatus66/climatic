@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import WeatherDataList from "../../components/visualize/WeatherDataList";
@@ -334,7 +334,7 @@ const transformDataforHeatMap = (filteredData, selectedEntries, heatmapParameter
 };
 
 const Visualize = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const currentUser = useSelector((state) => state.user.data);
   const weatherdata = useSelector((state) => state.visualization.data);
   const [dateRange, setDateRange] = useState([null, null]);
@@ -373,11 +373,11 @@ const Visualize = () => {
 
   useEffect(() => {
     if (!currentUser) {
-      history.push('/Auth');
+      navigate("/Auth");
     } else {
       handleDateChange(dateRange);
     }
-  }, [currentUser, dateRange, handleDateChange, history]);
+  }, [currentUser, dateRange, handleDateChange, navigate]);
 
   const handleSelect = useCallback((newSelectedEntries) => {
     setSelectedEntries(newSelectedEntries);
