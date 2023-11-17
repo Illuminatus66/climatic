@@ -11,7 +11,7 @@ import DropdownMenuParallelCoordinatesChart from "../../components/visualize/Par
 import DropdownMenuScatterPlot from "../../components/visualize/ScatterPlot/DropdownMenuScatterPlot";
 import DropdownMenuRadarChart from "../../components/visualize/RadarChart/DropdownMenuRadarChart";
 import DropdownMenuBoxPlot from "../../components/visualize/BoxPlot/DropdownMenuBoxPlot";
-import DropdownMenuHeatMap from "../../components/visualize/RadarChart/DropdownMenuHeatMap";
+import DropdownMenuHeatMap from "../../components/visualize/HeatMap/DropdownMenuHeatMap";
 import "./Visualize.css";
 
 const transformDataForCalendar = (filteredData, selectedEntries) => {

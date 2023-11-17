@@ -1,5 +1,5 @@
 import React from "react";
-import { MenuItem, Select, FormControl, InputLabel } from "@material-ui/core";
+import { MenuItem, Select, FormControl, InputLabel } from "@mui/material";
 import AResponsiveBoxPlot from "./AResponsiveBoxPlot";
 
 const DropdownMenuBoxPlot = ({

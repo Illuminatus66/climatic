@@ -1,8 +1,8 @@
 import React from "react";
-import { MenuItem, Select, FormControl, InputLabel } from "@material-ui/core";
+import { MenuItem, Select, FormControl, InputLabel } from "@mui/material";
 import AResponsiveHeatMap from "./AResponsiveHeatMap";
 
-const DropdownMenuHeatChart = ({
+const DropdownMenuHeatMap = ({
   selectedParameter,
   handleParameterChange,
   graphData,
@@ -35,4 +35,4 @@ const DropdownMenuHeatChart = ({
   );
 };
 
-export default DropdownMenuHeatChart;
+export default DropdownMenuHeatMap;

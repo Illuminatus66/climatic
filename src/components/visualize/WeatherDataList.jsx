@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import arrowUpImage from "./path-to-your-arrow-up-image.svg";
-import arrowDownImage from "./path-to-your-arrow-down-image.svg";
+import arrowUpImage from "../../assets/arrow-up-short.svg";
+import arrowDownImage from "../../assets/arrow-down-short.svg";
 
 const WeatherDataList = ({ data, selectedEntries, onSelect }) => {
   const [expandedId, setExpandedId] = useState(null);

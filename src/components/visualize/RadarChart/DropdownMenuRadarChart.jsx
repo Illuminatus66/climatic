@@ -1,5 +1,5 @@
 import React from "react";
-import { MenuItem, Select, FormControl, InputLabel, Chip } from "@material-ui/core";
+import { MenuItem, Select, FormControl, InputLabel, Chip } from "@mui/material";
 import ResponsiveRadarChart from "./ResponsiveRadarChart";
 
 const DropdownMenuRadarChart = ({
