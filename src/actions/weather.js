@@ -1,6 +1,6 @@
 import * as api from '../api';
 import { setWeather, resetWeather } from '../reducers/weatherSlice';
-import { setVisualization } from '../reducers/visualizationSlice';
+import { setVisualization, resetVisualization } from '../reducers/visualizationSlice';
 import { setInteractions } from '../reducers/interactionsSlice';
 
 export const visitorData = ({lat, lng}) => async (dispatch) => {
@@ -42,6 +42,7 @@ export const interactionsLeft = (_id) => async (dispatch) => {
 
 export const forVisualization = ({userId}) => async (dispatch) => {
   try {
+    dispatch(resetVisualization())
     const {data} = await api.forVisualization(userId);
     dispatch (setVisualization(data));
   } catch (error) {

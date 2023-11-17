@@ -10,10 +10,13 @@ const visualizationSlice = createSlice({
   reducers: {
     setVisualization: (state, action) => {
       state.data = action.payload;
+    },
+    resetVisualization: (state) => {
+      state.data = null
     }
   },
 });
 
-export const { setVisualization } = visualizationSlice.actions;
+export const { setVisualization, resetVisualization } = visualizationSlice.actions;
 
 export default visualizationSlice.reducer;
