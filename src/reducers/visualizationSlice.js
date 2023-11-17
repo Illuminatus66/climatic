@@ -14,6 +14,6 @@ const visualizationSlice = createSlice({
   },
 });
 
-export const { setWeather, resetWeather } = visualizationSlice.actions;
+export const { setVisualization } = visualizationSlice.actions;
 
 export default visualizationSlice.reducer;
