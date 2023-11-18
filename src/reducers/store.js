@@ -12,7 +12,7 @@ export const store = configureStore({
     auth: authReducer,
     user: userReducer,
     weather: weatherReducer,
-    viaulization: visualizationSlice
+    visualization: visualizationSlice
   },
   middleware: [thunk]
 });
