@@ -10,7 +10,7 @@ const ResponsiveParallelCoordinatesChart = ({ data, parameters }) => {
     max: 'auto',
     ticksPosition: 'after',
     legendPosition: 'start',
-    legendOffset: 0
+    legendOffset: 20
   }));
 
   return (
@@ -18,7 +18,7 @@ const ResponsiveParallelCoordinatesChart = ({ data, parameters }) => {
       <ResponsiveParallelCoordinates
         data={data}
         variables={variablesConfig}
-        margin={{ top: 10, right: 250, bottom: 50, left: 30 }}
+        margin={{ top: 10, right: 350, bottom: 50, left: 30 }}
         colors={{ scheme: 'nivo' }}
         lineOpacity={0.75}
         lineWidth={3}
