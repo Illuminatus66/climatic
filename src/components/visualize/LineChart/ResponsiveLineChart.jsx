@@ -18,9 +18,9 @@ const ResponsiveLineChart = ({ data, parameter }) => {
         axisTop={null}
         axisRight={null}
         axisBottom={{
-          tickSize: 5,
+          tickSize: 3,
           tickPadding: 5,
-          tickRotation: -18,
+          tickRotation: -10,
           legend: "Date",
           legendOffset: 36,
           legendPosition: "middle",

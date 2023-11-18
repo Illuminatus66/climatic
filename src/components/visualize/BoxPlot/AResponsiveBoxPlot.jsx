@@ -5,7 +5,7 @@ const AResponsiveBoxPlot = ({ data, parameter, group }) => {
     <div style={{ height: 500 }}>
       <ResponsiveBoxPlot
         data={data}
-        margin={{ top: 60, right: 190, bottom: 60, left: 60 }}
+        margin={{ top: 10, right: 200, bottom: 150, left: 60 }}
         groupBy="group"
         padding={0.12}
         axisTop={null}
@@ -19,7 +19,7 @@ const AResponsiveBoxPlot = ({ data, parameter, group }) => {
         axisBottom={{
           tickSize: 5,
           tickPadding: 5,
-          tickRotation: 0,
+          tickRotation: -10,
           legend: group,
           legendPosition: "middle",
           legendOffset: 32,

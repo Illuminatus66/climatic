@@ -8,7 +8,7 @@ const ResponsiveRadarChart = ({ data, parameters }) => (
       keys={parameters}
       indexBy="locationTimeKey"
       valueFormat=" >-.2f"
-      margin={{ top: 70, right: 90, bottom: 40, left: 90 }}
+      margin={{ top: 60, right: 90, bottom: 60, left: 90 }}
       gridShape="linear"
       gridLabelOffset={20}
       dotSize={10}
@@ -21,7 +21,7 @@ const ResponsiveRadarChart = ({ data, parameters }) => (
       motionConfig="slow"
       legends={[
         {
-          anchor: "top-left",
+          anchor: "top-right",
           direction: "column",
           translateX: -50,
           translateY: -40,

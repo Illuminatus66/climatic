@@ -22,7 +22,7 @@ const ResponsiveBarChart = ({ data, parameter }) => {
         axisBottom={{
           tickSize: 5,
           tickPadding: 5,
-          tickRotation: -18,
+          tickRotation: -10,
           legend: "",
           legendOffset: 0,
         }}

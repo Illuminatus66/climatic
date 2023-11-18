@@ -9,14 +9,14 @@ const AResponsiveHeatMap = ({ data, parameter }) => {
         axisTop={{
           tickSize: 5,
           tickPadding: 5,
-          tickRotation: -90,
+          tickRotation: -10,
           legend: "",
           legendOffset: 46,
         }}
         axisLeft={{
           tickSize: 5,
           tickPadding: 5,
-          tickRotation: 0,
+          tickRotation: -75,
           legend: "",
           legendPosition: "middle",
           legendOffset: -72,
