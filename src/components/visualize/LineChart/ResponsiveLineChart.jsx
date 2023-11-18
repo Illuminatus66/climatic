@@ -3,10 +3,10 @@ import { ResponsiveLine } from "@nivo/line";
 
 const ResponsiveLineChart = ({ data, parameter }) => {
   return (
-    <div style={{ height: 500, width:"80%" }}>
+    <div style={{ height: 500, width:"90%" }}>
       <ResponsiveLine
         data={data}
-        margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+        margin={{ top: 50, right: 170, bottom: 50, left: 60 }}
         xScale={{ type: "point" }}
         yScale={{
           type: "linear",
@@ -40,26 +40,6 @@ const ResponsiveLineChart = ({ data, parameter }) => {
         pointBorderColor={{ from: "serieColor" }}
         pointLabelYOffset={-12}
         useMesh={true}
-        tooltip={({ point }) => {
-          return (
-            <div
-              style={{
-                background: "white",
-                padding: "9px",
-                border: "1px solid #ccc",
-                borderRadius: "4px",
-                boxShadow: "0 3px 6px rgba(0,0,0,0.16)",
-              }}
-            >
-              <div>
-                <strong>Date</strong>:{point.data.xFormatted}
-              </div>
-              <div>
-                <strong>{parameter}</strong>:{point.data.yFormatted}
-              </div>
-            </div>
-          );
-        }}
         legends={[
           {
             anchor: "right",
