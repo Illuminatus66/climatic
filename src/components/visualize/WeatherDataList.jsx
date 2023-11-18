@@ -52,7 +52,7 @@ const WeatherDataList = ({ data, selectedEntries, onSelect, dateRange, setDateRa
           />
         </div>
         <button onClick={toggleSortOrder} className="sort-button">
-          <img src={isAscending ? arrowDownImage : arrowUpImage} alt="Sort" style={{ height: "100%" }} />
+          <svg src={isAscending ? arrowDownImage : arrowUpImage} alt="Sort" style={{ height: "100%" }} />
         </button>
       </div>
       {sortedData.map((locationData) => (
