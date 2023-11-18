@@ -18,7 +18,7 @@ const ResponsiveParallelCoordinatesChart = ({ data, parameters }) => {
       <ResponsiveParallelCoordinates
         data={data}
         variables={variablesConfig}
-        margin={{ top: 50, right: 220, bottom: 50, left: 90 }}
+        margin={{ top: 10, right: 250, bottom: 50, left: 30 }}
         colors={{ scheme: 'nivo' }}
         lineOpacity={0.75}
         lineWidth={3}
@@ -29,7 +29,7 @@ const ResponsiveParallelCoordinatesChart = ({ data, parameters }) => {
               anchor: 'right',
               direction: 'column',
               justify: false,
-              translateX: 100,
+              translateX: 90,
               translateY: 0,
               itemsSpacing: 2,
               itemWidth: 60,

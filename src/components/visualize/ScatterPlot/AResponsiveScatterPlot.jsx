@@ -32,7 +32,7 @@ const AResponsiveScatterPlot = ({ data, parameters }) => {
           tickRotation: 0,
           legend: param2,
           legendPosition: "middle",
-          legendOffset: -60,
+          legendOffset: -40,
         }}
         motionConfig="molasses"
         legends={[
