@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import arrowUpImage from "../../assets/arrow-up-short.svg";
 import arrowDownImage from "../../assets/arrow-down-short.svg";
 
-const WeatherDataList = ({ data, selectedEntries, onSelect }) => {
+const WeatherDataList = ({ data, selectedEntries, onSelect, dateRange, setDateRange }) => {
   const [expandedId, setExpandedId] = useState(null);
   const [isAscending, setIsAscending] = useState(true);
 
@@ -16,7 +18,7 @@ const WeatherDataList = ({ data, selectedEntries, onSelect }) => {
       }
     });
   };
-  
+
   const toggleExpand = (id) => {
     setExpandedId(expandedId === id ? null : id);
   };
@@ -36,9 +38,23 @@ const WeatherDataList = ({ data, selectedEntries, onSelect }) => {
       className="weather-data-list"
       style={{ overflowY: "scroll", maxHeight: "80vh" }}
     >
-      <button onClick={toggleSortOrder} className="sort-button">
-        <img src={isAscending ? arrowDownImage : arrowUpImage} alt="Sort" />
-      </button>
+      <div
+        style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}
+      >
+        <div id="datepick" style={{ marginRight: "10px" }}>
+          <DatePicker
+            selectsRange={true}
+            startDate={dateRange[0]}
+            endDate={dateRange[1]}
+            onChange={(update) => setDateRange(update)}
+            isClearable={true}
+            placeholderText="Select Date Range"
+          />
+        </div>
+        <button onClick={toggleSortOrder} className="sort-button">
+          <img src={isAscending ? arrowDownImage : arrowUpImage} alt="Sort" style={{ height: "100%" }} />
+        </button>
+      </div>
       {sortedData.map((locationData) => (
         <div key={locationData.location.place} className="location-section">
           <h3 onClick={() => toggleExpand(locationData.location.place)}>
@@ -104,10 +120,10 @@ const WeatherDataList = ({ data, selectedEntries, onSelect }) => {
 };
 
 const areEqual = (prevProps, nextProps) => {
-    return (
-      prevProps.data === nextProps.data &&
-      prevProps.onSelect === nextProps.onSelect
-    );
-  };
-  
+  return (
+    prevProps.data === nextProps.data &&
+    prevProps.onSelect === nextProps.onSelect
+  );
+};
+
 export default React.memo(WeatherDataList, areEqual);

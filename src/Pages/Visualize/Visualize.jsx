@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import WeatherDataList from "../../components/visualize/WeatherDataList";
 import ResponsiveCalendar from '../../components/visualize/Calendar/ResponsiveCalendar';
 import DropdownMenuLineChart from '../../components/visualize/LineChart/DropdownMenuLineChart';
@@ -469,23 +467,13 @@ const Visualize = () => {
 
   return (
     <div style={{ display: "flex", width: "100%" }}>
-      <div style={{ width: "20%" }}>
-        <div id="datepick">
-          <DatePicker
-            selectsRange={true}
-            startDate={dateRange[0]}
-            endDate={dateRange[1]}
-            onChange={(update) => {
-              setDateRange(update);
-            }}
-            isClearable={true}
-            placeholderText="Select Date Range"
-          />
-        </div>
+      <div style={{ width: "20%", height: "100vh", position: "sticky", top: 0  }}>
         <WeatherDataList 
-        data={filteredData} 
-        onSelect={handleSelect} 
-        selectedEntries={selectedEntries} 
+        data={filteredData}
+        onSelect={handleSelect}
+        selectedEntries={selectedEntries}
+        dateRange={dateRange}
+        setDateRange={setDateRange}
         />
       </div>
       <div style={{ width: "80%" }}>
