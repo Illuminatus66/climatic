@@ -3,7 +3,7 @@ import { ResponsiveBar } from "@nivo/bar";
 
 const ResponsiveBarChart = ({ data, parameter }) => {
   return (
-    <div style={{ height: 400 }}>
+    <div style={{ height: 500, width: "70%" }}>
       <ResponsiveBar
         data={data}
         keys={["value"]}

@@ -7,6 +7,10 @@ const DropdownMenuBarChart = ({
   handleParameterChange,
   graphData,
 }) => {
+  if (graphData.length === 0) {
+    return <div style={{ height: "400px" }}>No data available for Bar Chart. Try choosing another date range</div>;
+  }
+
   return (
     <>
       <FormControl style={{ minWidth: 120, marginBottom: 20 }}>
