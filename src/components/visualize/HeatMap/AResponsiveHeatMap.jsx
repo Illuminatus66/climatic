@@ -5,7 +5,7 @@ const AResponsiveHeatMap = ({ data, parameter }) => {
     <div style={{ height: 500 }}>
       <ResponsiveHeatMap
         data={data}
-        margin={{ top: 50, right: 60, bottom: 160, left: 150 }}
+        margin={{ top: 25, right: 30, bottom: 100, left: 150 }}
         axisTop={{
           tickSize: 5,
           tickPadding: 5,
@@ -16,7 +16,7 @@ const AResponsiveHeatMap = ({ data, parameter }) => {
         axisLeft={{
           tickSize: 5,
           tickPadding: 5,
-          tickRotation: -14,
+          tickRotation: -65,
           legend: "",
           legendPosition: "middle",
           legendOffset: -72,

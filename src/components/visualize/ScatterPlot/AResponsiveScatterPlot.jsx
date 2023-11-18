@@ -8,7 +8,7 @@ const AResponsiveScatterPlot = ({ data, parameters }) => {
     <div style={{ height: 500 }}>
       <ResponsiveScatterPlot
         data={data}
-        margin={{ top: 10, right: 220, bottom: 60, left: 60 }}
+        margin={{ top: 10, right: 250, bottom: 70, left: 70 }}
         xScale={{ type: "linear", min: "auto", max: "auto" }}
         xFormat=" >-.2f"
         yScale={{ type: "linear", min: "auto", max: "auto" }}
@@ -40,12 +40,12 @@ const AResponsiveScatterPlot = ({ data, parameters }) => {
             anchor: "bottom-right",
             direction: "column",
             justify: false,
-            translateX: 130,
+            translateX: 110,
             translateY: 0,
-            itemsSpacing: 0,
+            itemsSpacing: 5,
             itemDirection: "left-to-right",
-            itemWidth: 80,
-            itemHeight: 12,
+            itemWidth: 98,
+            itemHeight: 14,
             itemOpacity: 0.75,
             symbolSize: 12,
             symbolShape: "circle",

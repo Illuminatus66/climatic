@@ -8,7 +8,7 @@ const ResponsiveBarChart = ({ data, parameter }) => {
         data={data}
         keys={["value"]}
         indexBy="id"
-        margin={{ top: 50, right: 50, bottom: 100, left: 60 }}
+        margin={{ top: 10, right: 60, bottom: 150, left: 70 }}
         padding={0.3}
         valueScale={{ type: "linear" }}
         indexScale={{ type: "band", round: true }}

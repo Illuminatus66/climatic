@@ -14,6 +14,14 @@ import DropdownMenuBoxPlot from "../../components/visualize/BoxPlot/DropdownMenu
 import DropdownMenuHeatMap from "../../components/visualize/HeatMap/DropdownMenuHeatMap";
 import "./Visualize.css";
 
+const truncateAddress = (address) => {
+  const parts = address.split(',');
+  if (parts.length > 3) {
+    return parts.slice(0, 3).join(',');
+  }
+  return address;
+};
+
 const transformDataForCalendar = (filteredData, selectedEntries) => {
   const dateCounts = {};
 
@@ -41,7 +49,7 @@ const transformDataforLineChart = (filteredData, selectedEntries, lineParameter)
     filteredData.forEach((item) =>{
       item.weather.forEach((weather)=> {
         if (weather._id === entryId) {
-          const location = item.location.place;
+          const location = truncateAddress(item.location.place);
           const timeKey = new Date(weather.startTime).toISOString().split('T')[0];;
           const locationTimeKey = `${location}|${timeKey}`;
 
@@ -88,7 +96,7 @@ const transformDataforBarChart = (filteredData, selectedEntries, barParameter) =
     filteredData.forEach((item) => {
       item.weather.forEach((weather)=> {
         if (weather._id === entryId) {
-          const location = item.location.place;
+          const location = truncateAddress(item.location.place);
           const timeKey = new Date(weather.startTime).toISOString().split('T')[0];;
           const locationTimeKey = `${location}-${timeKey}`;
 
@@ -119,7 +127,7 @@ const transformDataforParallelChart = (filteredData, selectedEntries, parallelPa
     filteredData.forEach((item) => {
       item.weather.forEach((weather) => {
         if (weather._id === entryId) {
-          const location = item.location.place;
+          const location = truncateAddress(item.location.place);
           const timeKey = new Date(weather.startTime).toISOString().split('T')[0];;
           const locationTimeKey = `${location}-${timeKey}`;
 
@@ -166,7 +174,7 @@ const transformDataforScatterPlot = (filteredData, selectedEntries, [param1, par
     filteredData.forEach((item) => {
       item.weather.forEach((weather) => {
         if (weather._id === entryId) {
-          const location = item.location.place;
+          const location = truncateAddress(item.location.place);
           const timeKey = new Date(weather.startTime).toISOString().split('T')[0];;
           const locationTimeKey = `${location}-${timeKey}`;
 
@@ -202,7 +210,7 @@ const transformDataforRadarChart = (filteredData, selectedEntries, radarParamete
     filteredData.forEach((item) => {
       item.weather.forEach((weather) => {
         if (weather._id === entryId) {
-          const location = item.location.place;
+          const location = truncateAddress(item.location.place);
           const timeKey = new Date(weather.startTime).toISOString().split('T')[0];;
           const locationTimeKey = `${location}-${timeKey}`;
 
@@ -268,7 +276,7 @@ const transformDataforBoxPlot = (filteredData, selectedEntries, boxParameter, gr
         if (weather._id === entryId) {
           let groupKey;
           if (groupBy === 'location') {
-            groupKey = item.location.place;
+            groupKey = truncateAddress(item.location.place);
           } else if (groupBy === 'year' || groupBy === 'month' || groupBy === 'week') {
             const date = new Date(weather.startTime);
             groupKey = getGroupKey(date, groupBy);
@@ -307,7 +315,7 @@ const transformDataforHeatMap = (filteredData, selectedEntries, heatmapParameter
     filteredData.forEach((item) => {
       item.weather.forEach((weather) => {
         if (weather._id === entryId && weather.values[heatmapParameter] !== undefined) {
-          const location = item.location.place;
+          const location = truncateAddress(item.location.place);
           const date = new Date(weather.startTime).toISOString().split('T')[0];
 
           if (!groupedByLocation[location]) {

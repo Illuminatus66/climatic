@@ -6,7 +6,7 @@ const ResponsiveLineChart = ({ data, parameter }) => {
     <div style={{ height: 500 }}>
       <ResponsiveLine
         data={data}
-        margin={{ top: 50, right: 250, bottom: 50, left: 60 }}
+        margin={{ top: 10, right: 250, bottom: 90, left: 70 }}
         xScale={{ type: "point" }}
         yScale={{
           type: "linear",
