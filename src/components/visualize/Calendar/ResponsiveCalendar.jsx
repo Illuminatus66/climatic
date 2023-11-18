@@ -4,6 +4,12 @@ import { ResponsiveCalendar } from "@nivo/calendar";
 const CalendarChart = ({ data }) => {
   const sortedData = data.sort((a, b) => new Date(a.day) - new Date(b.day));
 
+  console.log(sortedData);
+
+  if (sortedData.length === 0) {
+    return <div style={{ height: "400px" }}>No data available</div>;
+  }
+
   return (
     <div style={{ height: "400px" }}>
       <ResponsiveCalendar
