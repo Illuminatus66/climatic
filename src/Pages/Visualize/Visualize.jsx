@@ -42,7 +42,7 @@ const transformDataforLineChart = (filteredData, selectedEntries, lineParameter)
       item.weather.forEach((weather)=> {
         if (weather._id === entryId) {
           const location = item.location.place;
-          const timeKey = new Date(weather.startTime).toISOString();
+          const timeKey = new Date(weather.startTime).toISOString().split('T')[0];;
           const locationTimeKey = `${location}|${timeKey}`;
 
           if (!groupedByLocationAndTime[locationTimeKey]) {
@@ -89,7 +89,7 @@ const transformDataforBarChart = (filteredData, selectedEntries, barParameter) =
       item.weather.forEach((weather)=> {
         if (weather._id === entryId) {
           const location = item.location.place;
-          const timeKey = new Date(weather.startTime).toISOString();
+          const timeKey = new Date(weather.startTime).toISOString().split('T')[0];;
           const locationTimeKey = `${location}-${timeKey}`;
 
           if (!groupedByLocationAndTime[locationTimeKey]) {
@@ -120,7 +120,7 @@ const transformDataforParallelChart = (filteredData, selectedEntries, parallelPa
       item.weather.forEach((weather) => {
         if (weather._id === entryId) {
           const location = item.location.place;
-          const timeKey = new Date(weather.startTime).toISOString();
+          const timeKey = new Date(weather.startTime).toISOString().split('T')[0];;
           const locationTimeKey = `${location}-${timeKey}`;
 
           if (!groupedByLocationAndTime[locationTimeKey]) {
@@ -167,7 +167,7 @@ const transformDataforScatterPlot = (filteredData, selectedEntries, [param1, par
       item.weather.forEach((weather) => {
         if (weather._id === entryId) {
           const location = item.location.place;
-          const timeKey = new Date(weather.startTime).toISOString();
+          const timeKey = new Date(weather.startTime).toISOString().split('T')[0];;
           const locationTimeKey = `${location}-${timeKey}`;
 
           if (!groupedByLocationAndTime[locationTimeKey]) {
@@ -203,7 +203,7 @@ const transformDataforRadarChart = (filteredData, selectedEntries, radarParamete
       item.weather.forEach((weather) => {
         if (weather._id === entryId) {
           const location = item.location.place;
-          const timeKey = new Date(weather.startTime).toISOString();
+          const timeKey = new Date(weather.startTime).toISOString().split('T')[0];;
           const locationTimeKey = `${location}-${timeKey}`;
 
           if (!groupedByLocationAndTime[locationTimeKey]) {

@@ -2,24 +2,16 @@ import { ResponsiveHeatMap } from "@nivo/heatmap";
 
 const AResponsiveHeatMap = ({ data, parameter }) => {
   return (
-    <div style={{ height: 400 }}>
+    <div style={{ height: 500, width: "80%" }}>
       <ResponsiveHeatMap
         data={data}
-        margin={{ top: 60, right: 90, bottom: 60, left: 90 }}
+        margin={{ top: 100, right: 60, bottom: 60, left: 150 }}
         axisTop={{
           tickSize: 5,
           tickPadding: 5,
           tickRotation: -90,
           legend: "",
           legendOffset: 46,
-        }}
-        axisRight={{
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legend: "location",
-          legendPosition: "middle",
-          legendOffset: 70,
         }}
         axisLeft={{
           tickSize: 5,

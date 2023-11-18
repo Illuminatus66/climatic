@@ -7,6 +7,10 @@ const DropdownMenuParallelCoordinatesChart = ({
   handleParameterChange,
   graphData,
 }) => {
+  if (graphData.length === 0) {
+    return <div style={{ height: "500px" }}>No data available for Parllel Coordinates Chart. Try choosing another date range or select some entries.</div>;
+  }
+
   return (
     <>
       <FormControl style={{ minWidth: 120, marginBottom: 20, maxWidth: 300 }}>

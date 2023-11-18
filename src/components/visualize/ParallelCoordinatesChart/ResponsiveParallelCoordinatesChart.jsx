@@ -10,20 +10,20 @@ const ResponsiveParallelCoordinatesChart = ({ data, parameters }) => {
     max: 'auto',
     ticksPosition: 'after',
     legendPosition: 'start',
-    legendOffset: 20
+    legendOffset: 0
   }));
 
   return (
-    <div style={{ height: 400 }}>
+    <div style={{ height: 500, width: "80%" }}>
       <ResponsiveParallelCoordinates
         data={data}
         variables={variablesConfig}
-        margin={{ top: 50, right: 120, bottom: 50, left: 60 }}
+        margin={{ top: 50, right: 170, bottom: 50, left: 60 }}
         colors={{ scheme: 'nivo' }}
         lineOpacity={0.75}
         lineWidth={3}
         axesPlan="foreground"
-        axesTicksPosition="before"
+        axesTicksPosition="after"
         motionConfig="molasses"
         legends={[
           {

@@ -22,6 +22,9 @@ const DropdownMenuScatterPlot = ({
     cloudCover: "Cloud Cover",
   };
 
+  if (graphData.length === 0) {
+    return <div style={{ height: "500px" }}>No data available for Scatter Plot. Try choosing another date range or select some entries.</div>;
+  }
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '20px' }}>

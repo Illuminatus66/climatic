@@ -8,7 +8,7 @@ const DropdownMenuBarChart = ({
   graphData,
 }) => {
   if (graphData.length === 0) {
-    return <div style={{ height: "400px" }}>No data available for Bar Chart. Try choosing another date range</div>;
+    return <div style={{ height: "500px" }}>No data available for Bar Chart. Try choosing another date range or select some entries.</div>;
   }
 
   return (

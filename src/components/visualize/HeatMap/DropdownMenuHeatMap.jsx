@@ -7,6 +7,10 @@ const DropdownMenuHeatMap = ({
   handleParameterChange,
   graphData,
 }) => {
+  if (graphData.length === 0) {
+    return <div style={{ height: "500px" }}>No data available for Heat Map. Try choosing another date range or select some entries.</div>;
+  }
+
   return (
     <>
       <FormControl style={{ minWidth: 120, marginBottom: 20 }}>

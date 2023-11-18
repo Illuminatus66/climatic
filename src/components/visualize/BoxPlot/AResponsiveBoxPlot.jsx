@@ -2,10 +2,10 @@ import { ResponsiveBoxPlot } from "@nivo/boxplot";
 
 const AResponsiveBoxPlot = ({ data, parameter, group }) => {
   return (
-    <div style={{ height: 400 }}>
+    <div style={{ height: 500, width: "80%" }}>
       <ResponsiveBoxPlot
         data={data}
-        margin={{ top: 60, right: 140, bottom: 60, left: 60 }}
+        margin={{ top: 60, right: 190, bottom: 60, left: 60 }}
         groupBy="group"
         padding={0.12}
         axisTop={{

@@ -3,12 +3,12 @@ import { ResponsiveBar } from "@nivo/bar";
 
 const ResponsiveBarChart = ({ data, parameter }) => {
   return (
-    <div style={{ height: 500, width: "70%" }}>
+    <div style={{ height: 500, width: "80%" }}>
       <ResponsiveBar
         data={data}
         keys={["value"]}
         indexBy="id"
-        margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+        margin={{ top: 50, right: 50, bottom: 100, left: 100 }}
         padding={0.3}
         valueScale={{ type: "linear" }}
         indexScale={{ type: "band", round: true }}

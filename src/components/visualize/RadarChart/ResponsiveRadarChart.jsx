@@ -2,7 +2,7 @@ import React from "react";
 import { ResponsiveRadar } from "@nivo/radar";
 
 const ResponsiveRadarChart = ({ data, parameters }) => (
-  <div style={{ height: 400 }}>
+  <div style={{ height: 500, width: "80%"}}>
     <ResponsiveRadar
       data={data}
       keys={parameters}
