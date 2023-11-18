@@ -5,7 +5,7 @@ const AResponsiveScatterPlot = ({ data, parameters }) => {
   const [param1, param2] = parameters;
 
   return (
-    <div style={{ height: 500, width:"80%" }}>
+    <div style={{ height: 500 }}>
       <ResponsiveScatterPlot
         data={data}
         margin={{ top: 60, right: 200, bottom: 60, left: 90 }}

@@ -14,7 +14,7 @@ const ResponsiveParallelCoordinatesChart = ({ data, parameters }) => {
   }));
 
   return (
-    <div style={{ height: 500, width: "90%" }}>
+    <div style={{ height: 500}}>
       <ResponsiveParallelCoordinates
         data={data}
         variables={variablesConfig}

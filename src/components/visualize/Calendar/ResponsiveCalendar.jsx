@@ -7,11 +7,11 @@ const CalendarChart = ({ data }) => {
   console.log(sortedData);
 
   if (sortedData.length === 0) {
-    return <div style={{ height: "400px" }}>No data available. Try choosing another date range</div>;
+    return <div style={{ height: "300px" }}>No data available. Try choosing another date range</div>;
   }
 
   return (
-    <div style={{ height: "400px" }}>
+    <div style={{ height: "300px" }}>
       <ResponsiveCalendar
         data={sortedData}
         from={sortedData[0].day}

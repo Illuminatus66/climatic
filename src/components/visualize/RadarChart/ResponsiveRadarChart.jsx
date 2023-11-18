@@ -2,13 +2,13 @@ import React from "react";
 import { ResponsiveRadar } from "@nivo/radar";
 
 const ResponsiveRadarChart = ({ data, parameters }) => (
-  <div style={{ height: 500, width: "80%"}}>
+  <div style={{ height: 500 }}>
     <ResponsiveRadar
       data={data}
       keys={parameters}
       indexBy="locationTimeKey"
       valueFormat=" >-.2f"
-      margin={{ top: 70, right: 80, bottom: 40, left: 80 }}
+      margin={{ top: 70, right: 90, bottom: 40, left: 90 }}
       gridShape="linear"
       gridLabelOffset={20}
       dotSize={10}
