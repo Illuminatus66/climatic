@@ -8,7 +8,7 @@ const DropdownMenuHeatMap = ({
   graphData,
 }) => {
   if (graphData.length === 0) {
-    return <div style={{ height: "500px" }}>No data available for Heat Map. Try choosing another date range or select some entries.</div>;
+    return <div style={{ height: "600px" }}>No data available for Heat Map. Try choosing another date range or select some entries.</div>;
   }
 
   return (
