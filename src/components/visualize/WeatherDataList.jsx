@@ -37,9 +37,9 @@ const WeatherDataList = ({ data, selectedEntries, onSelect, dateRange, setDateRa
       style={{ overflowY: "scroll", height: "100vh" }}
     >
       <div
-        style={{ display: "flex", alignItems: "center", marginBottom: "20px", height:"30px"}}
+        style={{ display: "flex", alignItems: "center", marginBottom: "20px"}}
       >
-        <div id="datepick" style={{ marginRight: "10px" }}>
+        <div id="datepick" style={{ marginRight: "15px" }}>
           <DatePicker
             selectsRange={true}
             startDate={dateRange[0]}
