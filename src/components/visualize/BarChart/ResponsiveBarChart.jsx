@@ -3,7 +3,7 @@ import { ResponsiveBar } from "@nivo/bar";
 
 const ResponsiveBarChart = ({ data, parameter }) => {
   return (
-    <div style={{ height: 500, width: "80%" }}>
+    <div style={{ height: 500, width: "90%" }}>
       <ResponsiveBar
         data={data}
         keys={["value"]}
@@ -17,15 +17,16 @@ const ResponsiveBarChart = ({ data, parameter }) => {
           from: "color",
           modifiers: [["darker", 1.6]],
         }}
-        axisTop={null}
         axisRight={null}
+        axisTop={{
+          legend: "Location-Timestamp",
+          legendPosition: "middle",
+          legendOffset: 32,
+        }}
         axisBottom={{
           tickSize: 5,
           tickPadding: 5,
           tickRotation: -18,
-          legend: "Location-Timestamp",
-          legendPosition: "middle",
-          legendOffset: 32,
         }}
         axisLeft={{
           tickSize: 5,
