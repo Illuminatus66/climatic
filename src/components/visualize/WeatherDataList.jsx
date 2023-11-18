@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import arrowUpImage from "../../assets/up-arrow.png";
-import arrowDownImage from "../../assets/down-arrow.png";
 
 const WeatherDataList = ({ data, selectedEntries, onSelect, dateRange, setDateRange }) => {
   const [expandedId, setExpandedId] = useState(null);
@@ -52,7 +50,7 @@ const WeatherDataList = ({ data, selectedEntries, onSelect, dateRange, setDateRa
           />
         </div>
         <button onClick={toggleSortOrder} className="sort-button">
-          <img src={isAscending ? arrowDownImage : arrowUpImage} alt="Sort" height={20} width={15}/>
+          {isAscending ? '↓' : '↑'}
         </button>
       </div>
       {sortedData.map((locationData) => (
