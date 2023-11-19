@@ -392,7 +392,6 @@ const Visualize = () => {
   useEffect(() => {
     const calendarData = transformDataForCalendar(filteredData, selectedEntries);
     setCalendarData(calendarData);
-    console.log(calendarData);
   }, [filteredData, selectedEntries]);
 
   useEffect(() => {

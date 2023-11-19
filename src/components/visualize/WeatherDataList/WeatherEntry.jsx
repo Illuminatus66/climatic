@@ -1,15 +1,10 @@
 import React from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 
 const WeatherEntry = ({ weatherEntry, selectedEntries, handleSelect }) => {
-    const [ref, inView] = useInView({ triggerOnce: true });
   
     return (
       <motion.li
-        ref={ref}
-        initial={{ opacity: 0, y: 50 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.5 }}
         className="weather-item"
         onClick={() => handleSelect(weatherEntry._id)}
         style={{

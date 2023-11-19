@@ -25,7 +25,9 @@ function Home() {
   };
 
   useEffect(() => {
-    dispatch(interactionsLeft(currentUser?.result._id));
+    if (currentUser?.result._id) {
+      dispatch(interactionsLeft(currentUser.result._id));
+    }
   }, [dispatch, currentUser]);
 
   return (
