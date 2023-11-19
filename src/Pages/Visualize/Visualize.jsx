@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import WeatherDataList from "../../components/visualize/WeatherDataList";
+import LocationsList from "../../components/visualize/WeatherDataList/LocationsList";
 import ResponsiveCalendar from '../../components/visualize/Calendar/ResponsiveCalendar';
 import DropdownMenuLineChart from '../../components/visualize/LineChart/DropdownMenuLineChart';
 import DropdownMenuBarChart from "../../components/visualize/BarChart/DropdownMenuBarChart";
@@ -468,7 +468,7 @@ const Visualize = () => {
   return (
     <div style={{ display: "flex", width: "100%" }}>
       <div style={{ width: "20%", height: "100vh", position: "sticky", top: 2, paddingRight: 5  }}>
-        <WeatherDataList 
+        <LocationsList 
         data={filteredData}
         onSelect={handleSelect}
         selectedEntries={selectedEntries}
