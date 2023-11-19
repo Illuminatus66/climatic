@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import WeatherEntry from "./WeatherEntry";
 
 const LocationsList = ({ data, selectedEntries, onSelect, dateRange, setDateRange }) => {
   const [expandedId, setExpandedId] = useState(null);
@@ -82,45 +83,12 @@ const LocationsList = ({ data, selectedEntries, onSelect, dateRange, setDateRang
                 }}
               >
                 {locationData.weather.map((weatherEntry) => (
-                  <motion.div
-                  className="weather-item"
-                  onClick={() => handleSelect(weatherEntry._id)}
-                  style={{
-                    margin: '5px',
-                    padding: '10px',
-                    borderRadius: '3px',
-                    border: selectedEntries.includes(weatherEntry._id) ? '3px solid red' : '1px dashed black',
-                    cursor: 'pointer',
-                  }}
-                >
-                  <div className="date">
-                    {new Date(weatherEntry.startTime).toLocaleString()}
-                  </div>
-                  <div>ID: {weatherEntry._id}</div>
-                  <div>Temperature: {weatherEntry.values.temperature}°C</div>
-                  <div>
-                    Temperature Apparent: {weatherEntry.values.temperatureApparent}°C
-                  </div>
-                  <div>Cloud Cover: {weatherEntry.values.cloudCover}%</div>
-                  <div>Dew Point: {weatherEntry.values.dewPoint}°C</div>
-                  <div>Humidity: {weatherEntry.values.humidity}%</div>
-                  <div>
-                    Precipitation Intensity: {weatherEntry.values.precipitationIntensity}
-                    &nbsp;mm/hr
-                  </div>
-                  <div>
-                    Precipitation Probability:{" "}
-                    {weatherEntry.values.precipitationProbability}%
-                  </div>
-                  <div>PSL: {weatherEntry.values.pressureSeaLevel}&nbsp;hPa</div>
-                  <div>Sunrise Time: {weatherEntry.values.sunriseTime}</div>
-                  <div>Sunset Time: {weatherEntry.values.sunsetTime}</div>
-                  <div>UV Index: {weatherEntry.values.uvIndex}</div>
-                  <div>Visibility: {weatherEntry.values.visibility}km</div>
-                  <div>Weather for Day: {weatherEntry.values.weatherCodeDay}</div>
-                  <div>Weather for Night: {weatherEntry.values.weatherCodeNight}</div>
-                  <div>Wind Speed: {weatherEntry.values.windSpeed}m/s</div>
-                </motion.div>
+                  <WeatherEntry
+                  key={weatherEntry._id}
+                  weatherEntry={weatherEntry}
+                  isSelected={selectedEntries.includes(weatherEntry._id)}
+                  handleSelect={handleSelect}
+                />
                 ))}
               </motion.ul>
             )}
