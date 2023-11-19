@@ -1,5 +1,5 @@
-import React, { useState, useInView } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState } from "react";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import WeatherEntry from "./WeatherEntry";
@@ -36,7 +36,7 @@ const LocationsList = ({ data, selectedEntries, onSelect, dateRange, setDateRang
   return (
     <div
       className="weather-data-list"
-      style={{ overflowY: "scroll", height: "100vh" }}
+      style={{ overflowY: "scroll", height: "100vh", backgroundColor: "#e6ccff" }}
     >
       <div
         style={{ display: "flex", alignItems: "center", marginBottom: "20px"}}

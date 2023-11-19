@@ -1,5 +1,5 @@
-import React, { useInView } from "react";
-import { motion } from "framer-motion";
+import React from "react";
+import { motion, useInView } from "framer-motion";
 
 const WeatherEntry = ({ weatherEntry, selectedEntries, handleSelect }) => {
     const [ref, inView] = useInView({ triggerOnce: true });
