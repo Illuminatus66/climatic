@@ -60,7 +60,7 @@ const LocationsList = ({ data, selectedEntries, onSelect, dateRange, setDateRang
               backgroundColor: '#d9b3ff',
               cursor: 'pointer',
               padding: '10px',
-              margin: '10px 0',
+              margin: '10px 0 0 0',
               boxShadow: expandedId === `${locationData.location.place}-${locationData.createdAt}` ? 'none' : '0px 4px 8px rgba(0, 0, 0, 0.1)',
               borderRadius: '5px',
             }}
@@ -86,7 +86,9 @@ const LocationsList = ({ data, selectedEntries, onSelect, dateRange, setDateRang
                   className="weather-item"
                   onClick={() => handleSelect(weatherEntry._id)}
                   style={{
+                    margin: '5px',
                     padding: '10px',
+                    borderRadius: '3px',
                     border: selectedEntries.includes(weatherEntry._id) ? '3px solid red' : '1px dashed black',
                     cursor: 'pointer',
                   }}
