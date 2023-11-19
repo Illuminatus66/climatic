@@ -1,40 +1,11 @@
-import React, { useState, useRef, useEffect, createRef } from "react";
-import { animate, motion, AnimatePresence, inView } from "framer-motion";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const LocationsList = ({ data, selectedEntries, onSelect, dateRange, setDateRange }) => {
   const [expandedId, setExpandedId] = useState(null);
   const [isAscending, setIsAscending] = useState(true);
-  const listRef = useRef(null);
-  const itemRefs = useRef(new Map());
-
-  useEffect(() => {
-    const newRefs = new Map();
-  
-    data.forEach((item) => {
-      const key = `${item.location.place}-${item.createdAt}`;
-      newRefs.set(key, itemRefs.current.get(key) || createRef());
-    });
-
-    itemRefs.current = newRefs;
-
-    itemRefs.current.forEach((ref) => {
-      if (ref.current) {
-        inView(ref.current, {
-          root: listRef.current,
-          once: false,
-          callback: ({ target }) => {
-            animate(target, { opacity: 1, y: 0 });
-          },
-          exitCallback: ({ target }) => {
-            animate(target, { opacity: 0, y: -20 });
-          }
-        });
-      }
-    });
-  }, [data]);
-  
 
   const handleSelect = (entryId) => {
     onSelect((prevSelectedEntries) => {
@@ -63,8 +34,7 @@ const LocationsList = ({ data, selectedEntries, onSelect, dateRange, setDateRang
   return (
     <div
       className="weather-data-list"
-      style={{ overflowY: "scroll", height: "101vh", backgroundColor: "#e6ccff" }}
-      ref={listRef}
+      style={{ overflowY: "scroll", height: "100vh", backgroundColor: "#e6ccff" }}
     >
       <div 
       style={{ display: "flex", alignItems: "center", marginBottom: "20px"}}
@@ -94,7 +64,6 @@ const LocationsList = ({ data, selectedEntries, onSelect, dateRange, setDateRang
               boxShadow: expandedId === `${locationData.location.place}-${locationData.createdAt}` ? 'none' : '0px 4px 8px rgba(0, 0, 0, 0.1)',
               borderRadius: '5px',
             }}
-            ref={itemRefs.current.get(`${locationData.location.place}-${locationData.createdAt}`)}
           >
             {locationData.location.place}
           </h3>
@@ -109,12 +78,11 @@ const LocationsList = ({ data, selectedEntries, onSelect, dateRange, setDateRang
                 style={{
                   backgroundColor: '#ffb3b3',
                   padding: '10px',
-                  margin: '0 10px',
                   borderRadius: '5px',
                 }}
               >
                 {locationData.weather.map((weatherEntry) => (
-                  <motion.li
+                  <motion.div
                   className="weather-item"
                   onClick={() => handleSelect(weatherEntry._id)}
                   style={{
@@ -123,7 +91,7 @@ const LocationsList = ({ data, selectedEntries, onSelect, dateRange, setDateRang
                   }}
                 >
                   <div className="date">
-                    {new Date(weatherEntry.startTime).toLocaleDateString()}
+                    {new Date(weatherEntry.startTime).toLocaleString()}
                   </div>
                   <div>ID: {weatherEntry._id}</div>
                   <div>Temperature: {weatherEntry.values.temperature}°C</div>
@@ -149,7 +117,7 @@ const LocationsList = ({ data, selectedEntries, onSelect, dateRange, setDateRang
                   <div>Weather for Day: {weatherEntry.values.weatherCodeDay}</div>
                   <div>Weather for Night: {weatherEntry.values.weatherCodeNight}</div>
                   <div>Wind Speed: {weatherEntry.values.windSpeed}m/s</div>
-                </motion.li>
+                </motion.div>
                 ))}
               </motion.ul>
             )}
