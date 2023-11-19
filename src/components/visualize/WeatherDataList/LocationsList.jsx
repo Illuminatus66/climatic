@@ -86,7 +86,8 @@ const LocationsList = ({ data, selectedEntries, onSelect, dateRange, setDateRang
                   className="weather-item"
                   onClick={() => handleSelect(weatherEntry._id)}
                   style={{
-                    border: selectedEntries.includes(weatherEntry._id) ? '2px solid lightblue' : 'none',
+                    padding: '10px',
+                    border: selectedEntries.includes(weatherEntry._id) ? '3px red' : '1px black',
                     cursor: 'pointer',
                   }}
                 >
