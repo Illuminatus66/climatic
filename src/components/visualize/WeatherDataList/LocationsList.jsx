@@ -102,7 +102,7 @@ const LocationsList = ({ data, selectedEntries, onSelect, dateRange, setDateRang
             {expandedId === (`${locationData.location.place}-${locationData.createdAt}`) && (
               <motion.ul
                 initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, y: 0 }}
+                animate={{ opacity: 1, height: "auto"}}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.5 }}
                 className="weather-list"
