@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence, useInView } from "framer-motion";
+import React, { useState, useRef, useEffect, createRef } from "react";
+import { animate, motion, AnimatePresence, inView } from "framer-motion";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import WeatherEntry from "./WeatherEntry";
@@ -7,7 +7,28 @@ import WeatherEntry from "./WeatherEntry";
 const LocationsList = ({ data, selectedEntries, onSelect, dateRange, setDateRange }) => {
   const [expandedId, setExpandedId] = useState(null);
   const [isAscending, setIsAscending] = useState(true);
-  const [ref, inView] = useInView({ triggerOnce: true });
+  const listRef = useRef(null);
+  const itemRefs = useRef(new Map());
+
+  useEffect(() => {
+    data.forEach((item) => {
+      const ref = itemRefs.current.get(item.location.place) || createRef();
+      itemRefs.current.set(item.location.place, ref);
+
+      if (ref.current) {
+        inView(ref.current, {
+          root: listRef.current,
+          once: false,
+          callback: ({ target }) => {
+            animate(target, { opacity: 1, y: 0 });
+          },
+          exitCallback: ({ target }) => {
+            animate(target, { opacity: 0, y: -20 });
+          }
+        });
+      }
+    });
+  }, [data]);
 
   const handleSelect = (entryId) => {
     onSelect((prevSelectedEntries) => {
@@ -37,9 +58,10 @@ const LocationsList = ({ data, selectedEntries, onSelect, dateRange, setDateRang
     <div
       className="weather-data-list"
       style={{ overflowY: "scroll", height: "100vh", backgroundColor: "#e6ccff" }}
+      ref={listRef}
     >
-      <div
-        style={{ display: "flex", alignItems: "center", marginBottom: "20px"}}
+      <div 
+      style={{ display: "flex", alignItems: "center", marginBottom: "20px"}}
       >
         <div id="datepick" style={{ marginRight: "15px" }}>
           <DatePicker
@@ -58,23 +80,23 @@ const LocationsList = ({ data, selectedEntries, onSelect, dateRange, setDateRang
       {sortedData.map((locationData) => (
         <div key={locationData.location.place} className="location-section">
           <h3 onClick={() => toggleExpand(locationData.location.place)}
-          style={{
-            backgroundColor: '#d9b3ff',
-            cursor: 'pointer',
-            padding: '10px',
-            margin: '10px 0',
-            boxShadow: expandedId === locationData.location.place ? 'none' : '0px 4px 8px rgba(0, 0, 0, 0.1)',
-            borderRadius: '5px',
-          }}
+            style={{
+              backgroundColor: '#d9b3ff',
+              cursor: 'pointer',
+              padding: '10px',
+              margin: '10px 0',
+              boxShadow: expandedId === locationData.location.place ? 'none' : '0px 4px 8px rgba(0, 0, 0, 0.1)',
+              borderRadius: '5px',
+            }}
+            ref={itemRefs.current.get(locationData.location.place)}
           >
             {locationData.location.place}
           </h3>
           <AnimatePresence>
             {expandedId === locationData.location.place && (
               <motion.ul
-                ref={ref}
                 initial={{ opacity: 0, height: 0 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
+                animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.5 }}
                 className="weather-list"
@@ -86,7 +108,7 @@ const LocationsList = ({ data, selectedEntries, onSelect, dateRange, setDateRang
                 }}
               >
                 {locationData.weather.map((weatherEntry) => (
-                    <WeatherEntry
+                  <WeatherEntry
                     key={weatherEntry._id}
                     weatherEntry={weatherEntry}
                     selectedEntries={selectedEntries}
@@ -103,10 +125,7 @@ const LocationsList = ({ data, selectedEntries, onSelect, dateRange, setDateRang
 };
 
 const areEqual = (prevProps, nextProps) => {
-  return (
-    prevProps.data === nextProps.data &&
-    prevProps.onSelect === nextProps.onSelect
-  );
+  return prevProps.data === nextProps.data && prevProps.onSelect === nextProps.onSelect;
 };
 
 export default React.memo(LocationsList, areEqual);
