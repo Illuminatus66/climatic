@@ -99,8 +99,4 @@ const LocationsList = ({ data, selectedEntries, onSelect, dateRange, setDateRang
   );
 };
 
-const areEqual = (prevProps, nextProps) => {
-  return prevProps.data === nextProps.data && prevProps.onSelect === nextProps.onSelect;
-};
-
-export default React.memo(LocationsList, areEqual);
+export default LocationsList;
