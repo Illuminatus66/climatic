@@ -66,18 +66,18 @@ function Home() {
                   simple and intuitive UI.
                   </p>
                   The weather data provided by Tomorrow.io contains various parameters such as:
-                  <ol>
-                    ‣Temperature and Apparent Temperature<br/>
-                    ‣Humidity<br/>
-                    ‣Rainfall Probablity and Intensity<br/>
-                    ‣Cloud Cover<br/>
-                    ‣UV Index<br/>
-                    ‣Visibility<br/>
-                    ‣Pressure at Sea Level<br/>
-                    ‣Sunrise and Sunset Time<br/>
-                    ‣Wind Speed<br/>
-                    ‣Dew Point<br/>
-                  </ol>
+                  <ul>
+                    <li>Temperature and Apparent Temperature</li>
+                    <li>Humidity</li>
+                    <li>Rainfall Probablity and Intensity</li>
+                    <li>Cloud Cover</li>
+                    <li>UV Index</li>
+                    <li>Visibility</li>
+                    <li>Pressure at Sea Level</li>
+                    <li>Sunrise and Sunset Time</li>
+                    <li>Wind Speed</li>
+                    <li>Dew Point</li>
+                  </ul>
                   <p>
                   To fetch the stored data, you can specify the date range and fetch the data from MongoDB Atlas. 
                   You can then easily download the data in four different formats based upon your needs.
@@ -87,6 +87,18 @@ function Home() {
                   verbose as you keep on using the app. In that case, you might want to choose an <strong>.xlsx</strong> file because no amount of 
                   data can faze the trusty old Excel file format. 
                   </p><br/><br/>
+                  <p>
+                    <b><i>New Features</i></b><br/>
+                    Added a Visualization component where the weather data can be compared in a bunch of different charts and graphs like
+                    <ol>
+                      <li>Box Plot</li>
+                      <li>Scatter Plot</li>
+                      <li>Line Chart and Bar Graph</li>
+                      <li>Heatmap</li>
+                      <li>Radar Chart</li>
+                      <li>Parallel Co-ordinates Chart</li>
+                    </ol>
+                  </p>
                 </p>
                 <hr></hr>
                 <p>Thank You! Send suggestions to <a href="mailto:varunsodhani2711@gmail.com">my email</a></p>
@@ -100,8 +112,8 @@ function Home() {
             <h2>About:</h2>
             <p>
               This Weather Data Downloader/Visualizer app was built on 30/08/2023 for the purpose of demonstrating the integration of various services<br/>
-              like <strong>Mapbox's</strong> WebGL-based map rendering, their forward-geocoding capabilities, <strong>Tomorrow.io's</strong> extensive array of weather<br/>
-              parameters and <strong>MongoDB's</strong> unopinionated document and schema structuring, complemented by blazingly-fast read-write speeds.<br/>
+              like <strong><a href="https://docs.mapbox.com/mapbox-gl-js/api/map/" class="no-blue-link" target="_blank" rel="noreferrer">Mapbox's</a></strong> WebGL-based map rendering, their forward-geocoding capabilities, <strong><a href="https://docs.tomorrow.io/reference/welcome" class="no-blue-link" target="_blank" rel="noreferrer">Tomorrow.io's</a></strong> extensive array of weather<br/>
+              parameters and <strong><a href="https://www.mongodb.com/docs/atlas/getting-started/" class="no-blue-link" target="_blank" rel="noreferrer">MongoDB's</a></strong> unopinionated document and schema structuring, complemented by blazingly-fast read-write speeds.<br/>
               You can get accurate weather of any place on Earth! Click on the button below and get your first weather forecast<br/>
               or you could read ahead to know how the web application was built and how it works-----&gt;
               <button className="buttonClass" onClick={handleButtonClick}>
@@ -128,13 +140,27 @@ function Home() {
             </p>
             <h2>Features: </h2>
             <p>
-              <li>API calls to both Map and Weather interfaces are limited free-tier services but still enough to be viably used.</li>
-              <li>Weather predictions for any location you want, of the current day as well as the next two days for unauthenticated users.</li>
+              <li>API calls to both the map, and weather data provider are limited free-tier services but still enough to be viably used.</li>
+              <li>Weather predictions for any location you want, of the current day as well as the next two days for authenticated users.</li>
               <li>Repeatedly double-clicking on different areas of the map will repopulate the HTML tables for unauthenticated users.</li>
-              <li>Weather data can be retrieved for upto three days for users that sign-in. Search and download capabilities also enabled.</li>
+              <li>Weather data can be retrieved for upto three days for authenticated users. Search and download capabilities also enabled.</li>
               <li>Weather predictions include a wide variety of parameters that could enhance your understanding of the locality you want.</li>
-              <li>Map and location services provided by Mapbox. Weather services by Tomorrow. Storage managed by MongoDB's Atlas.</li>
-              <li>The website is one of a kind and fun to operate because of the simplistic UI built using React.</li>
+              <li>Map and location services provided by Mapbox. Weather data provided by Tomorrow.io. Storage managed by MongoDB Atlas.</li>
+              <li>The website is one of a kind and easy to operate because of the simplistic UI built using React.</li>
+            </p>
+            <h3>New Features:</h3>
+            <p>
+              Some new features have been added to Climatic™ which hopefully enhance the user-experience:
+              <ul>
+                <li>A Visualization component has been added to compare weather data through graphs and plots provided by <strong><a href="https://nivo.rocks/components/" class="no-blue-link" target="_blank" rel="noreferrer">Nivo</a></strong>.</li>
+                <li>The user can filter weather data as many times as required using the datepicke.</li>
+                <li>The weather entries are sorted based on the time when the records were created in MongoDB.</li>
+                <li>Sort through the list on the left side and select the weather entries you want to visualize.</li>
+                <li>Select the parameters individually for each kind of chart for maxiumum customization.</li>
+                <li>You might also have to select a grouping option to group the data based on either location or time.</li>
+                <li>I also plan on including support for importing your own data to visualize along with a canvas<br/> 
+                  representation of the svg plots for the users to download and use in other places</li>
+              </ul>
             </p>
             <hr />
             <h3>Screenshots:</h3>

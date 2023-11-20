@@ -37,6 +37,10 @@
   background: linear-gradient(rgba(83, 180, 250, 1), rgba(26, 20, 226, 1));
 }
 
+.no-blue-link {
+  color: inherit;
+  cursor: pointer;
+}
 
 h1 {
   font-family: 'Oswald', sans-serif;
