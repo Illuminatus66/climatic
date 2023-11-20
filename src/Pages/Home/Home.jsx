@@ -52,19 +52,19 @@ function Home() {
             <div className="thumbnail">
               <img src={logo} alt="images of clouds and sun to show the purpose of the app" />
               <div className="caption">
-                <h2>Information:</h2>
+                <h2><b><i>Information:</i></b></h2>
                 <p>
                   This is the all new Climatic™ app. With us, you can choose to either get the weather as an <strong>unauthenticated 
                   user</strong>, which will enable you to double-click anywhere on the map provided by Mapbox. Then consequently, you'll
                   be able to <strong>view the weather data for 2 days inside an HTML table.</strong> Beware! You won't be able to download this
-                  data because the table refreshes after every double-click.<br/><br/>
+                  data because the table refreshes after every double-click.<br/>
                   <p>
                   If you do decide to sign-in, 
                   you gain the perks to search for your desired location in the Geocoder support, also provided by Mapbox.<br/>
                   Apart from being able search and locate, you'll be able to <strong>fetch weather data for 3 days</strong>, ie. the current
                   day and two consecutive days. The data will be <strong>stored indefinitely</strong> and can be downloaded using our
                   simple and intuitive UI.
-                  </p>
+                  </p><br/>
                   The weather data provided by Tomorrow.io contains various parameters such as:
                   <ul>
                     <li>Temperature and Apparent Temperature</li>
@@ -77,7 +77,7 @@ function Home() {
                     <li>Sunrise and Sunset Time</li>
                     <li>Wind Speed</li>
                     <li>Dew Point</li>
-                  </ul>
+                  </ul><br/>
                   <p>
                   To fetch the stored data, you can specify the date range and fetch the data from MongoDB Atlas. 
                   You can then easily download the data in four different formats based upon your needs.
@@ -86,9 +86,9 @@ function Home() {
                   you need, and we have that too! A simple text or <strong>.txt</strong> file might be what you want but that gets more and more 
                   verbose as you keep on using the app. In that case, you might want to choose an <strong>.xlsx</strong> file because no amount of 
                   data can faze the trusty old Excel file format. 
-                  </p><br/>
+                  </p>
                   <p>
-                    <h3><b><i>New Features</i></b><br/></h3>
+                    <h2><b><i>New Features:</i></b></h2><br/>
                     Added a Visualization component where the weather data can be compared in a bunch of different charts and graphs like:
                     <ol>
                       <li>Box Plot</li>
@@ -102,7 +102,7 @@ function Home() {
                   </p>
                 </p>
                 <hr></hr>
-                <p>Thank you for visiting! Send suggestions to <a href="mailto:varunsodhani2711@gmail.com">my email</a></p>
+                <p>Thank you for visiting! Send your suggestions to <a href="mailto:varunsodhani2711@gmail.com">my email</a></p>
               </div>
             </div>
           </div>
