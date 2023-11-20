@@ -10,7 +10,7 @@ import { visitorData } from "../../actions/weather";
 const Visitor = () => {
   const dispatch = useDispatch();
   const [showTable, setShowTable] = useState(false);
-  const weatherdata = useSelector((state) => state.weather.data);
+  const data = useSelector((state) => state.weather.data);
 
   useEffect(() => {
     mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
@@ -47,19 +47,19 @@ const Visitor = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (weatherdata.data.timelines.length > 0) {
+    if (data && data.data && data.data.timelines && data.data.timelines.length > 0) {
       const todTable = document.querySelector("#dayone tbody");
       const tomTable = document.querySelector("#daytwo tbody");
       todTable.innerHTML = "";
       tomTable.innerHTML = "";
 
-      for (const parameter of Object.keys(weatherdata.data.timelines[0].intervals[0].values)) {
+      for (const parameter of Object.keys(data.data.timelines[0].intervals[0].values)) {
         const row = document.createElement("tr");
         const paramcell = document.createElement("td");
         const valuecell = document.createElement("td");
 
         paramcell.textContent = parameterMap[parameter] || parameter;
-        let value = weatherdata.data.timelines[0].intervals[0].values[parameter];
+        let value = data.data.timelines[0].intervals[0].values[parameter];
         if (parameter === "sunriseTime" || parameter === "sunsetTime") {
           value = new Date(value).toLocaleString();
         } else if (parameter === "weatherCodeDay" || parameter === "weatherCodeNight") {
@@ -72,13 +72,13 @@ const Visitor = () => {
         todTable.appendChild(row);
       }
 
-      for (const parameter of Object.keys(weatherdata.data.timelines[0].intervals[1].values)) {
+      for (const parameter of Object.keys(data.data.timelines[0].intervals[1].values)) {
         const row = document.createElement("tr");
         const paramcell = document.createElement("td");
         const valuecell = document.createElement("td");
 
         paramcell.textContent = parameterMap[parameter] || parameter;
-        let value = weatherdata.data.timelines[0].intervals[1].values[parameter];
+        let value = data.data.timelines[0].intervals[1].values[parameter];
         if (parameter === "sunriseTime" || parameter === "sunsetTime") {
           value = new Date(value).toLocaleString();
         } else if (parameter === "weatherCodeDay" || parameter === "weatherCodeNight") {
@@ -91,7 +91,7 @@ const Visitor = () => {
         tomTable.appendChild(row);
       }
     }
-  }, [weatherdata]);
+  }, [data]);
 
   return (
     <div>

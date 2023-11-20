@@ -8,7 +8,7 @@ import screenshot2 from '../../assets/screenshot2.png';
 import screenshot3 from '../../assets/screenshot3.png';
 import screenshot4 from '../../assets/screenshot4.png';
 import screenshot5 from '../../assets/screenshot5.png';
-import weather from '../../assets/weather.svg';
+import logo from '../../assets/logo.png';
 import { interactionsLeft } from '../../actions/weather';
 import './Home.css';
 
@@ -50,7 +50,7 @@ function Home() {
         <section className="entire">
           <div className="col-sm-4">
             <div className="thumbnail">
-              <img src={weather} alt="images of clouds and sun to show the purpose of the app" />
+              <img src={logo} alt="images of clouds and sun to show the purpose of the app" />
               <div className="caption">
                 <h2>Information:</h2>
                 <p>
@@ -89,7 +89,7 @@ function Home() {
                   </p><br/><br/>
                 </p>
                 <hr></hr>
-                <p>Thank You</p>
+                <p>Thank You! Send suggestions to <a href="mailto:varunsodhani2711@gmail.com">my email</a></p>
               </div>
             </div>
           </div>

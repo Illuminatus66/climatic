@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato&family=Oswald&display=swap');
 
 @media screen and (max-width: 1199px) {
-  .col-sm-3 {
+  .col-sm-4 {
     display: none;
   }
   .footer {
@@ -12,10 +12,10 @@
 .entire {
   background-color: #e3f2fd;
 }
-.col-lg-9 {
+.col-lg-8 {
   background-color: #e3f2fd;
 }
-.col-sm-3{
+.col-sm-4{
   background-color: #f7a072;
 }
 .buttonClass {
@@ -30,6 +30,7 @@
   box-shadow: 3px 4px 0px 0px rgba(33, 44, 138, 1);
   text-shadow: 0px 1px 0px rgba(8, 11, 42, 1);
   background:linear-gradient(rgba(26, 20, 226, 1), rgba(83, 180, 250, 1));
+  border-radius: 3px;
 }
 
 .buttonClass:hover {
