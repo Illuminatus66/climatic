@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import ExcelJS from "exceljs";
 
 const DownloadXlsx = ({ setIsDownloading, weatherdata }) => {

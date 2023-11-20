@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import Papa from 'papaparse';
 
 const DownloadCsv = ({ setIsDownloading, weatherdata }) => {
