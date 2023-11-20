@@ -35,7 +35,7 @@ const LocationsList = ({ data, selectedEntries, onSelect, dateRange, setDateRang
   return (
     <div
       className="weather-data-list"
-      style={{ overflowY: "scroll", height: "100vh", backgroundColor: "#e6ccff" }}
+      style={{ overflowY: "scroll", height: "101vh", backgroundColor: "#e6ccff" }}
     >
       <div 
       style={{ display: "flex", alignItems: "center", marginBottom: "20px"}}

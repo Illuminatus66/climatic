@@ -5,7 +5,7 @@ const WeatherEntry = ({ weatherEntry, isSelected, handleSelect }) => {
   const style = {
     margin: "5px",
     padding: "5px",
-    borderRadius: "3px",
+    borderRadius: "5px",
     border: isSelected ? "2px solid green" : "1px dashed red",
     cursor: "pointer",
   };
@@ -28,12 +28,10 @@ const WeatherEntry = ({ weatherEntry, isSelected, handleSelect }) => {
       <div>Dew Point: {weatherEntry.values.dewPoint}°C</div>
       <div>Humidity: {weatherEntry.values.humidity}%</div>
       <div>
-        Precipitation Intensity: {weatherEntry.values.precipitationIntensity}
-        &nbsp;mm/hr
+        Precipitation Intensity: {weatherEntry.values.precipitationIntensity}mm/hr
       </div>
       <div>
-        Precipitation Probability:{" "}
-        {weatherEntry.values.precipitationProbability}%
+        Precipitation Probability:{weatherEntry.values.precipitationProbability}%
       </div>
       <div>PSL: {weatherEntry.values.pressureSeaLevel}&nbsp;hPa</div>
       <div>Sunrise Time: {weatherEntry.values.sunriseTime}</div>
