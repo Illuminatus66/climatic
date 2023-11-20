@@ -42,4 +42,21 @@
   .button:active {
     transform: translateY(0);
   }
+
+  .buttons-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .download-buttons button {
+    margin-bottom: 10px;
+  }
+  
+  .action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px; 
+  }
+  
   

@@ -109,7 +109,7 @@ const Map = () => {
             </div>
             <div id="buttons">
               {showButtons && weatherdata && (
-                <>
+                <div>
                   <button
                     className="button button-shadow-pop"
                     onClick={handleJsonDownload}
@@ -154,45 +154,47 @@ const Map = () => {
                       "Download .XLSX File"
                     )}
                   </button>
-                  <button
-                    onClick={handleVisualizeClick}
-                    className="button button-shadow-pop"
-                  >
-                    Visualize Data
-                  </button>
-                </>
+                </div>
               )}
+              <div className="action-buttons">
               <button
                 onClick={handleFetchDataClick}
                 className="button button-shadow-pop"
               >
                 Fetch Data
               </button>
+              <button
+                onClick={handleVisualizeClick}
+                className="button button-shadow-pop"
+              >
+                Visualize Data
+              </button>
+              </div>
             </div>
             {isDownloadingJson && (
-            <DownloadJson 
-              setIsDownloading={setIsDownloadingJson} 
-              weatherdata={weatherdata}
-            />
-          )}
-          {isDownloadingTxt && (
-            <DownloadTxt 
-              setIsDownloading={setIsDownloadingTxt} 
-              weatherdata={weatherdata}
-            />
-          )}
-          {isDownloadingCsv && (
-            <DownloadCsv 
-              setIsDownloading={setIsDownloadingCsv} 
-              weatherdata={weatherdata}
-            />
-          )}
-          {isDownloadingXlsx && (
-            <DownloadXlsx 
-              setIsDownloading={setIsDownloadingXlsx} 
-              weatherdata={weatherdata}
-            />
-          )}
+              <DownloadJson
+                setIsDownloading={setIsDownloadingJson}
+                weatherdata={weatherdata}
+              />
+            )}
+            {isDownloadingTxt && (
+              <DownloadTxt
+                setIsDownloading={setIsDownloadingTxt}
+                weatherdata={weatherdata}
+              />
+            )}
+            {isDownloadingCsv && (
+              <DownloadCsv
+                setIsDownloading={setIsDownloadingCsv}
+                weatherdata={weatherdata}
+              />
+            )}
+            {isDownloadingXlsx && (
+              <DownloadXlsx
+                setIsDownloading={setIsDownloadingXlsx}
+                weatherdata={weatherdata}
+              />
+            )}
           </div>
         </div>
       ) : (
