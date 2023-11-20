@@ -17,12 +17,11 @@ const DownloadJson = ({ setIsDownloading, weatherdata }) => {
     const a = document.createElement("a");
     a.href = dataUri;
     a.download = "data.json";
-    a.click();
-
-    a.addEventListener("click", () => {
+    a.addEventListener('click', () => {
       setIsDownloading(false);
-      URL.revokeObjectURL(a.href);
     });
+
+    a.click();
   }, [setIsDownloading, weatherdata]);
 
   return null;

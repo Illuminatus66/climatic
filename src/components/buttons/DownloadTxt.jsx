@@ -44,10 +44,13 @@ const DownloadTxt = ({ setIsDownloading, weatherdata }) => {
     a.style.display = 'none';
 
     document.body.appendChild(a);
+    
+    a.addEventListener('click', () => {
+      setIsDownloading(false);
+    });
+
     a.click();
     document.body.removeChild(a);
-    
-    setIsDownloading(false);
   }, [setIsDownloading, weatherdata]);
 
   return null;
