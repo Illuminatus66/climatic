@@ -6,7 +6,7 @@ const WeatherEntry = ({ weatherEntry, isSelected, handleSelect }) => {
     margin: "5px",
     padding: "10px",
     borderRadius: "3px",
-    border: isSelected ? "3px solid red" : "1px dashed black",
+    border: isSelected ? "3px solid green" : "1px dashed black",
     cursor: "pointer",
   };
 

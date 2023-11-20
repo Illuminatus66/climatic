@@ -48,44 +48,45 @@ function Home() {
       </head>
       <body>
         <section className="entire">
-          <div className="col-sm-3">
+          <div className="col-sm-4">
             <div className="thumbnail">
               <img src={weather} alt="images of clouds and sun to show the purpose of the app" />
               <div className="caption">
                 <h2>Information:</h2>
                 <p>
-                  This is the all new Climatic™ app. With us, you can choose to either get the weather as an unregistered 
-                  user, which will enable you to double click anywhere on the map provided by Mapbox. Then consequently, you'll
-                  be able to view the weather data for the next two days inside an HTML table.<br/><br/>
+                  This is the all new Climatic™ app. With us, you can choose to either get the weather as an <strong>unauthenticated 
+                  user</strong>, which will enable you to double-click anywhere on the map provided by Mapbox. Then consequently, you'll
+                  be able to <strong>view the weather data for 2 days inside an HTML table.</strong> Beware! You won't be able to download this
+                  data because the table refreshes after every double-click.<br/><br/>
                   <p>
                   If you do decide to sign-in, 
-                  you gain the perks to search for your desired location in the Geocoder support also provided by Mapbox.<br/>
-                  Apart from being able search and locate, you'll be able to store the weather data for 3 days, ie. the current
-                  day, the next day and the day after that. The data will be stored indefinitely and can be downloaded using our
-                  simple but intuitive UI.
+                  you gain the perks to search for your desired location in the Geocoder support, also provided by Mapbox.<br/>
+                  Apart from being able search and locate, you'll be able to <strong>fetch weather data for 3 days</strong>, ie. the current
+                  day and two consecutive days. The data will be <strong>stored indefinitely</strong> and can be downloaded using our
+                  simple and intuitive UI.
                   </p>
                   The weather data provided by Tomorrow.io contains various parameters such as:
                   <ol>
-                    ‣Cloud Cover<br/>
-                    ‣Humidity<br/>
-                    ‣UV Index<br/>
                     ‣Temperature and Apparent Temperature<br/>
+                    ‣Humidity<br/>
                     ‣Rainfall Probablity and Intensity<br/>
+                    ‣Cloud Cover<br/>
+                    ‣UV Index<br/>
+                    ‣Visibility<br/>
                     ‣Pressure at Sea Level<br/>
                     ‣Sunrise and Sunset Time<br/>
                     ‣Wind Speed<br/>
-                    ‣Visibility<br/>
                     ‣Dew Point<br/>
                   </ol>
                   <p>
-                  To fetch the stored data, you can specify the date range and Axios will fetch the data
-                  from MongoDB Atlas. You can then easily download the data in four different formats based upon your needs.
-                  The most useful one, is obviously the .json file format which is the most beautiful way to display nested data.
-                  A simple text or .txt file might be what you want but that gets more and more verbose as you keep on using the 
-                  app. In that case, you might want to choose a .xlsx file because no amount of data can faze the trusty old Excel
-                  file format. If your needs fall in the data analytics or machine learning disciplines, a .csv file might be what
-                  you need, and we have that too!
-                  </p>
+                  To fetch the stored data, you can specify the date range and fetch the data from MongoDB Atlas. 
+                  You can then easily download the data in four different formats based upon your needs.
+                  The most useful one, is obviously the <strong>.json</strong> file format which is the most beautiful way to display nested data.
+                  If your needs fall in the data analytics or machine learning disciplines, a <strong>.csv</strong> file might be what
+                  you need, and we have that too! A simple text or <strong>.txt</strong> file might be what you want but that gets more and more 
+                  verbose as you keep on using the app. In that case, you might want to choose an <strong>.xlsx</strong> file because no amount of 
+                  data can faze the trusty old Excel file format. 
+                  </p><br/><br/>
                 </p>
                 <hr></hr>
                 <p>Thank You</p>
@@ -93,14 +94,14 @@ function Home() {
             </div>
           </div>
 
-          <div className="col-lg-9">
+          <div className="col-lg-8">
             <h1><u>Documentation</u></h1>
             <hr />
             <h2>About:</h2>
             <p>
-              This Weather Forecasting app was built on 30/08/2023 for the purpose of demonstrating the integration of various services<br/>
-              like Mapbox's WebGL-based map rendering, their forward-geocoding capabilities, Tomorrow.io's extensive array of weather<br/>
-              parameters and MongoDB's unopinionated document and schema structuring, complemented by blazingly-fast read-write speeds.<br/>
+              This Weather Data Downloader/Visualizer app was built on 30/08/2023 for the purpose of demonstrating the integration of various services<br/>
+              like <strong>Mapbox's</strong> WebGL-based map rendering, their forward-geocoding capabilities, <strong>Tomorrow.io's</strong> extensive array of weather<br/>
+              parameters and <strong>MongoDB's</strong> unopinionated document and schema structuring, complemented by blazingly-fast read-write speeds.<br/>
               You can get accurate weather of any place on Earth! Click on the button below and get your first weather forecast<br/>
               or you could read ahead to know how the web application was built and how it works-----&gt;
               <button className="buttonClass" onClick={handleButtonClick}>
@@ -112,7 +113,7 @@ function Home() {
               <li>You can either choose to Sign-in as an authenticated user or simply click the Get Forecast button in the About section.</li>
               <li>
                 After signing-in you can either search for the location you want to fetch the weather for, or you can download any<br/>
-                weather data that you have previously searched for, using the date-picker on the top-left side. You'll soon see four<br/>
+                weather data that you have previously searched for, using the date-picker on the top-right side. You'll soon see four<br/>
                 options to download weather data in the format of your choosing. Currently, we have JSON, CSV, XLSX and TXT file formats.
               </li>
               <li>
@@ -140,11 +141,11 @@ function Home() {
             <Carousel showArrows={true}>
               <div>
                 <img src={screenshot1} alt="The map view for unauthenticated users" />
-                <p className="legend">What the visitor sees after double-clicking on the map element as an unauthenticated user.</p>
+                <p className="legend">What the visitor sees after double-clicking on the map as an unauthenticated user in the /Visitor route</p>
               </div>
               <div>
                 <img src={screenshot2} alt="The map view for authenticated users" />
-                <p className="legend">The layout of the map element for authenticated users with the date-picker on the left side.</p>
+                <p className="legend">The layout of the map for authenticated users in the /Map route with the date-picker on the right side.</p>
               </div>
               <div>
                 <img src={screenshot3} alt="The map view after fetching the data from MongoDB" />
