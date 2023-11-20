@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const DownloadJson = ({ setIsDownloading, weatherdata }) => {
-  React.useEffect(() => {
+  useEffect(() => {
     if (!weatherdata) {
       setIsDownloading(false);
       return;

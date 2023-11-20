@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Papa from 'papaparse';
 
 const DownloadCsv = ({ setIsDownloading, weatherdata }) => {
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!weatherdata) {
       setIsDownloading(false);
       return;

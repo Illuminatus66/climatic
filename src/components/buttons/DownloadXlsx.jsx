@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ExcelJS from "exceljs";
 
 const DownloadXlsx = ({ setIsDownloading, weatherdata }) => {
-  React.useEffect(() => {
+  useEffect(() => {
     if (!weatherdata) {
       setIsDownloading(false);
       return;
