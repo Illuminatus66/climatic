@@ -78,7 +78,7 @@ const LocationsList = ({ data, selectedEntries, onSelect, dateRange, setDateRang
                 className="weather-list"
                 style={{
                   backgroundColor: '#ffb3b3',
-                  padding: '10px',
+                  padding: '5px',
                   borderRadius: '5px',
                 }}
               >

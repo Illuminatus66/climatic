@@ -58,7 +58,7 @@ function Home() {
                   user</strong>, which will enable you to double-click anywhere on the map provided by Mapbox. Then consequently, you'll
                   be able to <strong>view the weather data for 2 days inside an HTML table.</strong> Beware! You won't be able to download this
                   data because the table refreshes after every double-click.<br/>
-                  <p>
+                  <p><br/>
                   If you do decide to sign-in, 
                   you gain the perks to search for your desired location in the Geocoder support, also provided by Mapbox.<br/>
                   Apart from being able search and locate, you'll be able to <strong>fetch weather data for 3 days</strong>, ie. the current
@@ -88,7 +88,7 @@ function Home() {
                   data can faze the trusty old Excel file format. 
                   </p>
                   <p>
-                    <h2><b><i>New Features:</i></b></h2><br/>
+                    <h2><b><i>New Features:</i></b></h2>
                     Added a Visualization component where the weather data can be compared in a bunch of different charts and graphs like:
                     <ol>
                       <li>Box Plot</li>

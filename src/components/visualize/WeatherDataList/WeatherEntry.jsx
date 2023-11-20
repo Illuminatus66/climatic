@@ -4,9 +4,9 @@ import { motion } from "framer-motion";
 const WeatherEntry = ({ weatherEntry, isSelected, handleSelect }) => {
   const style = {
     margin: "5px",
-    padding: "10px",
+    padding: "5px",
     borderRadius: "3px",
-    border: isSelected ? "3px solid green" : "1px dashed black",
+    border: isSelected ? "2px solid green" : "1px dashed red",
     cursor: "pointer",
   };
 
