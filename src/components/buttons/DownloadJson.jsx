@@ -1,40 +1,31 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React from "react";
 
-function DownloadJson() {
-  const [isDownloading, setIsDownloading] = useState(false);
-  const weatherdata = useSelector((state) => state.weather.data);
-
-  const downloadJson = () => {
-    if (isDownloading || !weatherdata) {
+const DownloadJson = ({ setIsDownloading, weatherdata }) => {
+  React.useEffect(() => {
+    if (!weatherdata) {
+      setIsDownloading(false);
       return;
     }
 
     setIsDownloading(true);
 
     const jsonData = JSON.stringify(weatherdata, null, 2);
-    const dataUrl = `data:application/json;charset=utf-8,${encodeURIComponent(jsonData)}`;
+    const dataUri = `data:application/json;charset=utf-8,${encodeURIComponent(
+      jsonData
+    )}`;
 
-    const a = document.createElement('a');
-    a.href = dataUrl;
-    a.download = 'data.json';
+    const a = document.createElement("a");
+    a.href = dataUri;
+    a.download = "data.json";
+    a.click();
 
-    a.addEventListener('click', () => {
+    a.addEventListener("click", () => {
       setIsDownloading(false);
       URL.revokeObjectURL(a.href);
     });
+  }, [setIsDownloading, weatherdata]);
 
-    a.click();
-  };
-
-  return (
-    <div>
-      <h2 onClick={isDownloading ? null : downloadJson} style={{ cursor: isDownloading ? 'not-allowed' : 'pointer' }}>
-        Download JSON File
-      </h2>
-      {isDownloading ? 'Downloading...' : null}
-    </div>
-  );
-}
+  return null;
+};
 
 export default DownloadJson;

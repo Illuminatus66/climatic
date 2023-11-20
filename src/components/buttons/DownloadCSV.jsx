@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
 import Papa from 'papaparse';
 
-function DownloadCSV() {
-  const [isDownloading, setIsDownloading] = useState(false);
-  const weatherdata = useSelector((state) => state.weather.data);
+const DownloadCsv = ({ setIsDownloading, weatherdata }) => {
 
-  const downloadCSV = async () => {
-    if (isDownloading || !weatherdata) {
+  React.useEffect(() => {
+    if (!weatherdata) {
+      setIsDownloading(false);
       return;
     }
 
@@ -47,6 +45,7 @@ function DownloadCSV() {
       const base64Data = btoa(csvData);
 
       const dataUri = `data:text/csv;base64,${base64Data}`;
+
       const a = document.createElement('a');
       a.href = dataUri;
       a.download = 'weather_data.csv';
@@ -60,16 +59,8 @@ function DownloadCSV() {
       console.error('Error generating CSV:', error);
       setIsDownloading(false);
     }
-  };
+  }, [setIsDownloading, weatherdata]);
 
-  return (
-    <div>
-      <h2 onClick={isDownloading ? null : downloadCSV} style={{ cursor: isDownloading ? 'not-allowed' : 'pointer' }}>
-        Download CSV file&nbsp;
-      </h2>
-      {isDownloading ? 'Downloading...' : null}
-    </div>
-  );
-}
-
-export default DownloadCSV;
+  return null;
+};
+export default DownloadCsv;

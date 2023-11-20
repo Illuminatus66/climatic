@@ -30,7 +30,11 @@
   box-shadow: 3px 4px 0px 0px rgba(33, 44, 138, 1);
   text-shadow: 0px 1px 0px rgba(8, 11, 42, 1);
   background:linear-gradient(rgba(26, 20, 226, 1), rgba(83, 180, 250, 1));
-  border-radius: 3px;
+  border-radius: 4px;
+}
+
+.buttonClass:disabled {
+  cursor: wait;
 }
 
 .buttonClass:hover {

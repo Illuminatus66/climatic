@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
 
-function DownloadTxt() {
-  const [isDownloading, setIsDownloading] = useState(false);
-  const weatherdata = useSelector((state) => state.weather.data);
+const DownloadTxt = ({ setIsDownloading, weatherdata }) => {
 
-  const downloadText = () => {
-    if (isDownloading || !weatherdata) {
+  React.useEffect(() => {
+    if (!weatherdata) {
+      setIsDownloading(false);
       return;
     }
 
@@ -50,16 +48,9 @@ function DownloadTxt() {
     document.body.removeChild(a);
     
     setIsDownloading(false);
-  };
+  }, [setIsDownloading, weatherdata]);
 
-  return (
-    <div>
-      <h2 onClick={isDownloading ? null : downloadText} style={{ cursor: isDownloading ? 'not-allowed' : 'pointer' }}>
-        Download Txt File&nbsp;&nbsp;
-      </h2>
-      {isDownloading ? 'Downloading...' : null}
-    </div>
-  );
+  return null;
 }
 
 export default DownloadTxt;

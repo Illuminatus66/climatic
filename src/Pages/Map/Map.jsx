@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import mapboxgl from '!mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -9,8 +11,8 @@ import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import './Map.css';
 import { toMongo, fromMongo, forVisualization } from '../../actions/weather';
 import DownloadJson from '../../components/buttons/DownloadJson';
-import DownloadExcel from '../../components/buttons/DownloadExcel';
-import DownloadCSV from '../../components/buttons/DownloadCSV';
+import DownloadXlsx from '../../components/buttons/DownloadXlsx';
+import DownloadCsv from '../../components/buttons/DownloadCsv';
 import DownloadTxt from '../../components/buttons/DownloadTxt';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -24,6 +26,10 @@ const Map = () => {
   const [dateRange, setDateRange] = useState([null, null]);
   const [showButtons, setShowButtons] = useState(false);
   const [showMap, setShowMap] = useState(interactions > 0);
+  const [isDownloadingJson, setIsDownloadingJson] = useState(false);
+  const [isDownloadingTxt, setIsDownloadingTxt] = useState(false);
+  const [isDownloadingCsv, setIsDownloadingCsv] = useState(false);
+  const [isDownloadingXlsx, setIsDownloadingXlsx] = useState(false);
 
   const handleFetchDataClick = () => {
     setShowButtons(false);
@@ -36,6 +42,35 @@ const Map = () => {
   const handleVisualizeClick = () => {
     navigate("/Visualize");
   };
+
+  const handleJsonDownload = () => {
+    setIsDownloadingJson(true);
+    <DownloadJson 
+      setIsDownloading={setIsDownloadingJson} 
+      weatherdata={weatherdata}
+    />;
+  }
+  const handleTxtDownload = () => {
+    setIsDownloadingTxt(true);
+    <DownloadTxt 
+      setIsDownloading={setIsDownloadingTxt} 
+      weatherdata={weatherdata}
+    />;
+  }
+  const handleCsvDownload = () => {
+    setIsDownloadingCsv(true);
+    <DownloadCsv 
+      setIsDownloading={setIsDownloadingCsv} 
+      weatherdata={weatherdata}
+    />;
+  }
+  const handleXlsxDownload = () => {
+    setIsDownloadingXlsx(true);
+    <DownloadXlsx 
+      setIsDownloading={setIsDownloadingXlsx} 
+      weatherdata={weatherdata}
+    />;
+  }
 
   useEffect(() => {
     const handleGeocoderResult = (result) => {
@@ -74,9 +109,9 @@ const Map = () => {
     <div>
       {currentUser && interactions > 0 ? (
         <div className="container">
-          <div id='map-container'></div>
-          <div id='controls'>
-            <div id='datepick'>
+          <div id="map-container"></div>
+          <div id="controls">
+            <div id="datepick">
               <DatePicker
                 selectsRange={true}
                 startDate={dateRange[0]}
@@ -85,26 +120,79 @@ const Map = () => {
                   setDateRange(update);
                 }}
                 isClearable={true}
-                placeholderText='Select Date Range'
+                placeholderText="Select Date Range"
               />
             </div>
-            <div id='buttons'>
+            <div id="buttons">
               {showButtons && weatherdata && (
                 <>
-                  <button className='button button-shadow-pop'><DownloadJson/></button>
-                  <button className='button button-shadow-pop'><DownloadTxt/></button>
-                  <button className='button button-shadow-pop'><DownloadCSV/></button>
-                  <button className='button button-shadow-pop'><DownloadExcel/></button>
-                  <button onClick= {handleVisualizeClick} className='button button-shadow-pop'>Visualize Data</button>
+                  <button
+                    className="button button-shadow-pop"
+                    onClick={handleJsonDownload}
+                    disabled={isDownloadingJson}
+                  >
+                    {isDownloadingJson ? (
+                      <FontAwesomeIcon icon={faSpinner} spin size="lg" />
+                    ) : (
+                      "Download .JSON File"
+                    )}
+                  </button>
+                  <button
+                    className="button button-shadow-pop"
+                    onClick={handleTxtDownload}
+                    disabled={isDownloadingTxt}
+                  >
+                    {isDownloadingTxt ? (
+                      <FontAwesomeIcon icon={faSpinner} spin size="lg" />
+                    ) : (
+                      "Download .TXT File"
+                    )}
+                  </button>
+                  <button
+                    className="button button-shadow-pop"
+                    onClick={handleCsvDownload}
+                    disabled={isDownloadingCsv}
+                  >
+                    {isDownloadingCsv ? (
+                      <FontAwesomeIcon icon={faSpinner} spin size="lg" />
+                    ) : (
+                      "Download .CSV File"
+                    )}
+                  </button>
+                  <button
+                    className="button button-shadow-pop"
+                    onClick={handleXlsxDownload}
+                    disabled={isDownloadingXlsx}
+                  >
+                    {isDownloadingXlsx ? (
+                      <FontAwesomeIcon icon={faSpinner} spin size="lg" />
+                    ) : (
+                      "Download .XLSX File"
+                    )}
+                  </button>
+                  <button
+                    onClick={handleVisualizeClick}
+                    className="button button-shadow-pop"
+                  >
+                    Visualize Data
+                  </button>
                 </>
               )}
-              <button onClick={handleFetchDataClick} className='button button-shadow-pop'>Fetch Data</button>
+              <button
+                onClick={handleFetchDataClick}
+                className="button button-shadow-pop"
+              >
+                Fetch Data
+              </button>
             </div>
           </div>
         </div>
       ) : (
         <div>
-          <p>Sorry, come back tomorrow. You have exhausted your daily quota of 5 interactions.</p>
+          <p>
+            Sorry, come back tomorrow. You have exhausted your daily quota of 5
+            interactions.
+          </p>
         </div>
       )}
     </div>
