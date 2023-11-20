@@ -108,7 +108,7 @@ function Home() {
           </div>
 
           <div className="col-lg-8">
-            <h1><u>Documentation</u></h1>
+            <h1><b><i>Documentation</i></b></h1>
             <hr />
             <h2>About:</h2>
             <p>
@@ -149,7 +149,7 @@ function Home() {
               <li>Map and location services provided by Mapbox. Weather data provided by Tomorrow.io. Storage managed by MongoDB Atlas.</li>
               <li>The website is one of a kind and easy to operate because of the simplistic UI built using React.</li>
             </p>
-            <h3>New Features:</h3>
+            <h2>New Features:</h2>
             <p>
               Some new features have been added to Climatic™ which hopefully enhance the user-experience:
               <ul>
