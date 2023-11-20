@@ -14,6 +14,7 @@ import './Home.css';
 
 function Home() {
   const currentUser = useSelector((state) => state.user.data);
+  const interactions = useSelector((state) => state.interactions.data);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleButtonClick = () => {
@@ -117,7 +118,7 @@ function Home() {
               parameters and <strong><a href="https://www.mongodb.com/docs/atlas/getting-started/" class="no-blue-link" target="_blank" rel="noreferrer">MongoDB's</a></strong> unopinionated document and schema structuring, complemented by blazingly-fast read-write speeds.<br/>
               You can get accurate weather of any place on Earth! Click on the button below and get your first weather forecast<br/>
               or you could read ahead to know how the web application was built and how it works-----&gt;
-              <button className="buttonClass" onClick={handleButtonClick}>
+              <button className="buttonClass" onClick={handleButtonClick} disabled={interactions === null || interactions === undefined}>
                 Get Forecast
               </button>
             </p>
