@@ -107,9 +107,9 @@ const Map = () => {
                 placeholderText="Select Date Range"
               />
             </div>
-            <div id="buttons">
+            <div id="buttons" className="buttons-container">
               {showButtons && weatherdata && (
-                <div>
+                <div className="download-buttons">
                   <button
                     className="button button-shadow-pop"
                     onClick={handleJsonDownload}
