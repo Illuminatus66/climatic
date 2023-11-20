@@ -45,31 +45,15 @@ const Map = () => {
 
   const handleJsonDownload = () => {
     setIsDownloadingJson(true);
-    <DownloadJson 
-      setIsDownloading={setIsDownloadingJson} 
-      weatherdata={weatherdata}
-    />;
   }
   const handleTxtDownload = () => {
     setIsDownloadingTxt(true);
-    <DownloadTxt 
-      setIsDownloading={setIsDownloadingTxt} 
-      weatherdata={weatherdata}
-    />;
   }
   const handleCsvDownload = () => {
     setIsDownloadingCsv(true);
-    <DownloadCsv 
-      setIsDownloading={setIsDownloadingCsv} 
-      weatherdata={weatherdata}
-    />;
   }
   const handleXlsxDownload = () => {
     setIsDownloadingXlsx(true);
-    <DownloadXlsx 
-      setIsDownloading={setIsDownloadingXlsx} 
-      weatherdata={weatherdata}
-    />;
   }
 
   useEffect(() => {
@@ -185,6 +169,30 @@ const Map = () => {
                 Fetch Data
               </button>
             </div>
+            {isDownloadingJson && (
+            <DownloadJson 
+              setIsDownloading={setIsDownloadingJson} 
+              weatherdata={weatherdata}
+            />
+          )}
+          {isDownloadingTxt && (
+            <DownloadTxt 
+              setIsDownloading={setIsDownloadingTxt} 
+              weatherdata={weatherdata}
+            />
+          )}
+          {isDownloadingCsv && (
+            <DownloadCsv 
+              setIsDownloading={setIsDownloadingCsv} 
+              weatherdata={weatherdata}
+            />
+          )}
+          {isDownloadingXlsx && (
+            <DownloadXlsx 
+              setIsDownloading={setIsDownloadingXlsx} 
+              weatherdata={weatherdata}
+            />
+          )}
           </div>
         </div>
       ) : (
