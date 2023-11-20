@@ -86,14 +86,15 @@ function Home() {
                   you need, and we have that too! A simple text or <strong>.txt</strong> file might be what you want but that gets more and more 
                   verbose as you keep on using the app. In that case, you might want to choose an <strong>.xlsx</strong> file because no amount of 
                   data can faze the trusty old Excel file format. 
-                  </p><br/><br/>
+                  </p><br/>
                   <p>
-                    <b><i>New Features</i></b><br/>
-                    Added a Visualization component where the weather data can be compared in a bunch of different charts and graphs like
+                    <h3><b><i>New Features</i></b><br/></h3>
+                    Added a Visualization component where the weather data can be compared in a bunch of different charts and graphs like:
                     <ol>
                       <li>Box Plot</li>
                       <li>Scatter Plot</li>
-                      <li>Line Chart and Bar Graph</li>
+                      <li>Line Chart</li>
+                      <li>Bar Chart</li>
                       <li>Heatmap</li>
                       <li>Radar Chart</li>
                       <li>Parallel Co-ordinates Chart</li>
@@ -101,7 +102,7 @@ function Home() {
                   </p>
                 </p>
                 <hr></hr>
-                <p>Thank You! Send suggestions to <a href="mailto:varunsodhani2711@gmail.com">my email</a></p>
+                <p>Thank you for visiting! Send suggestions to <a href="mailto:varunsodhani2711@gmail.com">my email</a></p>
               </div>
             </div>
           </div>
