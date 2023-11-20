@@ -15,13 +15,9 @@ export const signUp = (authData, navigate) => async (dispatch) => {
 };
 
 export const logIn = (authData, navigate) => async (dispatch) => {
-  try {
     dispatch (resetInteractions());
     const { data } = await api.logIn(authData);
     dispatch(login(data));
     dispatch(fetchCurrentUser(JSON.parse(localStorage.getItem("Profile"))));
     navigate("/");
-  } catch (error) {
-    console.log(error);
-  }
 };

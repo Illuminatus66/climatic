@@ -137,7 +137,7 @@ const Auth = () => {
           </label>
           <button type="submit" className="auth-btn">
             {isLoading ? (
-              <FontAwesomeIcon icon={faSpinner} spin size="2xs" />
+              <FontAwesomeIcon icon={faSpinner} spin size="lg" />
             ) : isSignup ? (
               "Sign up"
             ) : (
