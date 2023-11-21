@@ -387,10 +387,7 @@ function Home() {
             </Carousel>
           </div>
           <hr />
-          <div className="footer"
-          style={{
-            borderTop: "2px solid black"
-          }}>
+          <div className="footer">
             <span
               style={{
                 fontFamily: "Phudu",

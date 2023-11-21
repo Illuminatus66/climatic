@@ -46,6 +46,10 @@
   cursor: pointer;
 }
 
+.footer {
+  border-top: thick double black;
+}
+
 h1 {
   font-family: 'Oswald', sans-serif;
 }
