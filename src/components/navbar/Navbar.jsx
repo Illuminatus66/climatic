@@ -6,6 +6,8 @@ import "./Navbar.css";
 import { fetchCurrentUser } from "../../reducers/userSlice"; 
 import { logout } from "../../reducers/authSlice";
 import { resetWeather } from "../../reducers/weatherSlice"
+import { resetVisualization } from "../../reducers/visualizationSlice"
+
 const Navbar = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.data);
@@ -14,8 +16,9 @@ const Navbar = () => {
   const handleLogout = () => {
     dispatch(logout());
     dispatch (resetWeather());
-    navigate("/");
+    dispatch(resetVisualization());
     dispatch(fetchCurrentUser(null));
+    navigate("/");
   };
 
   useEffect((handleLogout) => {

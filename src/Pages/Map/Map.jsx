@@ -23,6 +23,7 @@ const Map = () => {
   const navigate = useNavigate();
   const interactions = useSelector((state) => state.interactions.data);
   const weatherdata = useSelector((state) => state.weather.data);
+  const visualizationdata = useSelector((state) => state.visualization.data);
   const [dateRange, setDateRange] = useState([null, null]);
   const [showButtons, setShowButtons] = useState(false);
   const [showMap, setShowMap] = useState(interactions > 0);
@@ -166,7 +167,9 @@ const Map = () => {
               <button
                 onClick={handleVisualizeClick}
                 className="button button-shadow-pop"
-                disabled={!showButtons}
+                disabled={
+                  visualizationdata === null || visualizationdata === undefined
+                }
               >
                 Visualize Data
               </button>

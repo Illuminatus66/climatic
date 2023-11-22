@@ -69,3 +69,7 @@
 .action-buttons button {
   border: thick double black;
 }
+
+.action-buttons:disabled {
+  cursor: not-allowed;
+}
