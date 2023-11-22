@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import WeatherEntry from "./WeatherEntry";
 
 const LocationsList = ({ data, selectedEntries, onSelect, dateRange, setDateRange }) => {
@@ -51,7 +53,7 @@ const LocationsList = ({ data, selectedEntries, onSelect, dateRange, setDateRang
           />
         </div>
         <button onClick={toggleSortOrder} className="sort-button">
-          {isAscending ? '↓' : '↑'}
+          {isAscending ? <FontAwesomeIcon icon={faArrowDown}/> : <FontAwesomeIcon icon={faArrowUp}/> }
         </button>
       </div>
       {sortedData.map((locationData) => (
