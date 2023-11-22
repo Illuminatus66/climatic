@@ -466,7 +466,7 @@ const Visualize = () => {
 
   return (
     <div style={{ display: "flex", width: "100%" }}>
-      <div style={{ width: "20%", height: "101vh", position: "sticky", top: 0, paddingRight: 5  }}>
+      <div style={{ width: "20%", height: "100vh", position: "sticky", top: 0, paddingRight: 5  }}>
         <LocationsList 
         data={filteredData}
         onSelect={handleSelect}

@@ -70,6 +70,6 @@
   border: thick double black;
 }
 
-.action-buttons:disabled {
+.action-buttons button:disabled {
   cursor: not-allowed;
 }

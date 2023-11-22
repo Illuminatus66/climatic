@@ -304,7 +304,7 @@ function Home() {
                 </li>
                 <li>
                   The user can filter weather data as many times as required
-                  using the datepicke.
+                  using the datepicker.
                 </li>
                 <li>
                   The weather entries are sorted based on the time when the

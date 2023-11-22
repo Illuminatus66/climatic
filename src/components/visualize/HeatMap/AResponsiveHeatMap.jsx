@@ -54,7 +54,6 @@ const AResponsiveHeatMap = ({ data, parameter }) => {
         ]}
         motionConfig="molasses"
       />
-      ;
     </div>
   );
 };
