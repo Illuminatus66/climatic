@@ -166,6 +166,7 @@ const Map = () => {
               <button
                 onClick={handleVisualizeClick}
                 className="button button-shadow-pop"
+                disabled={!showButtons}
               >
                 Visualize Data
               </button>
